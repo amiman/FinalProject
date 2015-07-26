@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        jar="C:\Users\Amitay\Documents\Android\tutorial-1-camerapreview\ImageMerge\build\intermediates\exploded-aar\tutorial-1-camerapreview\openCVLibrary2411\unspecified\classes.jar"
+        jumboMode="false"
+        revision="22.0.0"
+        sha1="5ed0c45140f5dbc909be6e24cea0532e6e424755">
+        <dex dex="C:\Users\Amitay\Documents\Android\tutorial-1-camerapreview\ImageMerge\build\intermediates\pre-dexed\debug\classes-e4e4b6e9f2c64778033614ead7664161dceba3bf.jar" />
+    </item>
+    <item
+        jar="C:\Users\Amitay\Documents\Android\tutorial-1-camerapreview\ImageMerge\src\main\java\libs\android-support-v4.jar"
+        jumboMode="false"
+        revision="22.0.0"
+        sha1="33b27a8d2a5b87e6eb6c60e87a5374ffbfeacc3a">
+        <dex dex="C:\Users\Amitay\Documents\Android\tutorial-1-camerapreview\ImageMerge\build\intermediates\pre-dexed\debug\android-support-v4-b4612954af84286ff82aca6cb95eefe62199b97c.jar" />
+    </item>
+
+</items>
