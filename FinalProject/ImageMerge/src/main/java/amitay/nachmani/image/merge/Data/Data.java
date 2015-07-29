@@ -9,6 +9,7 @@ import org.opencv.core.Scalar;
 import java.util.ArrayList;
 
 import amitay.nachmani.image.merge.General.MarkValues;
+import amitay.nachmani.image.merge.ImageProcessing.ColorPoint;
 import amitay.nachmani.image.merge.Tracker.MovementTracker;
 import amitay.nachmani.image.merge.Tutorial1Activity;
 
@@ -31,6 +32,12 @@ public class Data {
     // Tracks data
     private ArrayList<Point> mBackgroundPixels;
     private ArrayList<Point> mForegroundPixels;
+    private Point mMinForegroundPoint;
+    private Point mMaxForegroundPoint;
+
+    // Extract foreground
+    private ArrayList<ColorPoint> mExtractForeground;
+    private Point mCenterOfGravity;
 
     // Status
     private boolean mMarkedImageMaskChanged = true;
@@ -83,7 +90,7 @@ public class Data {
     public void SetKmeansBestLabels()
     {
 
-        mKmeansBestLabels = new Mat((int)mKmeansMatrix.total(),2, CvType.CV_32SC1,new Scalar(0));
+        mKmeansBestLabels = new Mat((int)mSecondImage.total(),1, CvType.CV_32SC1,new Scalar(0));
     }
 
     public void SetKmeansBestLabels(Mat labels)
@@ -94,6 +101,11 @@ public class Data {
     public void SetForegroundImage()
     {
         mForegroundImage = new Mat(mSecondImage.rows(),mSecondImage.cols(),mSecondImage.type());
+    }
+
+    public void SetExtractForeground()
+    {
+        mExtractForeground = new ArrayList<ColorPoint>();
     }
 
     /**
@@ -116,6 +128,30 @@ public class Data {
     public void AddForegroundPixel(Point point)
     {
         mForegroundPixels.add(point);
+    }
+
+    public void AddExtractForegroundPoint(ColorPoint point)
+    {
+        mExtractForeground.add(point);
+    }
+
+    public void ExtractMinMaxForegroundPoint()
+    {
+        // Go over the point in the foreground and find the bounding box
+        mMinForegroundPoint = new Point(mSecondImage.rows(),mSecondImage.cols());
+        mMaxForegroundPoint = new Point(0,0);
+        for(Point p : mForegroundPixels)
+        {
+            if(p.x > mMaxForegroundPoint.x) { mMaxForegroundPoint.x = p.x; }
+            if(p.y > mMaxForegroundPoint.y) { mMaxForegroundPoint.y = p.y; }
+            if(p.x < mMinForegroundPoint.x) { mMinForegroundPoint.x = p.x; }
+            if(p.y < mMinForegroundPoint.y) { mMinForegroundPoint.y = p.y; }
+        }
+    }
+
+    public void CalculateExtractForegroundCenterOfGravity()
+    {
+
     }
 
     public Mat GetFirstImage()
@@ -153,6 +189,12 @@ public class Data {
             return mForegroundImage;
     }
 
+    public Point GetForegroundMaxPoint() { return mMaxForegroundPoint; }
+
+    public Point GetForegroundMinPoint() { return mMinForegroundPoint; }
+
+    public ArrayList<ColorPoint> GetExtractForegroundPoints() { return mExtractForeground; }
+
     public ArrayList<Point> GetBackgroundPoints()
     {
         return mBackgroundPixels;
@@ -172,6 +214,8 @@ public class Data {
     {
         mKmeansMatrix.release();
     }
+
+    public void ReleaseKmeansBestLabelsMatrix() { mKmeansBestLabels.release(); }
 
     /**
      * MarkPixlesInMarkedImage:

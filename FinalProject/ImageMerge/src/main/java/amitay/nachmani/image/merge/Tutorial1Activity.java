@@ -203,6 +203,8 @@ public class Tutorial1Activity extends Activity implements CvCameraViewListener2
      */
     public void onCameraViewStopped() {
 
+        Log.d(TAG,"onCameraViewStopped");
+
         // When we stop retrieving images we change the last image to be the second image wait for tracks to be made
         Mat combinedMat = ImageProcessing.DrawTracks(mData.GetSecondImage(), mTracks);
 
@@ -407,17 +409,10 @@ public class Tutorial1Activity extends Activity implements CvCameraViewListener2
      */
     private void InitializeRunSegmentationAlgorithmView()
     {
-
-        ImageProcessing.RunSegmentationAlgorithmDebug(mData,mTracks,mProgressBarStatus);
-
-        DrawAlgorithmResult();
-
-        /*
         // Create a progress bar for the algorithm progress
         FrameLayout frameMainLayout = (FrameLayout) findViewById(R.id.frame_main_layout);
 
         // prepare for a progress bar dialog
-
         mProgressBar = new ProgressDialog(frameMainLayout.getContext());
         mProgressBar.setCancelable(true);
         mProgressBar.setMessage(PROGRESS_MESSAGE);
@@ -469,10 +464,13 @@ public class Tutorial1Activity extends Activity implements CvCameraViewListener2
 
                     // draw result
                     DrawAlgorithmResult();
+
+                    // Change application stage to MOVE_FOREGROUND
+                    mApplicationStage = ApplicationStage.MOVE_FOREGROUND;
                 }
             }
         }).start();
-        */
+
     }
 
     /********************************************* Initialization's  end *************************************************************/
@@ -508,8 +506,6 @@ public class Tutorial1Activity extends Activity implements CvCameraViewListener2
             // Draw current image
             DrawMat(mData.GetSecondImage());
 
-            // Initialize SEGMENTATION_MARK_INITIALIZATION
-            InitializeMarkSegmentationView();
         }
     }
 
@@ -525,7 +521,9 @@ public class Tutorial1Activity extends Activity implements CvCameraViewListener2
     public boolean onTouchEvent(MotionEvent event){
 
         // If we are not in stage of marking do not do anything
-        if(mApplicationStage != ApplicationStage.SEGMENTATION_MARK_INITIALIZATION && mApplicationStage != ApplicationStage.SEGMENTATION_MARK)
+        if(mApplicationStage != ApplicationStage.SEGMENTATION_MARK_INITIALIZATION
+                && mApplicationStage != ApplicationStage.SEGMENTATION_MARK
+                && mApplicationStage != ApplicationStage.MOVE_FOREGROUND)
         {
             return super.onTouchEvent(event);
         } else if(mApplicationStage == ApplicationStage.SEGMENTATION_MARK_INITIALIZATION) {
@@ -534,12 +532,32 @@ public class Tutorial1Activity extends Activity implements CvCameraViewListener2
             InitializeMarkSegmentationView();
         }
 
+        if(mApplicationStage == ApplicationStage.SEGMENTATION_MARK_INITIALIZATION || mApplicationStage != ApplicationStage.SEGMENTATION_MARK)
+        {
+            return SegmentationTouchEvent(event);
+        }
+
+        if(mApplicationStage == ApplicationStage.MOVE_FOREGROUND)
+        {
+            return MoveForegroundTouchEvent(event);
+        }
+
+        return super.onTouchEvent(event);
+    }
+
+    /**
+     * SegmentationTouchEvent:
+     *
+     * The behavior touch
+     * @param event
+     */
+    private boolean SegmentationTouchEvent(MotionEvent event)
+    {
         // If this is stage of marking start to mark the pixels that are marked
         int action = MotionEventCompat.getActionMasked(event);
 
         float x;
         float y;
-        float[] transformedPixels;
 
         switch(action) {
             case (MotionEvent.ACTION_DOWN) :
@@ -593,6 +611,35 @@ public class Tutorial1Activity extends Activity implements CvCameraViewListener2
         }
     }
 
+    private boolean MoveForegroundTouchEvent(MotionEvent event)
+    {
+        // If this is stage of marking start to mark the pixels that are marked
+        int action = MotionEventCompat.getActionMasked(event);
+
+        float x;
+        float y;
+
+        switch(action) {
+
+            case (MotionEvent.ACTION_UP) :
+
+                // Get the coordinate of the touch event
+                x = event.getAxisValue(MotionEvent.AXIS_X);
+                y = event.getAxisValue(MotionEvent.AXIS_Y);
+
+                // Update the foreground final position
+
+
+                // Draw new tracks on view
+
+
+                return true;
+
+            default :
+                return super.onTouchEvent(event);
+        }
+    }
+
     /**
      * DrawNewTracksOnView:
      *
@@ -622,13 +669,16 @@ public class Tutorial1Activity extends Activity implements CvCameraViewListener2
      */
     private void DrawAlgorithmResult()
     {
+        // Merge the foreground pixels to the firstImage image
+        Mat combinedMat = ImageProcessing.MergeMatWithPoints(mData.GetSecondImage(), mData.GetExtractForegroundPoints());
+
         // Allocate space for the bitmap that will contain the image
         if(mBitmap == null) {
             mBitmap = Bitmap.createBitmap(mFrameWidth, mFrameHeight, Bitmap.Config.ARGB_8888);
         }
 
         // Convert the algorithm result to bitmap
-        Utils.matToBitmap(mData.GetForegroundImage(), mBitmap);
+        Utils.matToBitmap(combinedMat, mBitmap);
 
         // Display the new bitmap
         DisplayBitmap();

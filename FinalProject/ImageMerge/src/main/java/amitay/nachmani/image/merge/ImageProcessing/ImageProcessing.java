@@ -56,6 +56,28 @@ public class ImageProcessing {
     }
 
     /**
+     * MergeMatWithPoints:
+     *
+     * Go over all the color point and paint them on the background image
+     *
+     * @param background
+     * @param points
+     * @return
+     */
+    public static final Mat MergeMatWithPoints(Mat background,ArrayList<ColorPoint> points)
+    {
+        Mat mergeMat = background.clone();
+
+        // Go over the point the paint there color on the background image
+        for(ColorPoint point : points)
+        {
+            mergeMat.put((int)point.y,(int)point.x,point.mColor);
+        }
+
+        return mergeMat;
+    }
+
+    /**
      * RunSegmentationAlgorithm:
      *
      * Run a segmentation algorithm in order to differ between the background and foreground of the entire image.
@@ -84,23 +106,25 @@ public class ImageProcessing {
             data.SetMarkedImageMask(tempMask);
 
             // Second go over the marked mask and extract the background and foreground values
+            Log.d(GeneralInfo.DEBUG_TAG, "Start ExtractMaskPixels");
             ExtractMaskPixels(data);
-            
-            // return current progress
-            currentProgress = 10;
+            Log.d(GeneralInfo.DEBUG_TAG, "End ExtractMaskPixels");
 
-        } else if(currentProgress == 10) {
+            // return current progress
+            currentProgress = 25;
+
+        } else if(currentProgress == 25) {
 
             //TODO: change kMeans algorithm to a better segmentation algo
 
             // Create Kmeans matrix
             Log.d(GeneralInfo.DEBUG_TAG, "Start SetKmeansMatrix");
             data.SetKmeansMatrix(CreateKMeansMatrix(data));
-            Log.d(GeneralInfo.DEBUG_TAG, "Done SetKmeansMatrix");
+            Log.d(GeneralInfo.DEBUG_TAG, "End SetKmeansMatrix");
 
-            currentProgress = 20;
+            currentProgress = 50;
 
-        } else if(currentProgress == 20) {
+        } else if(currentProgress == 50) {
 
             //TODO: change kMeans algorithm to a better segmentation algo
 
@@ -115,86 +139,22 @@ public class ImageProcessing {
             // Release unused matrix
             data.ReleaseKmeansMatrix();
 
-            currentProgress = 30;
+            currentProgress = 75;
 
-        } else if(currentProgress == 30) {
+        } else if(currentProgress == 75) {
 
             // Convert best labels to foreground image
             Log.d(GeneralInfo.DEBUG_TAG, "Start ConvertBestLabelsToForegroundImage");
             ConvertBestLabelsToForegroundImage(data);
             Log.d(GeneralInfo.DEBUG_TAG, "End ConvertBestLabelsToForegroundImage");
 
+            // Release unused matrix
+            data.ReleaseKmeansBestLabelsMatrix();
+
             currentProgress = 100;
         }
 
         return currentProgress;
-    }
-
-
-    /**
-     * RunSegmentationAlgorithmDebug:
-     *
-     * For debuging this on the main process and not on thread.
-     * @param data
-     * @param tracks
-     * @param currentProgress
-     */
-    public static final void RunSegmentationAlgorithmDebug(Data data,ArrayList<MovementTracker> tracks,int currentProgress)
-    {
-        Mat background = data.GetSecondImage();
-
-        // Initialize the return image
-        //foregroundImage = new Mat(background.rows(), background.cols(), background.type(), MarkValues.NO_MARK_VALUE);
-
-        //TODO: optimize this using line iterator and line from opencv. needs to implemnent those classes in java so needs to be copy from opencv c++ source code and translate to java
-        // Extract all the pixels the user mark to foreground pixels and background pixels
-
-        // First merge all the tracks into the marked image
-        data.SetMarkedImageMask();
-        Mat tempMask = DrawTracks(data.GetMarkedImageMask(),tracks);
-        data.SetMarkedImageMask(tempMask);
-
-        // Second go over the marked mask and extract the background and foreground values
-        ExtractMaskPixels(data);
-
-        // return current progress
-        currentProgress = 10;
-
-
-        //TODO: change kMeans algorithm to a better segmentation algo
-
-        // Create Kmeans matrix
-        Log.d(GeneralInfo.DEBUG_TAG, "Start SetKmeansMatrix");
-        data.SetKmeansMatrix(CreateKMeansMatrix(data));
-        Log.d(GeneralInfo.DEBUG_TAG, "Done SetKmeansMatrix");
-
-        currentProgress = 20;
-
-
-        //TODO: change kMeans algorithm to a better segmentation algo
-
-        // Run kmeans
-        Log.d(GeneralInfo.DEBUG_TAG, "Start CreateBestLabelsFromUserMarks");
-        CreateBestLabelsFromUserMarks(data);
-        Log.d(GeneralInfo.DEBUG_TAG, "End CreateBestLabelsFromUserMarks");
-        Log.d(GeneralInfo.DEBUG_TAG, "Start kmeans");
-        Core.kmeans(data.GetmKmeansMatrix(), 2, data.GetKmeansBestLabels(), new TermCriteria(TermCriteria.MAX_ITER | TermCriteria.EPS, 10, 0.0001), 1, Core.KMEANS_USE_INITIAL_LABELS);
-        Log.d(GeneralInfo.DEBUG_TAG, "End kmeans");
-
-        // Release unused matrix
-        data.ReleaseKmeansMatrix();
-
-        currentProgress = 30;
-
-
-
-        // Convert best labels to foreground image
-        Log.d(GeneralInfo.DEBUG_TAG, "Start ConvertBestLabelsToForegroundImage");
-        ConvertBestLabelsToForegroundImage(data);
-        Log.d(GeneralInfo.DEBUG_TAG, "End ConvertBestLabelsToForegroundImage");
-
-        currentProgress = 100;
-
     }
 
     /**
@@ -215,16 +175,19 @@ public class ImageProcessing {
         {
             // Convert index to x y coordinate
             int normalizeI = i/mask.channels();
-            int x = (int)Math.floor(normalizeI/mask.cols());
-            int y = normalizeI%mask.cols();
+            int x = normalizeI%mask.cols();
+            int y = (int)Math.floor(normalizeI/mask.cols());
 
             // Check if the color is a background or foreground color
             if(maskData[i] == MarkValues.FOREGROUND_VALUE_BYTE) {
                 data.AddForegroundPixel(new Point(x,y));
             } else if(maskData[i] == MarkValues.BACKGROUND_VALUE_BYTE) {
-                data.AddBackgroundPixel(new Point(x, y));
+                data.AddBackgroundPixel(new Point(x,y));
             }
         }
+
+        // Get the bounding box for the foreground pixels
+        data.ExtractMinMaxForegroundPoint();
     }
 
     //TODO: finish this explanation
@@ -251,15 +214,17 @@ public class ImageProcessing {
         {
             // Convert index to x y coordinate
             int normalizeI = i/secondImage.channels();
-            int x = (int)Math.floor(normalizeI/secondImage.cols());
-            int y = normalizeI%secondImage.cols();
+            int x = normalizeI%secondImage.cols();
+            int y = (int)Math.floor(normalizeI/secondImage.cols());
 
-            kMeansMatrix.put(j,1,(float) secondImageData[i]);
-            kMeansMatrix.put(j+1,2,(float) secondImageData[i+1]);
-            kMeansMatrix.put(j+2,3,(float) secondImageData[i+2]);
-            kMeansMatrix.put(j+3,4,(float) x);
-            kMeansMatrix.put(j+4,5,(float) y);
-            j  = j + 5;
+            //float[] values = {secondImageData[i]/255,secondImageData[i+1]/255,secondImageData[i+2]/255,x/secondImage.cols(), y/secondImage.rows()};
+            //kMeansMatrix.put(j,0,values);
+            kMeansMatrix.put(j,0,(float) secondImageData[i]/255);
+            kMeansMatrix.put(j,1,(float) secondImageData[i+1]/255);
+            kMeansMatrix.put(j,2,(float) secondImageData[i+2]/255);
+            kMeansMatrix.put(j,3,(float) x/secondImage.cols());
+            kMeansMatrix.put(j,4,(float) y/secondImage.rows());
+            j  = j + 1;
         }
 
         return kMeansMatrix;
@@ -282,7 +247,7 @@ public class ImageProcessing {
         // Go over all the pixels that are foreground and change their label
         for(Point point : data.GetForeroundPoints())
         {
-            labels.put((int)point.x,(int)point.y,1);
+            labels.put((int)(point.y*data.GetSecondImage().cols() + point.x),0,1f);
         }
 
         // Update best labels
@@ -299,26 +264,46 @@ public class ImageProcessing {
     private static void ConvertBestLabelsToForegroundImage(Data data)
     {
         // Initialize the foreground image
-        data.SetForegroundImage();
+        //data.SetForegroundImage();
         Mat secondImage = data.GetSecondImage();
-        Mat foreground = data.GetForegroundImage();
+        //Mat foreground = data.GetForegroundImage();
         Mat labels = data.GetKmeansBestLabels();
+
+        Core.MinMaxLocResult a = Core.minMaxLoc(labels);
+        int[] value = new int[1];
+        labels.get((int)a.maxLoc.y,(int)a.maxLoc.x,value);
+
+        // Get the max and min point of the foreground bounding point
+        Point maxForegroundPoint = data.GetForegroundMaxPoint();
+        Point minForegroundPoint = data.GetForegroundMinPoint();
+
+        data.SetExtractForeground();
 
         // Go over labels and create new foreground image
         for(int i = 0 ; i < labels.rows() ; i++)
         {
-            int value = 0;
-            labels.get(i,1,value);
-            if(value != 0)
+            labels.get(i,0,value);
+            if(value[0] != 0)
             {
                 // a foreground pixel
-                int normalizeI = i/secondImage.channels();
-                int x = (int)Math.floor(normalizeI/secondImage.cols());
-                int y = normalizeI%secondImage.cols();
+                int x = i%secondImage.cols();
+                int y = (int)Math.floor(i/secondImage.cols());
 
-                byte[] color = new byte[4];
-                secondImage.get(x,y,color);
-                foreground.put(x,y,color);
+                // if the the pixel is out of the foreground bounding box continue
+                if(x > maxForegroundPoint.x || x < minForegroundPoint.x || y > maxForegroundPoint.y || y < minForegroundPoint.y)
+                {
+                    continue;
+                } else {
+
+                    // The point is in the bounding box and a foreground pixel
+                    byte[] color = new byte[4];
+                    secondImage.get(y, x, color);
+                    //foreground.put(y,x,color);
+
+                    // Add the color data point
+                    data.AddExtractForegroundPoint(new ColorPoint(x,y,color));
+                }
+
             }
         }
 
@@ -544,3 +529,76 @@ public class ImageProcessing {
     }
 
 }
+
+/*
+/**
+     * RunSegmentationAlgorithmDebug:
+     *
+     * For debuging this on the main process and not on thread.
+     * @param data
+     * @param tracks
+     * @param currentProgress
+     */
+/*
+public static final void RunSegmentationAlgorithmDebug(Data data,ArrayList<MovementTracker> tracks,int currentProgress)
+{
+    Mat background = data.GetSecondImage();
+
+    // Initialize the return image
+    //foregroundImage = new Mat(background.rows(), background.cols(), background.type(), MarkValues.NO_MARK_VALUE);
+
+    //TODO: optimize this using line iterator and line from opencv. needs to implemnent those classes in java so needs to be copy from opencv c++ source code and translate to java
+    // Extract all the pixels the user mark to foreground pixels and background pixels
+
+    // First merge all the tracks into the marked image
+    data.SetMarkedImageMask();
+    Mat tempMask = DrawTracks(data.GetMarkedImageMask(),tracks);
+    data.SetMarkedImageMask(tempMask);
+
+    // Second go over the marked mask and extract the background and foreground values
+    Log.d(GeneralInfo.DEBUG_TAG, "Start ExtractMaskPixels");
+    ExtractMaskPixels(data);
+    Log.d(GeneralInfo.DEBUG_TAG, "End ExtractMaskPixels");
+    // return current progress
+    currentProgress = 10;
+
+
+    //TODO: change kMeans algorithm to a better segmentation algo
+
+    // Run kmeans
+    Log.d(GeneralInfo.DEBUG_TAG, "Start CreateBestLabelsFromUserMarks");
+    CreateBestLabelsFromUserMarks(data);
+    Log.d(GeneralInfo.DEBUG_TAG, "End CreateBestLabelsFromUserMarks");
+
+    // Create Kmeans matrix
+    Log.d(GeneralInfo.DEBUG_TAG, "Start SetKmeansMatrix");
+    data.SetKmeansMatrix(CreateKMeansMatrix(data));
+    Log.d(GeneralInfo.DEBUG_TAG, "Done SetKmeansMatrix");
+
+    currentProgress = 20;
+
+
+    //TODO: change kMeans algorithm to a better segmentation algo
+
+
+    Log.d(GeneralInfo.DEBUG_TAG, "Start kmeans");
+    Core.kmeans(data.GetmKmeansMatrix(), 2, data.GetKmeansBestLabels(), new TermCriteria(TermCriteria.MAX_ITER | TermCriteria.EPS, 100, 0.0001), 1, Core.KMEANS_USE_INITIAL_LABELS);
+    Log.d(GeneralInfo.DEBUG_TAG, "End kmeans");
+
+    // Release unused matrix
+    //data.ReleaseKmeansMatrix();
+
+    currentProgress = 30;
+
+
+
+    // Convert best labels to foreground image
+    Log.d(GeneralInfo.DEBUG_TAG, "Start ConvertBestLabelsToForegroundImage");
+    ConvertBestLabelsToForegroundImage(data);
+    Log.d(GeneralInfo.DEBUG_TAG, "End ConvertBestLabelsToForegroundImage");
+
+    currentProgress = 100;
+
+}
+
+ */
