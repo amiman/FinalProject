@@ -61,17 +61,22 @@ public class ImageProcessing {
      * Go over all the color point and paint them on the background image
      *
      * @param background
-     * @param points
+     * @param data
      * @return
      */
-    public static final Mat MergeMatWithPoints(Mat background,ArrayList<ColorPoint> points)
+    public static final Mat MergeMatWithPoints(Mat background,Data data)
     {
         Mat mergeMat = background.clone();
+        Point centerOfGravity = data.GetCenterOfGravity();
 
         // Go over the point the paint there color on the background image
-        for(ColorPoint point : points)
+        for(ColorPoint point : data.GetExtractForegroundPoints())
         {
-            mergeMat.put((int)point.y,(int)point.x,point.mColor);
+            // Check if the point is active and we need to draw it or not
+            if(point.mStatus == PointStatus.ACTIVE) {
+                // Draw the points including movement about the center of gravity
+                mergeMat.put((int) (point.y + centerOfGravity.y), (int) (point.x + centerOfGravity.x), point.mColor);
+            }
         }
 
         return mergeMat;

@@ -14,6 +14,7 @@ import org.opencv.core.Point;
 
 import amitay.nachmani.image.merge.Data.Data;
 import amitay.nachmani.image.merge.General.ApplicationStage;
+import amitay.nachmani.image.merge.General.ButtonAction;
 import amitay.nachmani.image.merge.General.MarkValues;
 import amitay.nachmani.image.merge.ImageProcessing.ImageProcessing;
 import amitay.nachmani.image.merge.Tracker.MovementTracker;
@@ -50,6 +51,8 @@ public class Tutorial1Activity extends Activity implements CvCameraViewListener2
     private static final String FOREGROUND = "FOREGROUND";
     private static final String BACKGROUND = "BACKGROUND";
     private static final String DONE = "DONE";
+    private static final String MOVE_TO_BACK = "MOVE TO BACKGROUND";
+    private static final String MOVE_FOREGROUND = "MOVE EXTRACT AREA";
     private static final String PROGRESS_MESSAGE = "Running Algorithm Please Wait";
 
     // Camera
@@ -64,6 +67,7 @@ public class Tutorial1Activity extends Activity implements CvCameraViewListener2
     // Status
     private ApplicationStage mApplicationStage;
     private MarkValues.Marking mMark = MarkValues.Marking.BACKGROUND;
+    private ButtonAction mButtonAction = ButtonAction.MOVE_FOREGROUND;
 
     // Movement tracker
     private MovementTracker mTracker;
@@ -78,6 +82,8 @@ public class Tutorial1Activity extends Activity implements CvCameraViewListener2
     private Button mMarkBackgroundButton;
     private Button mMarkForegroundButton;
     private Button mDoneButton;
+    private Button mMoveForegroundPixelsToBack;
+    private Button mMoveForeground;
 
     // Progress bar
     private ProgressDialog mProgressBar;
@@ -356,7 +362,7 @@ public class Tutorial1Activity extends Activity implements CvCameraViewListener2
             }
         });
         FrameLayout.LayoutParams frameLayoutParmasAlgorithm = new FrameLayout.LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT);
-        frameLayoutParmasAlgorithm.gravity = Gravity.BOTTOM;
+        frameLayoutParmasAlgorithm.gravity = Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL;
         mDoneButton.setLayoutParams(frameLayoutParmasAlgorithm);
 
         // Second add the tools we need for image segmentation and set there position in the frame layout
@@ -462,15 +468,93 @@ public class Tutorial1Activity extends Activity implements CvCameraViewListener2
                     // close the progress bar dialog
                     mProgressBar.dismiss();
 
+                    // Run basic calculation for MOVE_FOREGROUND_INITIALIZATION stage
+                    mData.CalculateExtractForegroundCenterOfGravity();
+                    mData.NormallizeExtractForegroundPointsByCenterOfMass();
+
                     // draw result
                     DrawAlgorithmResult();
 
-                    // Change application stage to MOVE_FOREGROUND
-                    mApplicationStage = ApplicationStage.MOVE_FOREGROUND;
+                    // Change application stage to MOVE_FOREGROUND_AND_EDIT_INITIALIZATION
+                    mApplicationStage = ApplicationStage.MOVE_FOREGROUND_AND_EDIT_INITIALIZATION;
+
                 }
             }
         }).start();
 
+        // Initialize the new view for this stage
+        InitializeMoveForegroundAndEdit();
+    }
+
+    private void InitializeMoveForegroundAndEdit()
+    {
+        // Remove the unnecessary buttons
+        ViewGroup layout = (ViewGroup) mMarkBackgroundButton.getParent();
+        if(null!=layout)
+        {
+            //for safety only  as you are doing onClick
+            layout.removeView(mMarkBackgroundButton);
+            layout.removeView(mMarkForegroundButton);
+        }
+
+        // Add move extract foreground to background image button
+        mMoveForegroundPixelsToBack = new Button(this);
+        mMoveForegroundPixelsToBack.setText(MOVE_TO_BACK);
+        mMoveForegroundPixelsToBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                // Change the action to move foreground to back
+                mButtonAction = ButtonAction.MOVE_FOREGROUND_TO_BACK;
+            }
+        });
+        FrameLayout.LayoutParams frameLayoutParmasForegroundToBack = new FrameLayout.LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT);
+        frameLayoutParmasForegroundToBack.gravity = Gravity.LEFT;
+        mMoveForegroundPixelsToBack.setLayoutParams(frameLayoutParmasForegroundToBack);
+
+        // Add move foreground button
+        mMoveForeground = new Button(this);
+        mMoveForeground.setText(MOVE_FOREGROUND);
+        mMoveForeground.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                // Change the action to move foreground pixels
+                mButtonAction = ButtonAction.MOVE_FOREGROUND;
+            }
+        });
+        FrameLayout.LayoutParams frameLayoutParmasMoveForeground = new FrameLayout.LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT);
+        frameLayoutParmasMoveForeground.gravity = Gravity.RIGHT;
+        mMoveForeground.setLayoutParams(frameLayoutParmasMoveForeground);
+
+        // Change the action the DONE button does
+        mDoneButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                // When the user done moving the extract foreground go to save image stage
+                SaveImageInitilazation();
+            }
+        });
+
+        // Add buttons to view
+        FrameLayout frameMainLayout = (FrameLayout) findViewById(R.id.frame_main_layout);
+        frameMainLayout.addView(mMoveForegroundPixelsToBack);
+        frameMainLayout.addView(mMoveForeground);
+
+        // Change application stage
+        mApplicationStage = ApplicationStage.MOVE_FOREGROUND_AND_EDIT;
+
+    }
+
+    private void SaveImageInitilazation()
+    {
+
+        // Remove buttons
+
+
+        // Change application stage
+        mApplicationStage = ApplicationStage.SAVE_IMAGE;
     }
 
     /********************************************* Initialization's  end *************************************************************/
@@ -523,23 +607,30 @@ public class Tutorial1Activity extends Activity implements CvCameraViewListener2
         // If we are not in stage of marking do not do anything
         if(mApplicationStage != ApplicationStage.SEGMENTATION_MARK_INITIALIZATION
                 && mApplicationStage != ApplicationStage.SEGMENTATION_MARK
-                && mApplicationStage != ApplicationStage.MOVE_FOREGROUND)
+                && mApplicationStage != ApplicationStage.MOVE_FOREGROUND_AND_EDIT
+                && mApplicationStage != ApplicationStage.MOVE_FOREGROUND_AND_EDIT_INITIALIZATION)
         {
             return super.onTouchEvent(event);
         } else if(mApplicationStage == ApplicationStage.SEGMENTATION_MARK_INITIALIZATION) {
 
             // Initialize the new view for this stage
             InitializeMarkSegmentationView();
+
+        } else if (mApplicationStage == ApplicationStage.MOVE_FOREGROUND_AND_EDIT_INITIALIZATION) {
+
+            // Initialize the new view for this stage
+            InitializeMoveForegroundAndEdit();
         }
 
-        if(mApplicationStage == ApplicationStage.SEGMENTATION_MARK_INITIALIZATION || mApplicationStage != ApplicationStage.SEGMENTATION_MARK)
+
+        if(mApplicationStage == ApplicationStage.SEGMENTATION_MARK_INITIALIZATION || mApplicationStage == ApplicationStage.SEGMENTATION_MARK)
         {
             return SegmentationTouchEvent(event);
         }
 
-        if(mApplicationStage == ApplicationStage.MOVE_FOREGROUND)
+        if(mApplicationStage == ApplicationStage.MOVE_FOREGROUND_AND_EDIT)
         {
-            return MoveForegroundTouchEvent(event);
+            return MoveForegroundAndEditTouchEvent(event);
         }
 
         return super.onTouchEvent(event);
@@ -611,15 +702,39 @@ public class Tutorial1Activity extends Activity implements CvCameraViewListener2
         }
     }
 
-    private boolean MoveForegroundTouchEvent(MotionEvent event)
+    private boolean MoveForegroundAndEditTouchEvent(MotionEvent event)
     {
-        // If this is stage of marking start to mark the pixels that are marked
         int action = MotionEventCompat.getActionMasked(event);
 
         float x;
         float y;
 
         switch(action) {
+            case (MotionEvent.ACTION_DOWN) :
+
+                if(mButtonAction == ButtonAction.MOVE_FOREGROUND) { return true; }
+
+                // Get the coordinate of the touch event
+                x = event.getAxisValue(MotionEvent.AXIS_X);
+                y = event.getAxisValue(MotionEvent.AXIS_Y);
+
+                // Change the current point to unactive
+                mData.UpdatePointStatus(x,y);
+
+                return true;
+
+            case (MotionEvent.ACTION_MOVE) :
+
+                if(mButtonAction == ButtonAction.MOVE_FOREGROUND) { return true; }
+
+                // Get the coordinate of the touch event
+                x = event.getAxisValue(MotionEvent.AXIS_X);
+                y = event.getAxisValue(MotionEvent.AXIS_Y);
+
+                // Change the current point to unactive
+                mData.UpdatePointStatus(x,y);
+
+                return true;
 
             case (MotionEvent.ACTION_UP) :
 
@@ -627,11 +742,16 @@ public class Tutorial1Activity extends Activity implements CvCameraViewListener2
                 x = event.getAxisValue(MotionEvent.AXIS_X);
                 y = event.getAxisValue(MotionEvent.AXIS_Y);
 
-                // Update the foreground final position
+                // Depending on the current button action decide what to do
+                if(mButtonAction == ButtonAction.MOVE_FOREGROUND) {
+                    // Update the foreground center of gravity
+                    mData.UpdateCenterOfGravity(x, y);
+                } else if(mButtonAction == ButtonAction.MOVE_FOREGROUND_TO_BACK) {
+                    mData.UpdatePointStatus(x,y);
+                }
 
-
-                // Draw new tracks on view
-
+                // Draw new foreground view
+                DrawAlgorithmResult();
 
                 return true;
 
@@ -670,7 +790,7 @@ public class Tutorial1Activity extends Activity implements CvCameraViewListener2
     private void DrawAlgorithmResult()
     {
         // Merge the foreground pixels to the firstImage image
-        Mat combinedMat = ImageProcessing.MergeMatWithPoints(mData.GetSecondImage(), mData.GetExtractForegroundPoints());
+        Mat combinedMat = ImageProcessing.MergeMatWithPoints(mData.GetFirstImage(), mData);
 
         // Allocate space for the bitmap that will contain the image
         if(mBitmap == null) {

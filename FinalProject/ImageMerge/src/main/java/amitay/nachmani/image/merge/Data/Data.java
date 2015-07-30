@@ -10,6 +10,7 @@ import java.util.ArrayList;
 
 import amitay.nachmani.image.merge.General.MarkValues;
 import amitay.nachmani.image.merge.ImageProcessing.ColorPoint;
+import amitay.nachmani.image.merge.ImageProcessing.PointStatus;
 import amitay.nachmani.image.merge.Tracker.MovementTracker;
 import amitay.nachmani.image.merge.Tutorial1Activity;
 
@@ -38,11 +39,12 @@ public class Data {
     // Extract foreground
     private ArrayList<ColorPoint> mExtractForeground;
     private Point mCenterOfGravity;
+    private int mRadius;
 
     // Status
     private boolean mMarkedImageMaskChanged = true;
 
-    public Data(){};
+    public Data(){ mRadius = 10; };
 
     public void Initialize(int height, int width, int cvType)
     {
@@ -149,9 +151,68 @@ public class Data {
         }
     }
 
+    /**
+     * CalculateExtractForegroundCenterOfGravity:
+     *
+     * Calculate the center of gravity for the extracted foreground points.
+     * This is done for easy way to calculate were to draw thoose points after the user moved them.
+     *
+     */
     public void CalculateExtractForegroundCenterOfGravity()
     {
+        // The center of mass for the pixes for every coordinate is the sum of coordinates divide by number of points
+        mCenterOfGravity = new Point(0,0);
 
+        for(ColorPoint point : mExtractForeground)
+        {
+            mCenterOfGravity.x = mCenterOfGravity.x + point.x;
+            mCenterOfGravity.y = mCenterOfGravity.y + point.y;
+        }
+        mCenterOfGravity.x =  mCenterOfGravity.x / mExtractForeground.size();
+        mCenterOfGravity.y =  mCenterOfGravity.y / mExtractForeground.size();
+
+    }
+
+    /**
+     * NormallizeExtractForegroundPointsByCenterOfMass:
+     *
+     * The idea is that every time we would draw those points we will add the center of mass to there coordinate.
+     * so each time the user move the extracted foreground we only change the center of mass for the points.
+     *
+     */
+    public void NormallizeExtractForegroundPointsByCenterOfMass()
+    {
+        for(ColorPoint point : mExtractForeground)
+        {
+            point.x = point.x - mCenterOfGravity.x;
+            point.y = point.y - mCenterOfGravity.y;
+        }
+    }
+
+    public void UpdateCenterOfGravity(float x,float y)
+    {
+        mCenterOfGravity.x = x;
+        mCenterOfGravity.y = y;
+    }
+
+    public void UpdatePointStatus(float x,float y)
+    {
+        // Normalize the x and y point according to mCenterOfGravity
+        int newX = (int)(x - mCenterOfGravity.x);
+        int newY = (int)(y - mCenterOfGravity.y);
+
+        // Find out if this point is in the extracted foreground points by a radius of mRadius
+        for(ColorPoint point : mExtractForeground)
+        {
+
+            // Calculate the distance between the point and x and y
+            double distance = Math.sqrt((point.x - newX)*(point.x - newX) + (point.y - newY)*(point.y - newY));
+            if(distance < mRadius )
+            {
+                // If we the point is indeed in the radius of change then change extracted foreground points change her status to UNACTIVE
+                point.mStatus = PointStatus.UNACTIVE;
+            }
+        }
     }
 
     public Mat GetFirstImage()
@@ -203,6 +264,11 @@ public class Data {
     public ArrayList<Point> GetForeroundPoints()
     {
         return mForegroundPixels;
+    }
+
+    public Point GetCenterOfGravity()
+    {
+        return mCenterOfGravity;
     }
 
     public void ReleaseCurrentImage()
