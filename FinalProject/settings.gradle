@@ -1,2 +1,2 @@
-include ':openCVLibrary2411'
+include ':openCVLibrary2411', ':facebook'
 include ':ImageMerge'

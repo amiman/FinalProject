@@ -2,11 +2,53 @@
 <items version="2" >
 
     <item
+        jar="C:\Users\Amitay\Documents\GitHub\FinalProject\FinalProject\ImageMerge\build\intermediates\exploded-aar\com.facebook.android\facebook\4.4.0\libs\android-support-v4.jar"
+        jumboMode="false"
+        revision="22.0.0"
+        sha1="33b27a8d2a5b87e6eb6c60e87a5374ffbfeacc3a">
+        <dex dex="C:\Users\Amitay\Documents\GitHub\FinalProject\FinalProject\ImageMerge\build\intermediates\pre-dexed\debug\android-support-v4-77526fa840f1983a288c621513a938c6232cf94e.jar" />
+    </item>
+    <item
+        jar="C:\Users\Amitay\.gradle\caches\modules-2\files-2.1\com.parse.bolts\bolts-android\1.2.0\6ee2953ccf51ce72b6d548c30c4633b99eb4f9dd\bolts-android-1.2.0.jar"
+        jumboMode="false"
+        revision="22.0.0"
+        sha1="6ee2953ccf51ce72b6d548c30c4633b99eb4f9dd">
+        <dex dex="C:\Users\Amitay\Documents\GitHub\FinalProject\FinalProject\ImageMerge\build\intermediates\pre-dexed\debug\bolts-android-1.2.0-e153b39edf23b19b23a1bebe87db0c7a6b0af0c8.jar" />
+    </item>
+    <item
+        jar="C:\Users\Amitay\AppData\Local\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\22.0.0\support-annotations-22.0.0.jar"
+        jumboMode="false"
+        revision="22.0.0"
+        sha1="685d0b2c590447e85284ed84712cb363ba04eff8">
+        <dex dex="C:\Users\Amitay\Documents\GitHub\FinalProject\FinalProject\ImageMerge\build\intermediates\pre-dexed\debug\support-annotations-22.0.0-aa01d8f5b27cf5a55d773a64ba766e9a551c01dd.jar" />
+    </item>
+    <item
+        jar="C:\Users\Amitay\Documents\GitHub\FinalProject\FinalProject\ImageMerge\build\intermediates\exploded-aar\com.android.support\support-v4\22.0.0\classes.jar"
+        jumboMode="false"
+        revision="22.0.0"
+        sha1="4e86306289ace4aa0cfec44a05ed2b410d36989d">
+        <dex dex="C:\Users\Amitay\Documents\GitHub\FinalProject\FinalProject\ImageMerge\build\intermediates\pre-dexed\debug\classes-fdc847c7617333949b1478cd3d264f22d49539fb.jar" />
+    </item>
+    <item
+        jar="C:\Users\Amitay\Documents\GitHub\FinalProject\FinalProject\ImageMerge\build\intermediates\exploded-aar\com.facebook.android\facebook\4.4.0\classes.jar"
+        jumboMode="false"
+        revision="22.0.0"
+        sha1="34748c3d8d3e47243082208cdeebea37dc98eaa4">
+        <dex dex="C:\Users\Amitay\Documents\GitHub\FinalProject\FinalProject\ImageMerge\build\intermediates\pre-dexed\debug\classes-b8327cb91595fbb5394205457b9baa053e6250df.jar" />
+    </item>
+    <item
         jar="C:\Users\Amitay\Documents\GitHub\FinalProject\FinalProject\ImageMerge\build\intermediates\exploded-aar\FinalProject\openCVLibrary2411\unspecified\classes.jar"
         jumboMode="false"
         revision="22.0.0"
-        sha1="8fc5326f9e8b6803268a672ee488d3f3015fedfc">
+        sha1="b31c59390c5228f7ed014901081ad7c453a753f4">
         <dex dex="C:\Users\Amitay\Documents\GitHub\FinalProject\FinalProject\ImageMerge\build\intermediates\pre-dexed\debug\classes-f9c8244b23c03448fe709b049080d92cb10c6d66.jar" />
+    </item>
+    <item
+        jar="C:\Users\Amitay\Documents\GitHub\FinalProject\FinalProject\ImageMerge\build\intermediates\exploded-aar\com.android.support\support-v4\22.0.0\libs\internal_impl-22.0.0.jar"
+        jumboMode="false"
+        revision="22.0.0"
+        sha1="b5b92f469d515a13d778900f6d50c03d12f35504">
+        <dex dex="C:\Users\Amitay\Documents\GitHub\FinalProject\FinalProject\ImageMerge\build\intermediates\pre-dexed\debug\internal_impl-22.0.0-75d2f2579742362101a1bf8f65852a9b2e7af74d.jar" />
     </item>
     <item
         jar="C:\Users\Amitay\Documents\GitHub\FinalProject\FinalProject\ImageMerge\src\main\java\libs\android-support-v4.jar"

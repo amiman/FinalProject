@@ -2,84 +2,150 @@
 manifest
 ADDED from AndroidManifest.xml:2:1
 	package
-		ADDED from AndroidManifest.xml:3:11
+		ADDED from AndroidManifest.xml:3:5
 		INJECTED from AndroidManifest.xml:0:0
 		INJECTED from AndroidManifest.xml:0:0
 	android:versionName
-		ADDED from AndroidManifest.xml:5:11
+		ADDED from AndroidManifest.xml:5:5
 	android:versionCode
-		ADDED from AndroidManifest.xml:4:11
+		ADDED from AndroidManifest.xml:4:5
 		INJECTED from AndroidManifest.xml:0:0
 		INJECTED from AndroidManifest.xml:0:0
 	xmlns:android
 		ADDED from AndroidManifest.xml:2:11
-application
-ADDED from AndroidManifest.xml:7:5
-	android:label
-		ADDED from AndroidManifest.xml:8:9
-	android:icon
-		ADDED from AndroidManifest.xml:9:9
-	android:theme
-		ADDED from AndroidManifest.xml:10:9
-activity#amitay.nachmani.image.merge.Tutorial1Activity
-ADDED from AndroidManifest.xml:12:9
-	android:screenOrientation
-		ADDED from AndroidManifest.xml:15:13
-	android:label
-		ADDED from AndroidManifest.xml:13:19
-	android:configChanges
-		ADDED from AndroidManifest.xml:14:19
-	android:name
-		ADDED from AndroidManifest.xml:12:19
-intent-filter#android.intent.action.MAIN+android.intent.category.LAUNCHER
-ADDED from AndroidManifest.xml:16:13
-action#android.intent.action.MAIN
-ADDED from AndroidManifest.xml:17:17
-	android:name
-		ADDED from AndroidManifest.xml:17:25
-category#android.intent.category.LAUNCHER
-ADDED from AndroidManifest.xml:18:17
-	android:name
-		ADDED from AndroidManifest.xml:18:27
-supports-screens
-ADDED from AndroidManifest.xml:23:5
-	android:largeScreens
-		ADDED from AndroidManifest.xml:26:23
-	android:smallScreens
-		ADDED from AndroidManifest.xml:24:23
-	android:normalScreens
-		ADDED from AndroidManifest.xml:25:23
-	android:resizeable
-		ADDED from AndroidManifest.xml:23:23
-	android:anyDensity
-		ADDED from AndroidManifest.xml:27:23
 uses-sdk
-ADDED from AndroidManifest.xml:29:5
+ADDED from AndroidManifest.xml:7:5
 MERGED from FinalProject:openCVLibrary2411:unspecified:7:5
+MERGED from com.facebook.android:facebook:4.4.0:24:5
 	android:targetSdkVersion
 		INJECTED from AndroidManifest.xml:0:0
 		INJECTED from AndroidManifest.xml:0:0
 	android:minSdkVersion
-		ADDED from AndroidManifest.xml:29:15
+		ADDED from AndroidManifest.xml:7:15
 		INJECTED from AndroidManifest.xml:0:0
 		INJECTED from AndroidManifest.xml:0:0
+supports-screens
+ADDED from AndroidManifest.xml:9:5
+	android:largeScreens
+		ADDED from AndroidManifest.xml:11:9
+	android:smallScreens
+		ADDED from AndroidManifest.xml:14:9
+	android:normalScreens
+		ADDED from AndroidManifest.xml:12:9
+	android:resizeable
+		ADDED from AndroidManifest.xml:13:9
+	android:anyDensity
+		ADDED from AndroidManifest.xml:10:9
 uses-permission#android.permission.CAMERA
-ADDED from AndroidManifest.xml:31:5
+ADDED from AndroidManifest.xml:16:5
 	android:name
-		ADDED from AndroidManifest.xml:31:22
+		ADDED from AndroidManifest.xml:16:22
+uses-permission#android.permission.WRITE_EXTERNAL_STORAGE
+ADDED from AndroidManifest.xml:17:5
+	android:name
+		ADDED from AndroidManifest.xml:17:22
+uses-permission#android.permission.READ_PHONE_STATE
+ADDED from AndroidManifest.xml:18:5
+	android:name
+		ADDED from AndroidManifest.xml:18:22
+uses-permission#android.permission.READ_EXTERNAL_STORAGE
+ADDED from AndroidManifest.xml:19:5
+	android:name
+		ADDED from AndroidManifest.xml:19:22
+uses-permission#android.permission.INTERNET
+ADDED from AndroidManifest.xml:20:5
+	android:name
+		ADDED from AndroidManifest.xml:20:22
 uses-feature#android.hardware.camera
-ADDED from AndroidManifest.xml:33:5
+ADDED from AndroidManifest.xml:22:5
 	android:name
-		ADDED from AndroidManifest.xml:33:19
+		ADDED from AndroidManifest.xml:22:19
 uses-feature#android.hardware.camera.autofocus
-ADDED from AndroidManifest.xml:34:5
+ADDED from AndroidManifest.xml:23:5
 	android:name
-		ADDED from AndroidManifest.xml:34:19
+		ADDED from AndroidManifest.xml:23:19
 uses-feature#android.hardware.camera.front
-ADDED from AndroidManifest.xml:35:5
+ADDED from AndroidManifest.xml:24:5
 	android:name
-		ADDED from AndroidManifest.xml:35:19
+		ADDED from AndroidManifest.xml:24:19
 uses-feature#android.hardware.camera.front.autofocus
-ADDED from AndroidManifest.xml:36:5
+ADDED from AndroidManifest.xml:25:5
 	android:name
-		ADDED from AndroidManifest.xml:36:19
+		ADDED from AndroidManifest.xml:25:19
+provider#com.facebook.FacebookContentProvider
+ADDED from AndroidManifest.xml:29:5
+	android:authorities
+		ADDED from AndroidManifest.xml:29:15
+	android:exported
+		ADDED from AndroidManifest.xml:31:9
+	android:name
+		ADDED from AndroidManifest.xml:30:9
+application
+ADDED from AndroidManifest.xml:33:5
+MERGED from com.facebook.android:facebook:4.4.0:28:5
+	android:label
+		ADDED from AndroidManifest.xml:36:9
+	android:hardwareAccelerated
+		ADDED from AndroidManifest.xml:34:9
+	android:icon
+		ADDED from AndroidManifest.xml:35:9
+	android:largeHeap
+		ADDED from AndroidManifest.xml:37:9
+	android:theme
+		ADDED from AndroidManifest.xml:38:9
+activity#amitay.nachmani.image.merge.ImageMergeMainActivity
+ADDED from AndroidManifest.xml:39:9
+	android:screenOrientation
+		ADDED from AndroidManifest.xml:43:13
+	android:label
+		ADDED from AndroidManifest.xml:42:13
+	android:configChanges
+		ADDED from AndroidManifest.xml:41:13
+	android:name
+		ADDED from AndroidManifest.xml:40:13
+activity#amitay.nachmani.image.merge.StartScreenActivity
+ADDED from AndroidManifest.xml:45:9
+	android:screenOrientation
+		ADDED from AndroidManifest.xml:48:13
+	android:label
+		ADDED from AndroidManifest.xml:47:13
+	android:name
+		ADDED from AndroidManifest.xml:46:13
+intent-filter#android.intent.action.MAIN+android.intent.category.LAUNCHER
+ADDED from AndroidManifest.xml:49:13
+action#android.intent.action.MAIN
+ADDED from AndroidManifest.xml:50:17
+	android:name
+		ADDED from AndroidManifest.xml:50:25
+category#android.intent.category.LAUNCHER
+ADDED from AndroidManifest.xml:52:17
+	android:name
+		ADDED from AndroidManifest.xml:52:27
+activity#amitay.nachmani.image.merge.LoadImages
+ADDED from AndroidManifest.xml:55:9
+	android:label
+		ADDED from AndroidManifest.xml:57:13
+	android:name
+		ADDED from AndroidManifest.xml:56:13
+activity#amitay.nachmani.image.merge.ShareActivity
+ADDED from AndroidManifest.xml:59:9
+	android:label
+		ADDED from AndroidManifest.xml:61:13
+	android:name
+		ADDED from AndroidManifest.xml:60:13
+activity#com.facebook.FacebookActivity
+ADDED from AndroidManifest.xml:64:9
+	android:label
+		ADDED from AndroidManifest.xml:68:13
+	android:configChanges
+		ADDED from AndroidManifest.xml:65:13
+	android:theme
+		ADDED from AndroidManifest.xml:67:13
+	android:name
+		ADDED from AndroidManifest.xml:64:19
+meta-data#com.facebook.sdk.ApplicationId
+ADDED from AndroidManifest.xml:70:9
+	android:value
+		ADDED from AndroidManifest.xml:70:66
+	android:name
+		ADDED from AndroidManifest.xml:70:20

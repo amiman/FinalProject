@@ -20,6 +20,7 @@ import amitay.nachmani.image.merge.General.GeneralInfo;
 import amitay.nachmani.image.merge.General.MarkValues;
 import amitay.nachmani.image.merge.Tracker.MovementTracker;
 
+
 /**
  * Created by Amitay on 22-Jul-15.
  */
@@ -94,8 +95,7 @@ public class ImageProcessing {
      * @param tracks
      * @return
      */
-    public static final int RunSegmentationAlgorithm(Data data,ArrayList<MovementTracker> tracks,int currentProgress)
-    {
+    public static final int RunSegmentationAlgorithm(Data data,ArrayList<MovementTracker> tracks,int currentProgress) {
         Mat background = data.GetSecondImage();
         if(currentProgress == 0) {
 
@@ -114,6 +114,9 @@ public class ImageProcessing {
             Log.d(GeneralInfo.DEBUG_TAG, "Start ExtractMaskPixels");
             ExtractMaskPixels(data);
             Log.d(GeneralInfo.DEBUG_TAG, "End ExtractMaskPixels");
+
+            // Release mask
+            data.ReleaseImageMask();
 
             // return current progress
             currentProgress = 25;
@@ -152,6 +155,9 @@ public class ImageProcessing {
             Log.d(GeneralInfo.DEBUG_TAG, "Start ConvertBestLabelsToForegroundImage");
             ConvertBestLabelsToForegroundImage(data);
             Log.d(GeneralInfo.DEBUG_TAG, "End ConvertBestLabelsToForegroundImage");
+
+            // Build a KDTree from the extracted foreground pixels
+            //data.BuildExtractedForegroundKDTree();
 
             // Release unused matrix
             data.ReleaseKmeansBestLabelsMatrix();

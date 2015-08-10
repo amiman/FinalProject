@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/ButtonImageMerge"
+        android:id="@+id/btnImageMerge"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="100dp" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/ButtonLoadImage"
+        android:id="@+id/btnLoadImage"
+        android:layout_marginTop="69dp"
+        android:layout_below="@+id/btnImageMerge"
+        android:layout_alignRight="@+id/btnImageMerge"
+        android:layout_alignEnd="@+id/btnImageMerge"
+        android:layout_alignLeft="@+id/btnImageMerge"
+        android:layout_alignStart="@+id/btnImageMerge" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/ButtonShare"
+        android:id="@+id/btnShare"
+        android:layout_marginTop="71dp"
+        android:layout_below="@+id/btnLoadImage"
+        android:layout_alignRight="@+id/btnLoadImage"
+        android:layout_alignEnd="@+id/btnLoadImage"
+        android:layout_alignLeft="@+id/btnLoadImage"
+        android:layout_alignStart="@+id/btnLoadImage" />
+</RelativeLayout>
+
+<!-- From: file:/C:/Users/Amitay/Documents/GitHub/FinalProject/FinalProject/ImageMerge/src/main/res/layout/start_screen.xml -->

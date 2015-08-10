@@ -25,7 +25,7 @@ public class MarkValues {
      * The marking options and conversion from marking to mark color
      */
     public enum Marking {
-        BACKGROUND,FOREGROUND;
+        BACKGROUND,FOREGROUND,NO_MARK;
 
         public Scalar GetMarkingColor()
         {
@@ -35,6 +35,9 @@ public class MarkValues {
 
                 case FOREGROUND:
                     return  FOREGROUND_VALUE;
+
+                case NO_MARK:
+                    return NO_MARK_VALUE;
 
                 default:
                     return  BACKGROUND_VALUE;

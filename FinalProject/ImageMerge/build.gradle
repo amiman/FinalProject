@@ -18,7 +18,11 @@ android {
     }
 }
 
+repositories {
+    mavenCentral()
+}
+
 dependencies {
     compile project(':openCVLibrary2411')
-    compile files('src/main/java/libs/android-support-v4.jar')
+    compile project(':facebook')
 }

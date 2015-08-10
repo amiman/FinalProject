@@ -1,5 +1,6 @@
 package amitay.nachmani.image.merge.Data;
 
+
 import org.opencv.core.Core;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
@@ -12,7 +13,7 @@ import amitay.nachmani.image.merge.General.MarkValues;
 import amitay.nachmani.image.merge.ImageProcessing.ColorPoint;
 import amitay.nachmani.image.merge.ImageProcessing.PointStatus;
 import amitay.nachmani.image.merge.Tracker.MovementTracker;
-import amitay.nachmani.image.merge.Tutorial1Activity;
+import amitay.nachmani.image.merge.ImageMergeMainActivity;
 
 /**
  * Created by Amitay on 20-Jul-15.
@@ -44,7 +45,7 @@ public class Data {
     // Status
     private boolean mMarkedImageMaskChanged = true;
 
-    public Data(){ mRadius = 10; };
+    public Data(){ mRadius = 10; }
 
     public void Initialize(int height, int width, int cvType)
     {
@@ -76,7 +77,7 @@ public class Data {
         // (0,0,0):         a pixel with no mark
         // (124,124,124):   a pixel marked as background
         // (255,255,255):   a pixel marked as foreground
-        mMarkedImageMask = new Mat(mSecondImage.rows(),mSecondImage.cols(), Tutorial1Activity.MAT_TYPE, MarkValues.NO_MARK_VALUE);
+        mMarkedImageMask = new Mat(mSecondImage.rows(),mSecondImage.cols(), ImageMergeMainActivity.MAT_TYPE, MarkValues.NO_MARK_VALUE);
     }
 
     public void SetMarkedImageMask(Mat newMask)
@@ -109,6 +110,26 @@ public class Data {
     {
         mExtractForeground = new ArrayList<ColorPoint>();
     }
+
+    /*
+    public void BuildExtractedForegroundKDTree() {
+
+        // Build a KD_tree for two dimensions
+        mExtractForegroundKDTree = new KDTree(2);
+
+        // Iterate over all the points in the extracted foreground points and insert there coordinate to KD tree
+        for(ColorPoint point : mExtractForeground)
+        {
+            // The key in the KD tree will be the coordinate of the point
+            double[] coordinate = new double[2];
+            coordinate[0] = point.x;
+            coordinate[1] = point.y;
+
+            // Insert the point to the tree
+            mExtractForegroundKDTree.insert(coordinate,point);
+        }
+
+    }*/
 
     /**
      * InitializeForegroundBackgroundPixels:
@@ -187,6 +208,11 @@ public class Data {
             point.x = point.x - mCenterOfGravity.x;
             point.y = point.y - mCenterOfGravity.y;
         }
+
+        mMinForegroundPoint.x = mMinForegroundPoint.x - mCenterOfGravity.x;
+        mMaxForegroundPoint.x = mMaxForegroundPoint.x - mCenterOfGravity.x;
+        mMinForegroundPoint.y = mMinForegroundPoint.y - mCenterOfGravity.y;
+        mMaxForegroundPoint.y = mMaxForegroundPoint.y - mCenterOfGravity.y;
     }
 
     public void UpdateCenterOfGravity(float x,float y)
@@ -195,23 +221,79 @@ public class Data {
         mCenterOfGravity.y = y;
     }
 
-    public void UpdatePointStatus(float x,float y)
-    {
+    /**
+     * UpdatePointStatus:
+     *
+     * Change the status of all the points that are in a certain radius from the selected coordinate.
+     *
+     * @param x
+     * @param y
+     */
+    public void UpdatePointStatus(float x,float y) {
+
         // Normalize the x and y point according to mCenterOfGravity
-        int newX = (int)(x - mCenterOfGravity.x);
-        int newY = (int)(y - mCenterOfGravity.y);
+        double[] coordinate = new double[2];
+        coordinate[0] = (x - mCenterOfGravity.x);
+        coordinate[1] = (y - mCenterOfGravity.y);
+
+        // Sanity check if the point is even in the bounding box
+        if(coordinate[0] < mMinForegroundPoint.x
+                || coordinate[0] > mMaxForegroundPoint.x
+                || coordinate[1] < mMinForegroundPoint.y
+                || coordinate[1] > mMaxForegroundPoint.y)
+        {
+            return;
+        }
 
         // Find out if this point is in the extracted foreground points by a radius of mRadius
         for(ColorPoint point : mExtractForeground)
         {
+            // Calculate the distance between the point and x and y use manhattan distance
+            //double distance = Math.sqrt((point.x - coordinate[0])*(point.x - coordinate[0]) + (point.y - coordinate[1])*(point.y - coordinate[1]));
+            double xCordDistance = Math.abs((point.x - coordinate[0]));
+            double yCordDistance = Math.abs((point.y - coordinate[1]));
+            if(xCordDistance > mRadius || yCordDistance > mRadius) { continue; }
 
-            // Calculate the distance between the point and x and y
-            double distance = Math.sqrt((point.x - newX)*(point.x - newX) + (point.y - newY)*(point.y - newY));
+            double distance = xCordDistance + yCordDistance;
+
             if(distance < mRadius )
             {
                 // If we the point is indeed in the radius of change then change extracted foreground points change her status to UNACTIVE
                 point.mStatus = PointStatus.UNACTIVE;
             }
+        }
+
+        //double newX = (double)(x - mCenterOfGravity.x);
+        //double newY = (double)(y - mCenterOfGravity.y);
+        /*
+        // Get the closest points to the selected coordinate from the kdtree
+        Object[] listOfPoints = mExtractForegroundKDTree.nearest(coordinate, mRadius);
+
+        // Go over all the points that are close enough and change there status
+        for(int i = 0 ; i < listOfPoints.length ; i++)
+        {
+            ColorPoint point = (ColorPoint) listOfPoints[i];
+            point.mStatus = PointStatus.UNACTIVE;
+        }
+        */
+    }
+
+    /**
+     * UpdatePointStatus:
+     *
+     * Take the last track that was over and delete the points in the track
+     *
+     * @param tracks
+     */
+    public void UpdatePointStatus(ArrayList<MovementTracker> tracks)
+    {
+        // Get the last track
+        MovementTracker lastTrack = tracks.get(tracks.size() - 1);
+
+        // Update each point deletion according to the track points
+        for(Point point : lastTrack.GetMarkedPoints())
+        {
+            UpdatePointStatus((float)point.x,(float)point.y);
         }
     }
 
@@ -279,9 +361,23 @@ public class Data {
     public void ReleaseKmeansMatrix()
     {
         mKmeansMatrix.release();
+        mKmeansMatrix = null;
+        System.gc();
     }
 
-    public void ReleaseKmeansBestLabelsMatrix() { mKmeansBestLabels.release(); }
+    public void ReleaseKmeansBestLabelsMatrix()
+    {
+        mKmeansBestLabels.release();
+        mKmeansBestLabels = null;
+        System.gc();
+    }
+
+    public void ReleaseImageMask()
+    {
+        mMarkedImageMask.release();
+        mMarkedImageMask = null;
+        System.gc();
+    }
 
     /**
      * MarkPixlesInMarkedImage:
@@ -322,6 +418,32 @@ public class Data {
     public boolean IsMarkedMaskChange()
     {
         return mMarkedImageMaskChanged;
+    }
+
+    public void CleanMemory()
+    {
+        // Clean all the memory
+        mCurrentImage = null;
+        mFirstImage = null;
+        mSecondImage = null;
+        mMarkedImageMask = null;
+        mForegroundImage = null;
+
+        // Kmeans
+        mKmeansMatrix = null;
+        mKmeansBestLabels = null;
+
+        // Tracks data
+        mBackgroundPixels = null;
+        mForegroundPixels = null;
+        mMinForegroundPoint = null;
+        mMaxForegroundPoint = null;
+
+        // Extract foreground
+        mExtractForeground = null;
+        mCenterOfGravity = null;
+        //mExtractForegroundKDTree = null;
+
     }
 
 

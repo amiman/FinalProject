@@ -1,0 +1,28 @@
+Activity Resolver Table:
+  Non-Data Actions:
+      android.intent.action.MAIN:
+        41534690 amitay.image.merge/amitay.nachmani.image.merge.StartScreenActivity filter 41a27960
+ 
+Packages:
+  Package [amitay.image.merge] (40f2b1b8):
+    userId=10119 gids=[1006, 1015]
+    sharedUser=null
+    pkg=Package{41d22ca0 amitay.image.merge}
+    codePath=/data/app/amitay.image.merge-2.apk
+    resourcePath=/data/app/amitay.image.merge-2.apk
+    nativeLibraryPath=/data/data/amitay.image.merge/lib
+    versionCode=21
+    versionName=2.1
+    dataDir=/data/data/amitay.image.merge
+    targetSdk=22
+    supportsScreens=[small, medium, large, xlarge, resizeable, anyDensity]
+    timeStamp=2015-08-09 19:39:45
+    firstInstallTime=2015-07-23 13:43:51
+    lastUpdateTime=2015-08-09 19:39:48
+    signatures=PackageSignatures{40f2b290 [40f2b400]}
+    permissionsFixed=true haveGids=true
+    pkgFlags=0x0 installStatus=1 stopped=false enabled=0
+    grantedPermissions:
+      android.permission.READ_PHONE_STATE
+      android.permission.CAMERA
+      android.permission.WRITE_EXTERNAL_STORAGE

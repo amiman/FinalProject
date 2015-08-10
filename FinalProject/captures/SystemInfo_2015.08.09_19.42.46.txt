@@ -1,0 +1,6 @@
+TASK amitay.image.merge id=12
+  ACTIVITY amitay.image.merge/amitay.nachmani.image.merge.ImageMergeMainActivity 41b30f00 pid=26745
+    Failure while dumping the activity: java.io.IOException: Timeout
+
+  ACTIVITY amitay.image.merge/amitay.nachmani.image.merge.StartScreenActivity 41a0af80 pid=26745
+    Failure while dumping the activity: java.io.IOException: Timeout
