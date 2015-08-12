@@ -13,12 +13,13 @@
         opencv:show_fps="true"
         opencv:camera_id="any" />
 
-    <Button
-        android:layout_width="254dp"
-        android:layout_height="wrap_content"
+    <ImageButton
+        android:layout_width="191dp"
+        android:layout_height="83dp"
         android:text="New Button"
         android:id="@+id/btnTakePicture"
-        android:layout_gravity="center_horizontal|bottom" />
+        android:layout_gravity="center_horizontal|bottom"
+        android:background="@drawable/take_picture_button" />
 
 </FrameLayout>
 <!-- From: file:/C:/Users/Amitay/Documents/GitHub/FinalProject/FinalProject/ImageMerge/src/main/res/layout/main_surface_view.xml -->

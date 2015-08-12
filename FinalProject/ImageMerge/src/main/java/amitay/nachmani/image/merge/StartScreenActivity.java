@@ -19,7 +19,7 @@ public class StartScreenActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.start_screen);
 
-        // Set click listner for each button
+        // Set click listener for each button
         Button btnImageMerge = (Button) findViewById(R.id.btnImageMerge);
         Button btnLoadImage = (Button) findViewById(R.id.btnLoadImage);
         Button btnShare = (Button) findViewById(R.id.btnShare);
