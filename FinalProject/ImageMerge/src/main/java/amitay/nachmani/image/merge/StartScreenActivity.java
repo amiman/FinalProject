@@ -52,8 +52,11 @@ public class StartScreenActivity extends Activity {
             @Override
             public void onClick(View view) {
 
-            // Start the share activity
+            // Start the load images activity
             Intent intent = new Intent(getApplicationContext(), ShareActivity.class);
+            Bundle bundleForShareActivity = new Bundle();
+            bundleForShareActivity.putInt(GeneralInfo.ACTIVITY_KEY_BUNDLE, GeneralInfo.ACTIVITY_ID_START);
+            intent.putExtras(bundleForShareActivity);
             startActivity(intent);
 
             }

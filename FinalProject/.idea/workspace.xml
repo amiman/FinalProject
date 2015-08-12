@@ -9,8 +9,9 @@
     </shared>
   </component>
   <component name="AndroidLogFilters">
-    <option name="TOOL_WINDOW_LOG_LEVEL" value="ERROR" />
-    <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="Show only selected application" />
+    <option name="TOOL_WINDOW_CUSTOM_FILTER" value="ImageM" />
+    <option name="TOOL_WINDOW_LOG_LEVEL" value="DEBUG" />
+    <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="No Filters" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="39e8d9dc-9342-44d3-9be4-92548bbfede5" name="Default" comment="" />
@@ -44,51 +45,89 @@
         <entry file="file://$PROJECT_DIR$/ImageMerge/src/main/java/amitay/nachmani/image/merge/StartScreenActivity.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="53" column="0" selection-start-line="53" selection-start-column="0" selection-end-line="53" selection-end-column="0" />
+              <caret line="55" column="77" selection-start-line="55" selection-start-column="77" selection-end-line="55" selection-end-column="77" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ShareActivity.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/ImageMerge/src/main/java/amitay/nachmani/image/merge/ShareActivity.java">
+      <file leaf-file-name="ImageMergeMainActivity.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/ImageMerge/src/main/java/amitay/nachmani/image/merge/ImageMergeMainActivity.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="128" column="20" selection-start-line="128" selection-start-column="20" selection-end-line="128" selection-end-column="20" />
+              <caret line="339" column="59" selection-start-line="339" selection-start-column="59" selection-end-line="339" selection-end-column="59" />
               <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#8425#8483#0" expanded="false" />
+                <element signature="docComment;field#mLoaderCallback#0;class#ImageMergeMainActivity#0" expanded="false" />
+                <element signature="class#4250:4818" expanded="false" />
+                <element signature="method#onManagerConnected#0;class#4250:4818" expanded="false" />
+                <element signature="method#onRestoreInstanceState#0;class#ImageMergeMainActivity#0" expanded="false" />
+                <element signature="method#onRestart#0;class#ImageMergeMainActivity#0" expanded="false" />
+                <element signature="method#onStart#0;class#ImageMergeMainActivity#0" expanded="false" />
+                <element signature="method#onStop#0;class#ImageMergeMainActivity#0" expanded="false" />
+                <element signature="method#onActivityReenter#0;class#ImageMergeMainActivity#0" expanded="false" />
+                <element signature="method#onWindowFocusChanged#0;class#ImageMergeMainActivity#0" expanded="false" />
+                <element signature="docComment;method#onCreate#0;class#ImageMergeMainActivity#0" expanded="false" />
+                <element signature="method#onCreate#0;class#ImageMergeMainActivity#0" expanded="false" />
+                <element signature="e#7096#7109#0" expanded="false" />
+                <element signature="method#onPause#0;class#ImageMergeMainActivity#0" expanded="false" />
+                <element signature="method#onResume#0;class#ImageMergeMainActivity#0" expanded="false" />
+                <element signature="method#onDestroy#0;class#ImageMergeMainActivity#0" expanded="false" />
+                <element signature="docComment;method#onCameraViewStarted#0;class#ImageMergeMainActivity#0" expanded="false" />
+                <element signature="docComment;method#onCameraViewStopped#0;class#ImageMergeMainActivity#0" expanded="false" />
+                <element signature="method#onCameraViewStopped#0;class#ImageMergeMainActivity#0" expanded="false" />
+                <element signature="docComment;method#onCameraFrame#0;class#ImageMergeMainActivity#0" expanded="false" />
+                <element signature="method#onCameraFrame#0;class#ImageMergeMainActivity#0" expanded="false" />
+                <element signature="e#12095#12165#0" expanded="false" />
+                <element signature="docComment;method#InitializeScale#0;class#ImageMergeMainActivity#0" expanded="false" />
+                <element signature="method#InitializeScale#0;class#ImageMergeMainActivity#0" expanded="false" />
+                <element signature="docComment;method#InitializeMarkSegmentationView#0;class#ImageMergeMainActivity#0" expanded="false" />
+                <element signature="e#14753#14804#0" expanded="false" />
+                <element signature="e#16276#16373#0" expanded="false" />
+                <element signature="docComment;method#InitializeRunSegmentationAlgorithmView#0;class#ImageMergeMainActivity#0" expanded="false" />
+                <element signature="method#InitializeRunSegmentationAlgorithmView#0;class#ImageMergeMainActivity#0" expanded="false" />
+                <element signature="docComment;method#InitializeTracksForDeletionTracks#0;class#ImageMergeMainActivity#0" expanded="false" />
+                <element signature="method#InitializeTracksForDeletionTracks#0;class#ImageMergeMainActivity#0" expanded="false" />
+                <element signature="method#InitializeMoveForegroundAndEdit#0;class#ImageMergeMainActivity#0" expanded="false" />
+                <element signature="docComment;method#SaveImageInitilazation#0;class#ImageMergeMainActivity#0" expanded="false" />
+                <element signature="method#SaveImageInitilazation#0;class#ImageMergeMainActivity#0" expanded="false" />
+                <element signature="e#25107#25183#0" expanded="false" />
+                <element signature="docComment;method#PopDialogFileName#0;class#ImageMergeMainActivity#0" expanded="false" />
+                <element signature="method#PopDialogFileName#0;class#ImageMergeMainActivity#0" expanded="false" />
+                <element signature="e#25503#25559#0" expanded="false" />
+                <element signature="docComment;method#SaveImageToData#0;class#ImageMergeMainActivity#0" expanded="false" />
+                <element signature="method#SaveImageToData#0;class#ImageMergeMainActivity#0" expanded="false" />
+                <element signature="method#SaveImageToDisk#0;class#ImageMergeMainActivity#0" expanded="false" />
+                <element signature="docComment;method#onTouchEvent#0;class#ImageMergeMainActivity#0" expanded="false" />
+                <element signature="method#onTouchEvent#0;class#ImageMergeMainActivity#0" expanded="false" />
+                <element signature="docComment;method#SegmentationTouchEvent#0;class#ImageMergeMainActivity#0" expanded="false" />
+                <element signature="method#SegmentationTouchEvent#0;class#ImageMergeMainActivity#0" expanded="false" />
+                <element signature="e#31131#31155#0" expanded="false" />
+                <element signature="e#31991#32016#0" expanded="false" />
+                <element signature="method#MoveForegroundAndEditTouchEvent#0;class#ImageMergeMainActivity#0" expanded="false" />
+                <element signature="docComment;method#DrawNewTracksOnView#0;class#ImageMergeMainActivity#0" expanded="false" />
+                <element signature="method#DrawNewTracksOnView#0;class#ImageMergeMainActivity#0" expanded="false" />
+                <element signature="docComment;method#DrawAlgorithmResult#0;class#ImageMergeMainActivity#0" expanded="false" />
+                <element signature="method#DrawAlgorithmResult#0;class#ImageMergeMainActivity#0" expanded="false" />
+                <element signature="docComment;method#DrawMat#0;class#ImageMergeMainActivity#0" expanded="false" />
+                <element signature="method#DrawMat#0;class#ImageMergeMainActivity#0" expanded="false" />
+                <element signature="docComment;method#DisplayBitmap#0;class#ImageMergeMainActivity#0" expanded="false" />
+                <element signature="method#DisplayBitmap#0;class#ImageMergeMainActivity#0" expanded="false" />
+                <element signature="docComment;method#MemoryChecker#0;class#ImageMergeMainActivity#0" expanded="false" />
+                <element signature="method#MemoryChecker#0;class#ImageMergeMainActivity#0" expanded="false" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="LoadImages.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/ImageMerge/src/main/java/amitay/nachmani/image/merge/LoadImages.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="85" column="0" selection-start-line="85" selection-start-column="0" selection-end-line="85" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="activity_share.xml" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/ImageMerge/src/main/res/layout/activity_share.xml">
-          <provider selected="true" editor-type-id="android-designer">
-            <state />
-          </provider>
+      <file leaf-file-name="main_surface_view.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/ImageMerge/src/main/res/layout/main_surface_view.xml">
           <provider editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="11" column="44" selection-start-line="11" selection-start-column="44" selection-end-line="11" selection-end-column="44" />
+              <caret line="15" column="16" selection-start-line="15" selection-start-column="16" selection-end-line="15" selection-end-column="16" />
               <folding />
             </state>
           </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="WhatsApp_icon.png" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/ImageMerge/src/main/res/drawable/WhatsApp_icon.png">
-          <provider selected="true" editor-type-id="images">
+          <provider selected="true" editor-type-id="android-designer">
             <state />
           </provider>
         </entry>
@@ -2575,23 +2614,18 @@
         <option value="$PROJECT_DIR$/ImageMerge/src/main/res/layout/image_name_dialog.xml" />
         <option value="$PROJECT_DIR$/ImageMerge/src/main/java/amitay/nachmani/image/merge/Tutorial1Activity.java" />
         <option value="$PROJECT_DIR$/ImageMerge/src/main/res/layout/activity_start_screen.xml" />
-        <option value="$PROJECT_DIR$/ImageMerge/src/main/res/layout/start_screen.xml" />
         <option value="$PROJECT_DIR$/ImageMerge/src/main/java/amitay/nachmani/image/merge/Adapters/LoadImageAdapter.java" />
         <option value="$PROJECT_DIR$/ImageMerge/src/main/java/amitay/nachmani/image/merge/Fragments/ImageDetailFragment.java" />
         <option value="$PROJECT_DIR$/ImageMerge/src/main/res/layout/load_images_image_row.xml" />
-        <option value="$PROJECT_DIR$/ImageMerge/src/main/java/amitay/nachmani/image/merge/Adapters/ImagePagerAdapter.java" />
         <option value="$PROJECT_DIR$/ImageMerge/src/main/res/layout/activity_load_images.xml" />
         <option value="$PROJECT_DIR$/ImageMerge/src/main/java/amitay/nachmani/image/merge/General/ApplicationStage.java" />
         <option value="$PROJECT_DIR$/ImageMerge/src/main/res/layout/main_surface_view_main_ui.xml" />
-        <option value="$PROJECT_DIR$/ImageMerge/src/main/res/layout/main_surface_view.xml" />
         <option value="$PROJECT_DIR$/captures/SystemInfo_2015.08.09_19.13.39.txt" />
         <option value="$PROJECT_DIR$/captures/SystemInfo_2015.08.09_19.14.04.txt" />
-        <option value="$PROJECT_DIR$/openCVLibrary2411/src/main/java/org/opencv/android/JavaCameraView.java" />
         <option value="$PROJECT_DIR$/captures/SystemInfo_2015.08.09_19.41.22.txt" />
         <option value="$PROJECT_DIR$/captures/SystemInfo_2015.08.09_19.41.59.txt" />
         <option value="$PROJECT_DIR$/captures/SystemInfo_2015.08.09_19.42.29.txt" />
         <option value="$PROJECT_DIR$/captures/SystemInfo_2015.08.09_19.42.46.txt" />
-        <option value="$PROJECT_DIR$/ImageMerge/src/main/java/amitay/nachmani/image/merge/ImageMergeMainActivity.java" />
         <option value="$PROJECT_DIR$/local.properties" />
         <option value="$PROJECT_DIR$/.gradle/gradle.properties" />
         <option value="$PROJECT_DIR$/build.gradle" />
@@ -2603,13 +2637,19 @@
         <option value="$PROJECT_DIR$/facebook/AndroidManifest.xml" />
         <option value="$PROJECT_DIR$/ImageMerge/build.gradle" />
         <option value="$PROJECT_DIR$/ImageMerge/src/main/java/amitay/nachmani/image/merge/Share/FacebookShare.java" />
-        <option value="$PROJECT_DIR$/ImageMerge/src/main/res/layout/load_images_list_row.xml" />
-        <option value="$PROJECT_DIR$/ImageMerge/src/main/java/amitay/nachmani/image/merge/General/GeneralInfo.java" />
-        <option value="$PROJECT_DIR$/ImageMerge/src/main/java/amitay/nachmani/image/merge/StartScreenActivity.java" />
         <option value="$PROJECT_DIR$/ImageMerge/src/main/java/amitay/nachmani/image/merge/Share/SharePlatform.java" />
-        <option value="$PROJECT_DIR$/ImageMerge/src/main/java/amitay/nachmani/image/merge/LoadImages.java" />
-        <option value="$PROJECT_DIR$/ImageMerge/src/main/java/amitay/nachmani/image/merge/ShareActivity.java" />
         <option value="$PROJECT_DIR$/ImageMerge/src/main/res/layout/activity_share.xml" />
+        <option value="$PROJECT_DIR$/ImageMerge/src/main/java/amitay/nachmani/image/merge/General/GeneralInfo.java" />
+        <option value="$PROJECT_DIR$/ImageMerge/src/main/java/amitay/nachmani/image/merge/ShareActivity.java" />
+        <option value="$PROJECT_DIR$/ImageMerge/src/main/java/amitay/nachmani/image/merge/StartScreenActivity.java" />
+        <option value="$PROJECT_DIR$/ImageMerge/src/main/java/amitay/nachmani/image/merge/Adapters/ImagePagerAdapter.java" />
+        <option value="$PROJECT_DIR$/ImageMerge/src/main/res/layout/load_images_list_row.xml" />
+        <option value="$PROJECT_DIR$/ImageMerge/src/main/java/amitay/nachmani/image/merge/LoadImages.java" />
+        <option value="$PROJECT_DIR$/openCVLibrary2411/src/main/java/org/opencv/android/CameraBridgeViewBase.java" />
+        <option value="$PROJECT_DIR$/openCVLibrary2411/src/main/java/org/opencv/android/JavaCameraView.java" />
+        <option value="$PROJECT_DIR$/ImageMerge/src/main/res/layout/start_screen.xml" />
+        <option value="$PROJECT_DIR$/ImageMerge/src/main/java/amitay/nachmani/image/merge/ImageMergeMainActivity.java" />
+        <option value="$PROJECT_DIR$/ImageMerge/src/main/res/layout/main_surface_view.xml" />
       </list>
     </option>
   </component>
@@ -2645,9 +2685,6 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="Scratches">
-        <subPane />
-      </pane>
       <pane id="AndroidView">
         <subPane>
           <PATH>
@@ -2666,80 +2703,6 @@
               <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
             </PATH_ELEMENT>
           </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="FinalProject" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ImageMerge" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="res" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidResFolderNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="FinalProject" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ImageMerge" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="res" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidResFolderNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="drawable" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidResFolderTypeNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="FinalProject" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ImageMerge" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="FinalProject" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ImageMerge" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidSourceTypeNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="FinalProject" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ImageMerge" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidSourceTypeNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="merge" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidPsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
         </subPane>
       </pane>
       <pane id="PackagesPane">
@@ -2751,6 +2714,28 @@
             </PATH_ELEMENT>
           </PATH>
         </subPane>
+      </pane>
+      <pane id="Scope">
+        <subPane subId="Problems" />
+        <subPane subId="Production">
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+        <subPane subId="Tests">
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
+      <pane id="Scratches">
+        <subPane />
       </pane>
       <pane id="ProjectPane">
         <subPane>
@@ -2782,25 +2767,6 @@
             <PATH_ELEMENT>
               <option name="myItemId" value="ImageMerge" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
-      </pane>
-      <pane id="Scope">
-        <subPane subId="Problems" />
-        <subPane subId="Production">
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
-        <subPane subId="Tests">
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
@@ -3075,35 +3041,35 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="7" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32993197" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.37244898" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4659864" sideWeight="0.50907713" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4319728" sideWeight="0.50907713" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32993197" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Captures" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32980332" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2568027" sideWeight="0.49092284" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3537415" sideWeight="0.49092284" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4319728" sideWeight="0.50907713" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.26701966" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3809524" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24962178" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4319728" sideWeight="0.4969743" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4319728" sideWeight="0.49092284" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.16496599" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32993197" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3809524" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="Vcs.Log.UiProperties">
@@ -3126,28 +3092,38 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/openCVLibrary2411/src/main/java/org/opencv/android/JavaCameraView.java</url>
-          <line>270</line>
+          <url>file://$PROJECT_DIR$/ImageMerge/src/main/java/amitay/nachmani/image/merge/LoadImages.java</url>
+          <line>65</line>
           <properties />
-          <option name="timeStamp" value="96" />
+          <option name="timeStamp" value="109" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/openCVLibrary2411/src/main/java/org/opencv/android/JavaCameraView.java</url>
-          <line>349</line>
+          <url>file://$PROJECT_DIR$/ImageMerge/src/main/java/amitay/nachmani/image/merge/LoadImages.java</url>
+          <line>125</line>
           <properties />
-          <option name="timeStamp" value="97" />
+          <option name="timeStamp" value="110" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/ImageMerge/src/main/java/amitay/nachmani/image/merge/ImageMergeMainActivity.java</url>
+          <line>276</line>
+          <properties />
+          <option name="timeStamp" value="113" />
         </line-breakpoint>
       </breakpoints>
-      <option name="time" value="107" />
+      <option name="time" value="114" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/ImageMerge/src/main/java/amitay/nachmani/image/merge/Tracker/MovementTracker.java">
-      <provider selected="true" editor-type-id="text-editor">
+    <entry file="file://$PROJECT_DIR$/ImageMerge/src/main/res/layout/main_surface_view.xml">
+      <provider editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="19" column="44" selection-start-line="19" selection-start-column="44" selection-end-line="19" selection-end-column="44" />
+          <caret line="15" column="16" selection-start-line="15" selection-start-column="16" selection-end-line="15" selection-end-column="16" />
+          <folding />
         </state>
+      </provider>
+      <provider selected="true" editor-type-id="android-designer">
+        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/ImageMerge/src/main/java/amitay/nachmani/image/merge/General/MarkValues.java">
@@ -3158,54 +3134,25 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/ImageMerge/src/main/res/layout/start_screen.xml">
-      <provider selected="true" editor-type-id="android-designer">
-        <state />
-      </provider>
       <provider editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ImageMerge/src/main/res/layout/start_screen.xml">
       <provider selected="true" editor-type-id="android-designer">
         <state />
-      </provider>
-      <provider editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="5" column="3" selection-start-line="5" selection-start-column="3" selection-end-line="5" selection-end-column="3" />
-          <folding />
-        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/ImageMerge/src/main/res/layout/load_images_list_row.xml">
-      <provider selected="true" editor-type-id="android-designer">
-        <state />
-      </provider>
       <provider editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ImageMerge/src/main/res/layout/activity_load_images.xml">
       <provider selected="true" editor-type-id="android-designer">
         <state />
-      </provider>
-      <provider editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="4" column="0" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ImageMerge/src/main/java/amitay/nachmani/image/merge/Adapters/ImagePagerAdapter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.38510638">
-          <caret line="36" column="34" selection-start-line="36" selection-start-column="34" selection-end-line="36" selection-end-column="34" />
-        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/openCVLibrary2411/src/main/java/org/opencv/android/LoaderCallbackInterface.java">
@@ -3253,17 +3200,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ImageMerge/src/main/res/layout/main_surface_view_main_ui.xml">
-      <provider selected="true" editor-type-id="android-designer">
-        <state />
-      </provider>
-      <provider editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="12" column="14" selection-start-line="12" selection-start-column="14" selection-end-line="12" selection-end-column="14" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/captures/SystemInfo_2015.08.09_19.13.39.txt">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -3275,32 +3211,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/openCVLibrary2411/src/main/java/org/opencv/android/CameraBridgeViewBase.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="235" column="16" selection-start-line="235" selection-start-column="16" selection-end-line="235" selection-end-column="16" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ImageMerge/src/main/res/layout/main_surface_view.xml">
-      <provider selected="true" editor-type-id="android-designer">
-        <state />
-      </provider>
-      <provider editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="22" column="14" selection-start-line="0" selection-start-column="0" selection-end-line="22" selection-end-column="14" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ImageMerge/src/main/java/amitay/nachmani/image/merge/BackUp/MyJavaCameraView.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="11" column="47" selection-start-line="11" selection-start-column="47" selection-end-line="11" selection-end-column="47" />
         </state>
       </provider>
     </entry>
@@ -3316,14 +3226,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.38871473">
           <caret line="138" column="22" selection-start-line="138" selection-start-column="22" selection-end-line="138" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/openCVLibrary2411/src/main/java/org/opencv/android/JavaCameraView.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="333" column="31" selection-start-line="333" selection-start-column="31" selection-end-line="333" selection-end-column="31" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -3494,23 +3396,153 @@
         <state />
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/ImageMerge/src/main/java/amitay/nachmani/image/merge/Share/SharePlatform.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.29095355">
+          <caret line="7" column="21" selection-start-line="7" selection-start-column="21" selection-end-line="7" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ImageMerge/src/main/res/layout/activity_share.xml">
+      <provider editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="11" column="44" selection-start-line="11" selection-start-column="44" selection-end-line="11" selection-end-column="44" />
+          <folding />
+        </state>
+      </provider>
+      <provider selected="true" editor-type-id="android-designer">
+        <state />
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/ImageMerge/src/main/java/amitay/nachmani/image/merge/General/GeneralInfo.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="25" column="48" selection-start-line="25" selection-start-column="31" selection-end-line="25" selection-end-column="48" />
+          <caret line="22" column="61" selection-start-line="22" selection-start-column="61" selection-end-line="22" selection-end-column="61" />
           <folding />
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/ImageMerge/src/main/res/drawable/whatsapp_icon.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ImageMerge/src/main/java/amitay/nachmani/image/merge/ShareActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="59" column="0" selection-start-line="59" selection-start-column="0" selection-end-line="59" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ImageMerge/src/main/res/layout/activity_load_images.xml">
+      <provider editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="4" column="0" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+      <provider selected="true" editor-type-id="android-designer">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ImageMerge/src/main/java/amitay/nachmani/image/merge/Adapters/ImagePagerAdapter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="42" column="0" selection-start-line="42" selection-start-column="0" selection-end-line="42" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ImageMerge/src/main/res/layout/load_images_list_row.xml">
+      <provider editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="26" column="15" selection-start-line="1" selection-start-column="0" selection-end-line="26" selection-end-column="15" />
+          <folding />
+        </state>
+      </provider>
+      <provider selected="true" editor-type-id="android-designer">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ImageMerge/src/main/java/amitay/nachmani/image/merge/LoadImages.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="85" column="41" selection-start-line="85" selection-start-column="41" selection-end-line="85" selection-end-column="41" />
+          <folding>
+            <element signature="imports" expanded="false" />
+            <element signature="e#3624#5060#0" expanded="false" />
+            <element signature="e#5059#5060#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/openCVLibrary2411/src/main/java/org/opencv/android/CameraBridgeViewBase.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="265" column="41" selection-start-line="265" selection-start-column="16" selection-end-line="265" selection-end-column="41" />
+          <folding>
+            <element signature="e#9141#9142#0" expanded="true" />
+            <element signature="e#9177#9178#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/openCVLibrary2411/src/main/java/org/opencv/android/JavaCameraView.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="277" column="9" selection-start-line="277" selection-start-column="9" selection-end-line="277" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ImageMerge/src/main/res/drawable/main_screen.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ImageMerge/src/main/java/amitay/nachmani/image/merge/BackUp/MyJavaCameraView.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="11" column="45" selection-start-line="11" selection-start-column="45" selection-end-line="11" selection-end-column="45" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ImageMerge/src/main/res/layout/start_screen.xml">
+      <provider editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="6" column="3" selection-start-line="6" selection-start-column="3" selection-end-line="6" selection-end-column="3" />
+          <folding />
+        </state>
+      </provider>
+      <provider selected="true" editor-type-id="android-designer">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ImageMerge/src/main/java/amitay/nachmani/image/merge/StartScreenActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="55" column="77" selection-start-line="55" selection-start-column="77" selection-end-line="55" selection-end-column="77" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ImageMerge/src/main/res/layout/main_surface_view.xml">
+      <provider editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="15" column="16" selection-start-line="15" selection-start-column="16" selection-end-line="15" selection-end-column="16" />
+          <folding />
+        </state>
+      </provider>
+      <provider selected="true" editor-type-id="android-designer">
+        <state />
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/ImageMerge/src/main/java/amitay/nachmani/image/merge/ImageMergeMainActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5819071">
-          <caret line="450" column="35" selection-start-line="450" selection-start-column="19" selection-end-line="450" selection-end-column="35" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="339" column="59" selection-start-line="339" selection-start-column="59" selection-end-line="339" selection-end-column="59" />
           <folding>
-            <element signature="imports" expanded="true" />
             <element signature="docComment;field#mLoaderCallback#0;class#ImageMergeMainActivity#0" expanded="false" />
-            <element signature="class#4130:4620" expanded="false" />
-            <element signature="method#onManagerConnected#0;class#4130:4620" expanded="false" />
+            <element signature="class#4250:4818" expanded="false" />
+            <element signature="method#onManagerConnected#0;class#4250:4818" expanded="false" />
             <element signature="method#onRestoreInstanceState#0;class#ImageMergeMainActivity#0" expanded="false" />
             <element signature="method#onRestart#0;class#ImageMergeMainActivity#0" expanded="false" />
             <element signature="method#onStart#0;class#ImageMergeMainActivity#0" expanded="false" />
@@ -3519,6 +3551,7 @@
             <element signature="method#onWindowFocusChanged#0;class#ImageMergeMainActivity#0" expanded="false" />
             <element signature="docComment;method#onCreate#0;class#ImageMergeMainActivity#0" expanded="false" />
             <element signature="method#onCreate#0;class#ImageMergeMainActivity#0" expanded="false" />
+            <element signature="e#7096#7109#0" expanded="false" />
             <element signature="method#onPause#0;class#ImageMergeMainActivity#0" expanded="false" />
             <element signature="method#onResume#0;class#ImageMergeMainActivity#0" expanded="false" />
             <element signature="method#onDestroy#0;class#ImageMergeMainActivity#0" expanded="false" />
@@ -3527,12 +3560,12 @@
             <element signature="method#onCameraViewStopped#0;class#ImageMergeMainActivity#0" expanded="false" />
             <element signature="docComment;method#onCameraFrame#0;class#ImageMergeMainActivity#0" expanded="false" />
             <element signature="method#onCameraFrame#0;class#ImageMergeMainActivity#0" expanded="false" />
-            <element signature="e#11365#11435#0" expanded="false" />
+            <element signature="e#12095#12165#0" expanded="false" />
             <element signature="docComment;method#InitializeScale#0;class#ImageMergeMainActivity#0" expanded="false" />
             <element signature="method#InitializeScale#0;class#ImageMergeMainActivity#0" expanded="false" />
             <element signature="docComment;method#InitializeMarkSegmentationView#0;class#ImageMergeMainActivity#0" expanded="false" />
-            <element signature="e#14021#14072#0" expanded="false" />
-            <element signature="e#15268#15365#0" expanded="false" />
+            <element signature="e#14753#14804#0" expanded="false" />
+            <element signature="e#16276#16373#0" expanded="false" />
             <element signature="docComment;method#InitializeRunSegmentationAlgorithmView#0;class#ImageMergeMainActivity#0" expanded="false" />
             <element signature="method#InitializeRunSegmentationAlgorithmView#0;class#ImageMergeMainActivity#0" expanded="false" />
             <element signature="docComment;method#InitializeTracksForDeletionTracks#0;class#ImageMergeMainActivity#0" expanded="false" />
@@ -3540,10 +3573,10 @@
             <element signature="method#InitializeMoveForegroundAndEdit#0;class#ImageMergeMainActivity#0" expanded="false" />
             <element signature="docComment;method#SaveImageInitilazation#0;class#ImageMergeMainActivity#0" expanded="false" />
             <element signature="method#SaveImageInitilazation#0;class#ImageMergeMainActivity#0" expanded="false" />
-            <element signature="e#24099#24175#0" expanded="false" />
+            <element signature="e#25107#25183#0" expanded="false" />
             <element signature="docComment;method#PopDialogFileName#0;class#ImageMergeMainActivity#0" expanded="false" />
             <element signature="method#PopDialogFileName#0;class#ImageMergeMainActivity#0" expanded="false" />
-            <element signature="e#24495#24551#0" expanded="false" />
+            <element signature="e#25503#25559#0" expanded="false" />
             <element signature="docComment;method#SaveImageToData#0;class#ImageMergeMainActivity#0" expanded="false" />
             <element signature="method#SaveImageToData#0;class#ImageMergeMainActivity#0" expanded="false" />
             <element signature="method#SaveImageToDisk#0;class#ImageMergeMainActivity#0" expanded="false" />
@@ -3551,8 +3584,8 @@
             <element signature="method#onTouchEvent#0;class#ImageMergeMainActivity#0" expanded="false" />
             <element signature="docComment;method#SegmentationTouchEvent#0;class#ImageMergeMainActivity#0" expanded="false" />
             <element signature="method#SegmentationTouchEvent#0;class#ImageMergeMainActivity#0" expanded="false" />
-            <element signature="e#30063#30087#0" expanded="false" />
-            <element signature="e#30923#30948#0" expanded="false" />
+            <element signature="e#31131#31155#0" expanded="false" />
+            <element signature="e#31991#32016#0" expanded="false" />
             <element signature="method#MoveForegroundAndEditTouchEvent#0;class#ImageMergeMainActivity#0" expanded="false" />
             <element signature="docComment;method#DrawNewTracksOnView#0;class#ImageMergeMainActivity#0" expanded="false" />
             <element signature="method#DrawNewTracksOnView#0;class#ImageMergeMainActivity#0" expanded="false" />
@@ -3565,68 +3598,6 @@
             <element signature="docComment;method#MemoryChecker#0;class#ImageMergeMainActivity#0" expanded="false" />
             <element signature="method#MemoryChecker#0;class#ImageMergeMainActivity#0" expanded="false" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ImageMerge/src/main/java/amitay/nachmani/image/merge/StartScreenActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="53" column="0" selection-start-line="53" selection-start-column="0" selection-end-line="53" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ImageMerge/src/main/java/amitay/nachmani/image/merge/Share/SharePlatform.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.29095355">
-          <caret line="7" column="21" selection-start-line="7" selection-start-column="21" selection-end-line="7" selection-end-column="21" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ImageMerge/src/main/java/amitay/nachmani/image/merge/ShareActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="128" column="20" selection-start-line="128" selection-start-column="20" selection-end-line="128" selection-end-column="20" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#8425#8483#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ImageMerge/src/main/res/layout/load_images_list_row.xml">
-      <provider selected="true" editor-type-id="android-designer">
-        <state />
-      </provider>
-      <provider editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="18" column="15" selection-start-line="1" selection-start-column="0" selection-end-line="18" selection-end-column="15" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ImageMerge/src/main/java/amitay/nachmani/image/merge/LoadImages.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="85" column="0" selection-start-line="85" selection-start-column="0" selection-end-line="85" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ImageMerge/src/main/res/drawable/WhatsApp_icon.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ImageMerge/src/main/res/layout/activity_share.xml">
-      <provider selected="true" editor-type-id="android-designer">
-        <state />
-      </provider>
-      <provider editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="11" column="44" selection-start-line="11" selection-start-column="44" selection-end-line="11" selection-end-column="44" />
-          <folding />
         </state>
       </provider>
     </entry>

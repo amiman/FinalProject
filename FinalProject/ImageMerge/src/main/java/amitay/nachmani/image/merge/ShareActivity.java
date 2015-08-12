@@ -48,12 +48,21 @@ public class ShareActivity extends Activity {
     // Share platform
     private SharePlatform mSharePlatform;
     private String mSharedImagePath;
+    private int mStartingActivityID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_share);
 
+        // Get the ID of the starting activity in order to choose actions
+        Bundle bundle = getIntent().getExtras();
+        mStartingActivityID = bundle.getInt(GeneralInfo.ACTIVITY_KEY_BUNDLE);
+        if(mStartingActivityID == GeneralInfo.ACTIVITY_ID_LOAD)
+        {
+            mSharedImagePath = getIntent().getStringExtra(GeneralInfo.BITMAP_BUNDLE_KEY);
+            LoadImage();
+        }
         /**************************************************** FACEBOOK ********************************************************/
         // Initialize the SDK before executing any other operations,
         // especially, if you're using Facebook UI elements.
@@ -65,7 +74,12 @@ public class ShareActivity extends Activity {
             @Override
             public void onClick(View view) {
                 mSharePlatform = SharePlatform.FACEBOOK;
-                RunLoadImage();
+                if(mStartingActivityID == GeneralInfo.ACTIVITY_ID_START) {
+                    RunLoadImage();
+                } else if(mStartingActivityID == GeneralInfo.ACTIVITY_ID_LOAD) {
+                    ShareFacebook();
+                    finish();
+                }
             }
         });
         /**************************************************** FACEBOOK ********************************************************/
@@ -78,7 +92,12 @@ public class ShareActivity extends Activity {
             @Override
             public void onClick(View view) {
                 mSharePlatform = SharePlatform.WHATSAPP;
-                RunLoadImage();
+                if(mStartingActivityID == GeneralInfo.ACTIVITY_ID_START) {
+                    RunLoadImage();
+                } else if(mStartingActivityID == GeneralInfo.ACTIVITY_ID_LOAD) {
+                    ShareWhatsAPP();
+                    finish();
+                }
             }
         });
         /**************************************************** WhatsUp ********************************************************/
@@ -91,7 +110,12 @@ public class ShareActivity extends Activity {
             @Override
             public void onClick(View view) {
                 mSharePlatform = SharePlatform.GMAIL;
-                RunLoadImage();
+                if(mStartingActivityID == GeneralInfo.ACTIVITY_ID_START) {
+                    RunLoadImage();
+                } else if(mStartingActivityID == GeneralInfo.ACTIVITY_ID_LOAD) {
+                    ShareGmail();
+                    finish();
+                }
             }
         });
         /**************************************************** GMAIL ********************************************************/
@@ -120,7 +144,7 @@ public class ShareActivity extends Activity {
     /**
      * ShareGmail:
      *
-     * Starts a gmail intent
+     * Opens an intent for Gmail with the chosen image
      */
     private void ShareGmail() {
 
@@ -136,8 +160,7 @@ public class ShareActivity extends Activity {
     /**
      * ShareWhatsAPP:
      *
-     * Opens an intent for whatsapp with the choosen image
-     * 
+     * Opens an intent for whatsapp with the chosen image
      */
     private void ShareWhatsAPP() {
 
@@ -153,6 +176,7 @@ public class ShareActivity extends Activity {
     /**
      * ShareFacebook:
      *
+     * login to facebook and posts the desired image on pepole wall
      */
     private void ShareFacebook() {
 
@@ -167,7 +191,7 @@ public class ShareActivity extends Activity {
             @Override
             public void onSuccess(LoginResult loginResult) {
 
-                // On sucess share
+                // On success share the image on facebook
                 SharePhotoToFacebook();
             }
 
@@ -189,6 +213,7 @@ public class ShareActivity extends Activity {
     /**
      * SharePhotoToFacebook:
      *
+     * create a photo share from the chosen image and shares it on facebook
      */
     private void SharePhotoToFacebook() {
 
@@ -224,9 +249,7 @@ public class ShareActivity extends Activity {
             {
                 // get the returned image path
                 mSharedImagePath = data.getStringExtra(GeneralInfo.BITMAP_BUNDLE_KEY);
-                BitmapFactory.Options options = new BitmapFactory.Options();
-                options.inPreferredConfig = Bitmap.Config.ARGB_8888;
-                mSharedImage = BitmapFactory.decodeFile(mSharedImagePath, options);
+                LoadImage();
 
                 switch(mSharePlatform) {
                     case FACEBOOK:
@@ -247,6 +270,19 @@ public class ShareActivity extends Activity {
             super.onActivityResult(requestCode, responseCode, data);
             mCallbackManager.onActivityResult(requestCode, responseCode, data);
         }
+    }
+
+    /**
+     * LoadImage:
+     *
+     * Loads the image we got from the load image activity
+     */
+    private void LoadImage()
+    {
+
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inPreferredConfig = Bitmap.Config.ARGB_8888;
+        mSharedImage = BitmapFactory.decodeFile(mSharedImagePath, options);
     }
 
     @Override

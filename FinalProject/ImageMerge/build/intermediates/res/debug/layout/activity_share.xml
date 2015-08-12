@@ -11,10 +11,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/btnShareFacebook"
-        android:layout_alignParentTop="true"
-        android:src="@color/com_facebook_blue"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
+        android:src="@drawable/facebook"
+        android:layout_alignTop="@+id/btnShareWatsUP"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
 
@@ -22,21 +20,18 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/btnShareWatsUP"
+        android:src="@drawable/whatsapp_icon"
         android:layout_centerVertical="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignRight="@+id/btnShareFacebook"
-        android:layout_alignEnd="@+id/btnShareFacebook" />
+        android:layout_alignParentStart="true" />
 
     <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/btnShareGmail"
+        android:src="@drawable/google_gmail"
         android:layout_alignParentBottom="true"
-        android:layout_alignRight="@+id/btnShareWatsUP"
-        android:layout_alignEnd="@+id/btnShareWatsUP"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>
 <!-- From: file:/C:/Users/Amitay/Documents/GitHub/FinalProject/FinalProject/ImageMerge/src/main/res/layout/activity_share.xml -->

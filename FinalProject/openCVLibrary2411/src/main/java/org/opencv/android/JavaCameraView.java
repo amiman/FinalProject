@@ -268,10 +268,13 @@ public class JavaCameraView extends CameraBridgeViewBase implements PreviewCallb
             }
             Log.d(TAG, "Wating for thread");
             if (mThread != null) {
-                mThread.join();
+                Log.d(TAG, "Do interupt");
+                mThread.interrupt();
+                Log.d(TAG, "After interupt");
+                Log.d(TAG, "Do join");
+                //mThread.join();
+
             }
-        } catch (InterruptedException e) {
-            e.printStackTrace();
         } finally {
             mThread =  null;
         }
@@ -346,7 +349,7 @@ public class JavaCameraView extends CameraBridgeViewBase implements PreviewCallb
                     if (!mFrameChain[1 - mChainIdx].empty())
                         deliverAndDrawFrame(mCameraFrame[1 - mChainIdx]);
                 }
-            } while (!mStopThread);
+            } while (!mStopThread && !Thread.interrupted());
             Log.d(TAG, "Finish processing thread");
         }
     }

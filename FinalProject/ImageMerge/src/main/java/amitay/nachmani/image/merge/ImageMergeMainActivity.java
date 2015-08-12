@@ -38,6 +38,7 @@ import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
+import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,6 +47,7 @@ import android.widget.Button;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -90,14 +92,15 @@ public class ImageMergeMainActivity extends Activity implements CvCameraViewList
     private float mScale = 0;
 
     // View
-    private Button mTakePictureButton;
+    //private Button mTakePictureButton;
+    private ImageButton mTakePictureButton;
     private Button mMarkBackgroundButton;
     private Button mMarkForegroundButton;
     private Button mDoneButton;
     private Button mMoveForegroundPixelsToBack;
     private Button mMoveForeground;
     private String[] mImageName;
-    private SurfaceView mNewSurfaceView;
+    private SurfaceHolder mNewSurfaceHolder;
 
     // Progress bar
     private ProgressDialog mProgressBar;
@@ -116,7 +119,9 @@ public class ImageMergeMainActivity extends Activity implements CvCameraViewList
                 case LoaderCallbackInterface.SUCCESS:
                 {
                     Log.i(TAG, "OpenCV loaded successfully");
-                    mOpenCvCameraView.enableView();
+                    if(mOpenCvCameraView != null) {
+                        mOpenCvCameraView.enableView();
+                    }
                 } break;
                 default:
                 {
@@ -165,6 +170,18 @@ public class ImageMergeMainActivity extends Activity implements CvCameraViewList
         Log.d(GeneralInfo.DEBUG_TAG, "onWindowFocusChanged");
         Log.d(GeneralInfo.DEBUG_TAG, "onWindowFocusChanged: " + mApplicationStage);
         super.onWindowFocusChanged(hasFocus);
+        switch(mApplicationStage)
+        {
+            case SEGMENTATION_MARK:
+                DrawNewTracksOnView();
+                break;
+            case MOVE_FOREGROUND_AND_EDIT:
+                DrawAlgorithmResult();
+                break;
+            default:
+                break;
+        }
+
     }
 
     /** Called when the activity is first created. */
@@ -186,7 +203,8 @@ public class ImageMergeMainActivity extends Activity implements CvCameraViewList
         mOpenCvCameraView.setCvCameraViewListener(this);
 
         // Get Button
-        mTakePictureButton = (Button) findViewById(R.id.btnTakePicture);
+        //mTakePictureButton = (Button) findViewById(R.id.btnTakePicture);
+        mTakePictureButton = (ImageButton) findViewById(R.id.btnTakePicture);
         mTakePictureButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -248,12 +266,15 @@ public class ImageMergeMainActivity extends Activity implements CvCameraViewList
         // According to the current stage initialize the proper stage
         switch(mApplicationStage)
         {
-
+            case SEGMENTATION_MARK:
+                DrawNewTracksOnView();
+                break;
             default:
                 if (mOpenCvCameraView != null)
                     mOpenCvCameraView.enableView();
                 break;
         }
+        Log.d(GeneralInfo.DEBUG_TAG, "End Resume");
     }
 
     public void onDestroy() {
@@ -289,7 +310,7 @@ public class ImageMergeMainActivity extends Activity implements CvCameraViewList
      */
     public void onCameraViewStopped() {
 
-        Log.d(GeneralInfo.DEBUG_TAG,"onCameraViewStopped");
+        Log.d(GeneralInfo.DEBUG_TAG, "onCameraViewStopped");
 
         /*
         // When we stop retrieving images we change the last image to be the second image wait for tracks to be made
@@ -391,7 +412,7 @@ public class ImageMergeMainActivity extends Activity implements CvCameraViewList
             mOpenCvCameraView.disableFpsMeter();
             mOpenCvCameraView.disableView();
 
-            InitializeMarkSegmentationView();
+            //InitializeMarkSegmentationView();
 
             return combinedMat;
         }
@@ -427,10 +448,17 @@ public class ImageMergeMainActivity extends Activity implements CvCameraViewList
         // First remove the "take picture" button that we don't any more and replace it by a new "Done"  button
 
 
-        ViewGroup layout = (ViewGroup) mTakePictureButton.getParent();
-        if(null!=layout) {//for safety only  as you are doing onClick
-            layout.removeView(mTakePictureButton);
-            //layout.removeView(mOpenCvCameraView);
+        //mOpenCvCameraView.unSetCvCameraViewListener();
+
+        if(mTakePictureButton != null) {
+            mNewSurfaceHolder = mOpenCvCameraView.getHolder();
+            mOpenCvCameraView = null;
+            ViewGroup layout = (ViewGroup) mTakePictureButton.getParent();
+            if (null != layout) {//for safety only  as you are doing onClick
+                layout.removeView(mTakePictureButton);
+                mTakePictureButton = null;
+                //layout.removeView(mOpenCvCameraView);
+            }
         }
 
         mDoneButton = new Button(this);
@@ -794,6 +822,7 @@ public class ImageMergeMainActivity extends Activity implements CvCameraViewList
             // Go back to start activity
             finish();
 
+            Log.d(GeneralInfo.DEBUG_TAG,"after finsish()");
             return;
         } catch (Exception e) {
             e.printStackTrace();
@@ -1054,7 +1083,11 @@ public class ImageMergeMainActivity extends Activity implements CvCameraViewList
     public void DisplayBitmap() {
 
         Canvas canvas = null;
-        canvas = mOpenCvCameraView.getHolder().lockCanvas();
+        if(mOpenCvCameraView != null) {
+            canvas = mOpenCvCameraView.getHolder().lockCanvas();
+        } else {
+            canvas = mNewSurfaceHolder.lockCanvas();
+        }
 
         if (canvas != null) {
             canvas.drawColor(0, android.graphics.PorterDuff.Mode.CLEAR);
@@ -1074,7 +1107,11 @@ public class ImageMergeMainActivity extends Activity implements CvCameraViewList
                                 (canvas.getHeight() - mBitmap.getHeight()) / 2 + mBitmap.getHeight()), null);
             }
 
-            mOpenCvCameraView.getHolder().unlockCanvasAndPost(canvas);
+            if(mOpenCvCameraView != null) {
+                mOpenCvCameraView.getHolder().unlockCanvasAndPost(canvas);
+            } else {
+                mNewSurfaceHolder.unlockCanvasAndPost(canvas);
+            }
         }
     }
 

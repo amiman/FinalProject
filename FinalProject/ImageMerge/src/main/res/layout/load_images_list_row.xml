@@ -16,4 +16,12 @@
         android:id="@+id/rowImageView"
         android:layout_gravity="center_horizontal" />
 
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/Share"
+        android:id="@+id/btnShare"
+        android:visibility="invisible"
+        android:focusable="false" />
+
 </LinearLayout>

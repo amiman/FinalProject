@@ -29,10 +29,12 @@ public class LoadImages extends ListActivity {
 
     public static final String EXTRA_IMAGE = "extra_image";
     private static final String SHARE_BUTTON_TEXT = "SHARE";
+    private static final String IMAGE_SHARE = "image has been shared";
 
     private int mStartingActivityID;
     private ImagePagerAdapter mAdapter;
     public File[] mImagePaths;
+    private Button mBtnShare;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,25 +81,35 @@ public class LoadImages extends ListActivity {
             imageView.setImageBitmap(bitmap);
 
             // add the share button dynamically
-            Button btnShare = new Button(this);
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);;
-            params.gravity = Gravity.BOTTOM;
-            btnShare.setLayoutParams(params);
+            mBtnShare = (Button) v.findViewById(R.id.btnShare);
+            mBtnShare.setVisibility(View.VISIBLE);
+            mBtnShare.setFocusable(false);
+            //LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);;
+            //params.gravity = Gravity.BOTTOM;
+            //mBtnShare.setLayoutParams(params);
+            //mBtnShare.setText(SHARE_BUTTON_TEXT);
 
-            btnShare.setText(SHARE_BUTTON_TEXT);
-            btnShare.setOnClickListener(new View.OnClickListener() {
+            mBtnShare.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
 
                     // according to the starting activity decide what to do
-                    if(mStartingActivityID == GeneralInfo.ACTIVITY_ID_START)
-                    {
+                    if (mStartingActivityID == GeneralInfo.ACTIVITY_ID_START) {
 
-                    } else if(mStartingActivityID == GeneralInfo.ACTIVITY_ID_SHARE) {
+                        // Open share activity and send the selected image path
+                        Intent intent = new Intent(getApplicationContext(), ShareActivity.class);
+                        Bundle bundleForSharemagesActivity = new Bundle();
+                        bundleForSharemagesActivity.putInt(GeneralInfo.ACTIVITY_KEY_BUNDLE, GeneralInfo.ACTIVITY_ID_LOAD);
+                        bundleForSharemagesActivity.putString(GeneralInfo.BITMAP_BUNDLE_KEY, photoPath.getAbsolutePath());
+                        intent.putExtras(bundleForSharemagesActivity);
+
+                        startActivityForResult(intent, GeneralInfo.ACTIVITY_ID_LOAD);
+
+                    } else if (mStartingActivityID == GeneralInfo.ACTIVITY_ID_SHARE) {
 
                         // return the selected image in a bundle to the starting activity and close this activity
                         Intent returnIntent = new Intent();
-                        returnIntent.putExtra(GeneralInfo.BITMAP_BUNDLE_KEY,photoPath.getAbsolutePath());
+                        returnIntent.putExtra(GeneralInfo.BITMAP_BUNDLE_KEY, photoPath.getAbsolutePath());
                         setResult(RESULT_OK, returnIntent);
                         finish();
                     }
@@ -105,13 +117,22 @@ public class LoadImages extends ListActivity {
             });
 
             // add button to view
-            LinearLayout layout = (LinearLayout) findViewById(R.id.load_image_list_row);
-            layout.addView(btnShare);
+            //LinearLayout layout = (LinearLayout) findViewById(R.id.load_image_list_row);
+            //layout.addView(mBtnShare);
 
         } else {
 
             // Collapse image
             imageView.setImageDrawable(null);
+
+            // Collapse button
+            mBtnShare.setVisibility(View.INVISIBLE);
+            /*
+            ViewGroup layout = (ViewGroup) mBtnShare.getParent();
+            if(null!=layout) {//for safety only  as you are doing onClick
+                layout.removeView(mBtnShare);
+            }
+            */
         }
     }
 
@@ -169,5 +190,14 @@ public class LoadImages extends ListActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int responseCode, Intent data) {
+        if(requestCode == GeneralInfo.ACTIVITY_ID_LOAD)
+        {
+            // show toast for sharing complete
+            Toast.makeText(getApplicationContext(),IMAGE_SHARE,Toast.LENGTH_SHORT).show();
+        }
     }
 }
