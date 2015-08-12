@@ -9,6 +9,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.io.File;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 import amitay.nachmani.image.merge.R;
 
@@ -18,14 +23,19 @@ import amitay.nachmani.image.merge.R;
 public class ImagePagerAdapter extends ArrayAdapter<File> {
 
     private Context mContext;
-    private File[] mFiles;
+    private ArrayList<File> mFiles;
     private ImageView mImageView;
 
-    public ImagePagerAdapter(Context context, int resource, File[] files) {
+    public ImagePagerAdapter(Context context, int resource, ArrayList<File> files) {
         super(context, resource, files);
 
         mContext = context;
         mFiles = files;
+    }
+
+    public void UpdateFilesArray(ArrayList<File> newFile)
+    {
+        mFiles = newFile;
     }
 
     @Override
@@ -39,7 +49,20 @@ public class ImagePagerAdapter extends ArrayAdapter<File> {
         //ImageView imageView = (ImageView) rowView.findViewById(R.id.icon);
 
         TextView fileName = (TextView) rowView.findViewById(R.id.list_row_file_name);
-        fileName.setText(mFiles[position].toString());
+        TextView fileDate = (TextView) rowView.findViewById(R.id.list_row_file_date);
+
+
+        // Create name and creation date
+
+        // Show only the name of the image and not the full path
+        String[] pathParts = mFiles.get(position).toString().split("/");
+        fileName.setText(pathParts[pathParts.length - 1]);
+
+        // Get last modified date
+        DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+        Date modifedDate = new Date(mFiles.get(position).lastModified());
+        String formatedModifedDate = df.format(modifedDate);
+        fileDate.setText(formatedModifedDate);
 
         return rowView;
     }

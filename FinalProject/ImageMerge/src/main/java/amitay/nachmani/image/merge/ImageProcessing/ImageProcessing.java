@@ -71,6 +71,7 @@ public class ImageProcessing {
         Point centerOfGravity = data.GetCenterOfGravity();
 
         // Go over the point the paint there color on the background image
+        if(data.GetExtractForegroundPoints() == null) { return mergeMat; }
         for(ColorPoint point : data.GetExtractForegroundPoints())
         {
             // Check if the point is active and we need to draw it or not

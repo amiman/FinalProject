@@ -13,4 +13,7 @@
 
     <string name="facebook_app_id">1620270164890984</string>
     <string name="Share">SHARE</string>
+    <string name="delete_image">Delete</string>
+    <string name="share">Share</string>
+    <string name="load_images">Load Images</string>
 </resources>

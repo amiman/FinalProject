@@ -1,14 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:layout_width="match_parent" android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:id="@+id/load_image_list_row">
+    android:id="@+id/load_image_list_row"
+    android:background="@drawable/very_small_theme">
 
     <TextView
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:id="@+id/list_row_file_name" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:id="@+id/list_row_file_date" />
 
     <ImageView
         android:layout_width="match_parent"
@@ -16,12 +23,28 @@
         android:id="@+id/rowImageView"
         android:layout_gravity="center_horizontal" />
 
-    <Button
+    <LinearLayout
+        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/Share"
-        android:id="@+id/btnShare"
-        android:visibility="invisible"
-        android:focusable="false" />
+        android:layout_height="wrap_content">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:text="@string/Share"
+            android:id="@+id/btnShare"
+            android:visibility="invisible"
+            android:focusable="false"
+            android:layout_gravity="left"
+            android:layout_weight="0.5" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:text="@string/delete_image"
+            android:id="@+id/btnDeleteImage"
+            android:layout_weight="0.5"
+            android:visibility="invisible" />
+    </LinearLayout>
 
 </LinearLayout>

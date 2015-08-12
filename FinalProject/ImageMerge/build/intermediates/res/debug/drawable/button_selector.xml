@@ -1,0 +1,6 @@
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_focused="true" android:state_pressed="false" android:drawable="@drawable/oval_button" />
+    <item android:state_focused="true" android:state_pressed="true" android:drawable="@drawable/gradient" />
+    <item android:state_focused="false" android:state_pressed="true" android:drawable="@drawable/gradient" />
+    <item android:drawable="@drawable/oval_button" />
+</selector><!-- From: file:/C:/Users/Amitay/Documents/GitHub/FinalProject/FinalProject/ImageMerge/src/main/res/drawable/button_selector.xml -->

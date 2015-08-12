@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.v4.util.LruCache;
 import android.support.v4.view.ViewPager;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,6 +22,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import java.io.File;
+import java.util.ArrayList;
 
 import amitay.nachmani.image.merge.Adapters.ImagePagerAdapter;
 import amitay.nachmani.image.merge.General.GeneralInfo;
@@ -33,8 +35,11 @@ public class LoadImages extends ListActivity {
 
     private int mStartingActivityID;
     private ImagePagerAdapter mAdapter;
-    public File[] mImagePaths;
+    public ArrayList<File> mImagePaths;
+    private ImageView mImageView;
     private Button mBtnShare;
+    private Button mBtnDelete;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,23 +52,29 @@ public class LoadImages extends ListActivity {
         // Get all the current images saved by the application
         mImagePaths = GetImagesPaths();
 
+        // Add the header dynamically because eit is a list activity
+        ListView lv = getListView();
+        LayoutInflater inflater = getLayoutInflater();
+        View header = inflater.inflate(R.layout.load_images_header, lv, false);
+        lv.addHeaderView(header, null, false);
+
         // Go over all the files and for each image in the current view load a small image
 
         // Create an adapter to load the images and display them in the list view
-        ImagePagerAdapter adapter = new ImagePagerAdapter(this, R.layout.activity_load_images, mImagePaths);
-        setListAdapter(adapter);
+        mAdapter = new ImagePagerAdapter(this, R.layout.activity_load_images, mImagePaths);
+        setListAdapter(mAdapter);
     }
 
     @Override
-    protected void onListItemClick(ListView l, View v, int position, long id) {
+    protected void onListItemClick(ListView l, View v, final int position, long id) {
 
         // Get the reference to the row image view
-        ImageView imageView = (ImageView)v.findViewById(R.id.rowImageView);
+        mImageView = (ImageView)v.findViewById(R.id.rowImageView);
 
-        final File photoPath = (File) getListAdapter().getItem(position);
+        final File photoPath = (File) getListAdapter().getItem(position - 1);
 
         // Check if the image is allready displayed or not if not load it if yes collapse it
-        if(imageView.getDrawable() == null) {
+        if(mImageView.getDrawable() == null) {
             // Load bitmap image
             BitmapFactory.Options options = new BitmapFactory.Options();
             options.inPreferredConfig = Bitmap.Config.ARGB_8888;
@@ -73,22 +84,17 @@ public class LoadImages extends ListActivity {
             BitmapFactory.decodeFile(photoPath.getAbsolutePath(), options);
 
             // Calculate inSampleSize
-            options.inSampleSize = CalculateInSampleSize(options, imageView.getWidth(), imageView.getHeight());
+            options.inSampleSize = CalculateInSampleSize(options, mImageView.getWidth(), mImageView.getHeight());
             options.inJustDecodeBounds = false;
             final Bitmap bitmap = BitmapFactory.decodeFile(photoPath.getAbsolutePath(), options);
 
             // display the image
-            imageView.setImageBitmap(bitmap);
+            mImageView.setImageBitmap(bitmap);
 
             // add the share button dynamically
             mBtnShare = (Button) v.findViewById(R.id.btnShare);
             mBtnShare.setVisibility(View.VISIBLE);
             mBtnShare.setFocusable(false);
-            //LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);;
-            //params.gravity = Gravity.BOTTOM;
-            //mBtnShare.setLayoutParams(params);
-            //mBtnShare.setText(SHARE_BUTTON_TEXT);
-
             mBtnShare.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -116,30 +122,65 @@ public class LoadImages extends ListActivity {
                 }
             });
 
-            // add button to view
-            //LinearLayout layout = (LinearLayout) findViewById(R.id.load_image_list_row);
-            //layout.addView(mBtnShare);
+            // make delete button visible
+            mBtnDelete = (Button) v.findViewById(R.id.btnDeleteImage);
+            mBtnDelete.setVisibility(View.VISIBLE);
+            mBtnDelete.setFocusable(false);
+
+            mBtnDelete.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    // Delete the chosen image
+                    File file = new File(photoPath.getAbsolutePath());
+                    boolean deleted = file.delete();
+
+                    if(deleted)
+                    {
+                        // Collapse image
+                        mImageView.setImageDrawable(null);
+
+                        // Collapse button
+                        mBtnShare.setVisibility(View.INVISIBLE);
+                        mBtnDelete.setVisibility(View.INVISIBLE);
+
+                        // Delete the file from the file array and update the adapter
+                        mImagePaths.remove(position - 1);
+                        mAdapter.UpdateFilesArray(mImagePaths);
+                        mAdapter.notifyDataSetChanged();
+                    }
+                }
+            });
 
         } else {
 
             // Collapse image
-            imageView.setImageDrawable(null);
+            mImageView.setImageDrawable(null);
 
             // Collapse button
             mBtnShare.setVisibility(View.INVISIBLE);
-            /*
-            ViewGroup layout = (ViewGroup) mBtnShare.getParent();
-            if(null!=layout) {//for safety only  as you are doing onClick
-                layout.removeView(mBtnShare);
-            }
-            */
+            mBtnDelete.setVisibility(View.INVISIBLE);
         }
     }
 
-    private File[] GetImagesPaths()
+    /**
+     * GetImagesPaths:
+     *
+     * Get the image paths and convert them to arraylist for the adapter
+     *
+     * @return
+     */
+    private ArrayList<File> GetImagesPaths()
     {
         File imageDir = new File(GeneralInfo.APPLICATION_PATH);
-        return imageDir.listFiles();
+        File[] filesArray = imageDir.listFiles();
+        ArrayList<File> files = new ArrayList<File>();
+        for(int i = 0 ; i < filesArray.length ; i++)
+        {
+            files.add(filesArray[i]);
+        }
+
+        return files;
     }
 
     //
