@@ -24,30 +24,33 @@ public class StartScreenActivity extends Activity {
         Button btnLoadImage = (Button) findViewById(R.id.btnLoadImage);
         Button btnShare = (Button) findViewById(R.id.btnShare);
 
+        btnImageMerge.setBackgroundResource(R.drawable.button_selector);
         btnImageMerge.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-            // Start the main merge activity
-            Intent intent = new Intent(getApplicationContext(), ImageMergeMainActivity.class);
-            startActivity(intent);
+                // Start the main merge activity
+                Intent intent = new Intent(getApplicationContext(), ImageMergeMainActivity.class);
+                startActivity(intent);
             }
         });
 
+        btnLoadImage.setBackgroundResource(R.drawable.button_selector);
         btnLoadImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-            // Start the load images activity
-            Intent intent = new Intent(getApplicationContext(), LoadImages.class);
-            Bundle bundleForLoadImagesActivity = new Bundle();
-            bundleForLoadImagesActivity.putInt(GeneralInfo.ACTIVITY_KEY_BUNDLE, GeneralInfo.ACTIVITY_ID_START);
-            intent.putExtras(bundleForLoadImagesActivity);
-            startActivity(intent);
-                
+                // Start the load images activity
+                Intent intent = new Intent(getApplicationContext(), LoadImages.class);
+                Bundle bundleForLoadImagesActivity = new Bundle();
+                bundleForLoadImagesActivity.putInt(GeneralInfo.ACTIVITY_KEY_BUNDLE, GeneralInfo.ACTIVITY_ID_START);
+                intent.putExtras(bundleForLoadImagesActivity);
+                startActivity(intent);
+
             }
         });
 
+        btnShare.setBackgroundResource(R.drawable.button_selector);
         btnShare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

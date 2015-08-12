@@ -23,6 +23,7 @@
     <eat-comment/>
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="button_text_size">25dp</dimen>
     <!-- From: file:/C:/Users/Amitay/Documents/GitHub/FinalProject/FinalProject/ImageMerge/build/intermediates/exploded-aar/com.facebook.android/facebook/4.4.0/res/values/values.xml -->
     <eat-comment/>
     <dimen name="com_facebook_likeboxcountview_border_radius">3dp</dimen>
@@ -44,6 +45,12 @@
     <dimen name="com_facebook_share_button_padding_top">12dp</dimen>
     <dimen name="com_facebook_share_button_text_size">16.0sp</dimen>
     <dimen name="com_facebook_tooltip_horizontal_padding">10dp</dimen>
+    <!-- From: file:/C:/Users/Amitay/Documents/GitHub/FinalProject/FinalProject/ImageMerge/src/main/res/values/dimens.xml -->
+    <eat-comment/>
+    <dimen name="padding_button">20dp</dimen>
+    <dimen name="padding_share_images">40dp</dimen>
+    <dimen name="title_text_size">60dp</dimen>
+    <dimen name="tkae_picture_size">55dp</dimen>
     <!-- From: file:/C:/Users/Amitay/Documents/GitHub/FinalProject/FinalProject/ImageMerge/src/main/res/values/strings.xml -->
     <eat-comment/>
     <string name="ButtonImageMerge">Merge Images</string>
@@ -72,13 +79,16 @@
     <string name="com_facebook_tooltip_default">New! You\'re in control - choose what info you want to share with apps.</string>
     <!-- From: file:/C:/Users/Amitay/Documents/GitHub/FinalProject/FinalProject/ImageMerge/src/main/res/values/strings.xml -->
     <eat-comment/>
+    <string name="delete_image">Delete</string>
     <string name="facebook_app_id">1620270164890984</string>
     <string name="hello_world">Hello world!</string>
+    <string name="load_images">Load Images</string>
     <!-- From: file:/C:/Users/Amitay/Documents/GitHub/FinalProject/FinalProject/ImageMerge/build/intermediates/exploded-aar/com.facebook.android/facebook/4.4.0/res/values/values.xml -->
     <eat-comment/>
     <string name="messenger_send_button_text">Send</string>
     <!-- From: file:/C:/Users/Amitay/Documents/GitHub/FinalProject/FinalProject/ImageMerge/src/main/res/values/strings.xml -->
     <eat-comment/>
+    <string name="share">Share</string>
     <string name="title_activity_load_images">LoadImages</string>
     <string name="title_activity_share">ShareActivity</string>
     <string name="title_activity_start_screen">StartScreenActivity</string>

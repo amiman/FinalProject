@@ -45,11 +45,14 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.view.ViewGroup.LayoutParams;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -68,6 +71,7 @@ public class ImageMergeMainActivity extends Activity implements CvCameraViewList
     private static final String PROGRESS_MESSAGE            = "Running Algorithm Please Wait";
     private static final String CANT_CREATE_FOLDER          = "Couldn't create folder for app so the image wpuldnot be saved to phone";
     private static final String POSTIVE_DIALOG_BUTTON       = "OK";
+    private static final String SAVE_FILE                   = "Save File";
 
     // Camera
     private CameraBridgeViewBase    mOpenCvCameraView;
@@ -96,6 +100,7 @@ public class ImageMergeMainActivity extends Activity implements CvCameraViewList
     private ImageButton mTakePictureButton;
     private Button mMarkBackgroundButton;
     private Button mMarkForegroundButton;
+    private ToggleButton mMarkingToggleButton;
     private Button mDoneButton;
     private Button mMoveForegroundPixelsToBack;
     private Button mMoveForeground;
@@ -442,14 +447,8 @@ public class ImageMergeMainActivity extends Activity implements CvCameraViewList
      */
     private void InitializeMarkSegmentationView()
     {
-        // Make sure that thee camera has been disconnected
-        //mOpenCvCameraView.disableView();
-
-        // First remove the "take picture" button that we don't any more and replace it by a new "Done"  button
-
-
-        //mOpenCvCameraView.unSetCvCameraViewListener();
-
+        //Make the switch between the opencv listener and the new view in order to
+        // really disconnect from the thread that update the surface. this is done by keeping the surface holder in a new variable
         if(mTakePictureButton != null) {
             mNewSurfaceHolder = mOpenCvCameraView.getHolder();
             mOpenCvCameraView = null;
@@ -463,6 +462,8 @@ public class ImageMergeMainActivity extends Activity implements CvCameraViewList
 
         mDoneButton = new Button(this);
         mDoneButton.setText(DONE);
+        mDoneButton.setBackgroundResource(R.drawable.oval_button);
+        mDoneButton.setWidth(R.dimen.button_text_size);
         mDoneButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -480,6 +481,27 @@ public class ImageMergeMainActivity extends Activity implements CvCameraViewList
 
         // Second add the tools we need for image segmentation and set there position in the frame layout
 
+        mMarkingToggleButton = new ToggleButton(this);
+        mMarkingToggleButton.setText(BACKGROUND);
+        mMarkingToggleButton.setTextOn(FOREGROUND);
+        mMarkingToggleButton.setTextOff(BACKGROUND);
+        mMarkingToggleButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean markState) {
+
+                if(markState)
+                {
+                    mMark = MarkValues.Marking.FOREGROUND;
+                } else {
+                    mMark = MarkValues.Marking.BACKGROUND;
+                }
+            }
+        });
+        FrameLayout.LayoutParams frameLayoutParmasMarkToogle = new FrameLayout.LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT);
+        frameLayoutParmasMarkToogle.gravity = Gravity.CENTER | Gravity.TOP;
+        mMarkingToggleButton.setLayoutParams(frameLayoutParmasMarkToogle);
+
+        /*
         // Background Button
         mMarkBackgroundButton = new Button(this);
         mMarkBackgroundButton.setText(BACKGROUND);
@@ -509,11 +531,12 @@ public class ImageMergeMainActivity extends Activity implements CvCameraViewList
         FrameLayout.LayoutParams frameLayoutParmasForeground = new FrameLayout.LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT);
         frameLayoutParmasForeground.gravity = Gravity.RIGHT;
         mMarkForegroundButton.setLayoutParams(frameLayoutParmasForeground);
-
+        */
         // Third Add the buttons to the view
         FrameLayout frameMainLayout = (FrameLayout) findViewById(R.id.frame_main_layout);
-        frameMainLayout.addView(mMarkBackgroundButton);
-        frameMainLayout.addView(mMarkForegroundButton);
+        //frameMainLayout.addView(mMarkBackgroundButton);
+        //frameMainLayout.addView(mMarkForegroundButton);
+        frameMainLayout.addView(mMarkingToggleButton);
         frameMainLayout.addView(mDoneButton);
 
         // Forth Change the application stage to SEGMENTATION_MARK
@@ -541,6 +564,7 @@ public class ImageMergeMainActivity extends Activity implements CvCameraViewList
         mProgressBar.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
         mProgressBar.setProgress(0);
         mProgressBar.setMax(100);
+        mProgressBar.setCancelable(false);
         mProgressBar.show();
 
         //reset progress bar status
@@ -626,12 +650,13 @@ public class ImageMergeMainActivity extends Activity implements CvCameraViewList
     private void InitializeMoveForegroundAndEdit()
     {
         // Remove the unnecessary buttons
-        ViewGroup layout = (ViewGroup) mMarkBackgroundButton.getParent();
+        ViewGroup layout = (ViewGroup) mMarkingToggleButton.getParent();
         if(null!=layout)
         {
             //for safety only  as you are doing onClick
-            layout.removeView(mMarkBackgroundButton);
-            layout.removeView(mMarkForegroundButton);
+            //layout.removeView(mMarkBackgroundButton);
+            //layout.removeView(mMarkForegroundButton);
+            layout.removeView(mMarkingToggleButton);
         }
 
         // Add move extract foreground to background image button
@@ -722,10 +747,21 @@ public class ImageMergeMainActivity extends Activity implements CvCameraViewList
         // Pop up a dialog for the user to insert the image name
         // Build a dialog box
         AlertDialog.Builder alert = new AlertDialog.Builder(v.getContext());
+
+        // Title
+        final TextView title = new TextView(v.getContext());
+        title.setText(SAVE_FILE);
+
+        // File name input
         final EditText inputImageName = new EditText(v.getContext());
+        final LayoutParams lparams = new LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.MATCH_PARENT);
+        inputImageName.setLayoutParams(lparams);
         inputImageName.setTag(1);
 
+        // Create a linear layout to hold the views in the dialog
         LinearLayout dialogLayout = new LinearLayout(v.getContext());
+        dialogLayout.setOrientation(LinearLayout.VERTICAL);
+        dialogLayout.addView(title);
         dialogLayout.addView(inputImageName);
         alert.setView(dialogLayout);
 

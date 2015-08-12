@@ -14,8 +14,8 @@
         opencv:camera_id="any" />
 
     <ImageButton
-        android:layout_width="191dp"
-        android:layout_height="83dp"
+        android:layout_width="@dimen/tkae_picture_size"
+        android:layout_height="@dimen/tkae_picture_size"
         android:text="New Button"
         android:id="@+id/btnTakePicture"
         android:layout_gravity="center_horizontal|bottom"
