@@ -1,7 +1,9 @@
 package org.opencv.android;
 
+import java.io.IOException;
 import java.util.List;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.graphics.ImageFormat;
 import android.graphics.SurfaceTexture;
@@ -10,8 +12,10 @@ import android.hardware.Camera.PreviewCallback;
 import android.os.Build;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.SurfaceHolder;
 import android.view.ViewGroup.LayoutParams;
 
+import org.opencv.R;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
 import org.opencv.core.Size;
@@ -39,7 +43,7 @@ public class JavaCameraView extends CameraBridgeViewBase implements PreviewCallb
 
     protected Camera mCamera;
     protected JavaCameraFrame[] mCameraFrame;
-    private SurfaceTexture mSurfaceTexture;
+    public SurfaceTexture mSurfaceTexture;
 
     public static class JavaCameraSizeAccessor implements ListItemAccessor {
 
@@ -192,9 +196,11 @@ public class JavaCameraView extends CameraBridgeViewBase implements PreviewCallb
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
                         mSurfaceTexture = new SurfaceTexture(MAGIC_TEXTURE_ID);
                         mCamera.setPreviewTexture(mSurfaceTexture);
-                    } else
-                       mCamera.setPreviewDisplay(null);
-
+                        //mCamera.setPreviewDisplay(getHolder());
+                        Log.d(TAG,"mSurfaceTeture created");
+                    } else {
+                        mCamera.setPreviewDisplay(null);
+                    }
                     /* Finally we are ready to start the preview */
                     Log.d(TAG, "startPreview");
                     mCamera.startPreview();
@@ -211,6 +217,7 @@ public class JavaCameraView extends CameraBridgeViewBase implements PreviewCallb
     }
 
     protected void releaseCamera() {
+        Log.d(TAG,"release camera");
         synchronized (this) {
             if (mCamera != null) {
                 mCamera.stopPreview();
@@ -288,6 +295,7 @@ public class JavaCameraView extends CameraBridgeViewBase implements PreviewCallb
     @Override
     public void onPreviewFrame(byte[] frame, Camera arg1) {
         Log.d(TAG, "Preview Frame received. Frame size: " + frame.length);
+
         synchronized (this) {
             mFrameChain[mChainIdx].put(0, 0, frame);
             mCameraFrameReady = true;

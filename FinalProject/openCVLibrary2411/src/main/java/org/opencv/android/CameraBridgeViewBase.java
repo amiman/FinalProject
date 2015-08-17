@@ -55,6 +55,9 @@ public abstract class CameraBridgeViewBase extends SurfaceView implements Surfac
     public static final int CAMERA_ID_BACK  = 99;
     public static final int CAMERA_ID_FRONT = 98;
 
+
+    public SurfaceHolder mNewHolder;
+
     public CameraBridgeViewBase(Context context, int cameraId) {
         super(context);
         mCameraIndex = cameraId;
@@ -209,6 +212,7 @@ public abstract class CameraBridgeViewBase extends SurfaceView implements Surfac
 
     public void surfaceCreated(SurfaceHolder holder) {
         /* Do nothing. Wait until surfaceChanged delivered */
+        //mHolder = holder;
     }
 
     public void surfaceDestroyed(SurfaceHolder holder) {
@@ -407,6 +411,7 @@ public abstract class CameraBridgeViewBase extends SurfaceView implements Surfac
 
         if (bmpValid && mCacheBitmap != null) {
             Canvas canvas = getHolder().lockCanvas();
+            //Canvas canvas = mHolder.lockCanvas();
             if (canvas != null) {
                 canvas.drawColor(0, android.graphics.PorterDuff.Mode.CLEAR);
                 Log.d(TAG, "mStretch value: " + mScale);
@@ -430,6 +435,7 @@ public abstract class CameraBridgeViewBase extends SurfaceView implements Surfac
                     mFpsMeter.draw(canvas, 20, 30);
                 }
                 getHolder().unlockCanvasAndPost(canvas);
+
             }
         }
     }

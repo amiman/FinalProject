@@ -58,7 +58,8 @@ public class Data {
     }
     public void SetCurrentImage(Mat image)
     {
-        mCurrentImage = image.clone();
+        //mCurrentImage = image.clone();
+        mCurrentImage = image;
     }
 
     public void SetFirstImage()

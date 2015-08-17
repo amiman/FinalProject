@@ -2,6 +2,7 @@ package amitay.nachmani.image.merge;
 
 import org.opencv.android.BaseLoaderCallback;
 import org.opencv.android.CameraBridgeViewBase.CvCameraViewFrame;
+import org.opencv.android.JavaCameraView;
 import org.opencv.android.LoaderCallbackInterface;
 import org.opencv.android.OpenCVLoader;
 import org.opencv.android.Utils;
@@ -28,6 +29,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Rect;
+import android.graphics.SurfaceTexture;
 import android.hardware.Camera;
 import android.os.Bundle;
 import android.os.Environment;
@@ -92,6 +94,7 @@ public class ImageMergeMainActivity extends Activity implements CvCameraViewList
     private ArrayList<MovementTracker> mTracks;
 
     // Image
+    private Mat mMergeImage;
     private Bitmap mBitmap;
     private float mScale = 0;
 
@@ -111,6 +114,7 @@ public class ImageMergeMainActivity extends Activity implements CvCameraViewList
     private ProgressDialog mProgressBar;
     private int mProgressBarStatus;
     private Handler mProgressBarHandler;
+
 
     /**
      * BaseLoaderCallback:
@@ -208,7 +212,6 @@ public class ImageMergeMainActivity extends Activity implements CvCameraViewList
         mOpenCvCameraView.setCvCameraViewListener(this);
 
         // Get Button
-        //mTakePictureButton = (Button) findViewById(R.id.btnTakePicture);
         mTakePictureButton = (ImageButton) findViewById(R.id.btnTakePicture);
         mTakePictureButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -339,12 +342,16 @@ public class ImageMergeMainActivity extends Activity implements CvCameraViewList
      * It gets an input frame and manipulate it and then sending the manipulated results to be displayed.
      * This manipulation is a function of the application stage.
      *
+     * NOTE: VERY IMPORTANT this function can't do a lot of processing and must be very efficient
+     * if not the surface view will be abandoned and the application will crash
+     *
      * @param inputFrame
      * @return
      */
     public Mat onCameraFrame(CvCameraViewFrame inputFrame) {
 
         // Check application stage
+
         if(mApplicationStage == ApplicationStage.INITIALIZATION)
         {
             Mat returnedImage = inputFrame.rgba();
@@ -358,6 +365,7 @@ public class ImageMergeMainActivity extends Activity implements CvCameraViewList
 
             // Initialize mData
             mData.Initialize(returnedImage.height(), returnedImage.width(), returnedImage.type());
+            mMergeImage = new Mat(mFrameWidth, mFrameHeight,MAT_TYPE);
 
             // Save current frame
             mData.SetCurrentImage(returnedImage);
@@ -394,20 +402,19 @@ public class ImageMergeMainActivity extends Activity implements CvCameraViewList
         } else if(mApplicationStage == ApplicationStage.SECOND_IMAGE) {
 
             // When we present the image we give the first image as a reference by merging the first image with high opacity
-
-            Mat returnedImage = inputFrame.rgba();
+            //Mat returnedImage = inputFrame.rgba();
 
             // Save current frame
-            mData.SetCurrentImage(returnedImage);
+            mData.SetCurrentImage(inputFrame.rgba());
 
             // Merge the current frame and the first image
-            Mat mergeImage = new Mat(mFrameWidth, mFrameHeight,MAT_TYPE);
+            //Mat mergeImage = new Mat(mFrameWidth, mFrameHeight,MAT_TYPE);
             double alpha = 0.3;
             double beta = 1- alpha;
             double gamma = 0;
-            Core.addWeighted(mData.GetFirstImage(), alpha, mData.GetCurrentImage(), beta, gamma, mergeImage);
+            Core.addWeighted(mData.GetFirstImage(), alpha, mData.GetCurrentImage(), beta, gamma, mMergeImage);
 
-            return  mergeImage;
+            return mMergeImage;
         } else if(mApplicationStage == ApplicationStage.SEGMENTATION_MARK_INITIALIZATION) {
 
             // Show the combination between the second image and the marked areas
@@ -418,7 +425,6 @@ public class ImageMergeMainActivity extends Activity implements CvCameraViewList
             mOpenCvCameraView.disableView();
 
             //InitializeMarkSegmentationView();
-
             return combinedMat;
         }
 
@@ -1125,6 +1131,8 @@ public class ImageMergeMainActivity extends Activity implements CvCameraViewList
             canvas = mNewSurfaceHolder.lockCanvas();
         }
 
+        //canvas = mMySurfaceView.getHolder().lockCanvas();
+
         if (canvas != null) {
             canvas.drawColor(0, android.graphics.PorterDuff.Mode.CLEAR);
             Log.d(TAG, "mStretch value: " + mScale);
@@ -1143,11 +1151,13 @@ public class ImageMergeMainActivity extends Activity implements CvCameraViewList
                                 (canvas.getHeight() - mBitmap.getHeight()) / 2 + mBitmap.getHeight()), null);
             }
 
+
             if(mOpenCvCameraView != null) {
                 mOpenCvCameraView.getHolder().unlockCanvasAndPost(canvas);
             } else {
                 mNewSurfaceHolder.unlockCanvasAndPost(canvas);
             }
+            //mMySurfaceView.getHolder().unlockCanvasAndPost(canvas);
         }
     }
 
