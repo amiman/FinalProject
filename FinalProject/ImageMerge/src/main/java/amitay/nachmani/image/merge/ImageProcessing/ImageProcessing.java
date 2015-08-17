@@ -319,6 +319,9 @@ public class ImageProcessing {
             }
         }
 
+        // Build the extracted foreground matrix
+        data.BuildExtractedForegroundMatrix();
+
     }
 
     /**

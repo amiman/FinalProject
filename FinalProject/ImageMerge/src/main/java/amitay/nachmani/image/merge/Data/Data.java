@@ -1,6 +1,8 @@
 package amitay.nachmani.image.merge.Data;
 
 
+import android.util.Log;
+
 import org.opencv.core.Core;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
@@ -9,6 +11,7 @@ import org.opencv.core.Scalar;
 
 import java.util.ArrayList;
 
+import amitay.nachmani.image.merge.General.GeneralInfo;
 import amitay.nachmani.image.merge.General.MarkValues;
 import amitay.nachmani.image.merge.ImageProcessing.ColorPoint;
 import amitay.nachmani.image.merge.ImageProcessing.PointStatus;
@@ -39,6 +42,7 @@ public class Data {
 
     // Extract foreground
     private ArrayList<ColorPoint> mExtractForeground;
+    private ColorPoint[][] mExtractForegroundMat;
     private Point mCenterOfGravity;
     private int mRadius;
 
@@ -247,6 +251,24 @@ public class Data {
         }
 
         // Find out if this point is in the extracted foreground points by a radius of mRadius
+        int[] matCoordinate = new int[2];
+        matCoordinate[0] = (int)(coordinate[0] - mMinForegroundPoint.x);
+        matCoordinate[1] = (int)(coordinate[1] - mMinForegroundPoint.y);
+        
+        for(int i = matCoordinate[1] - mRadius ; i <= matCoordinate[1] + mRadius ; i++)
+        {
+            for(int j = matCoordinate[0] - mRadius ; j <= matCoordinate[0] + mRadius ; j++)
+            {
+                if(i >= 0 && i <= mExtractForegroundMat.length && j >= 0 && j <= mExtractForegroundMat[0].length)
+                {
+                    if (mExtractForegroundMat[i][j] != null) {
+                        mExtractForegroundMat[i][j].mStatus = PointStatus.UNACTIVE;
+                    }
+                }
+            }
+        }
+
+        /*
         for(ColorPoint point : mExtractForeground)
         {
             // Calculate the distance between the point and x and y use manhattan distance
@@ -263,7 +285,7 @@ public class Data {
                 point.mStatus = PointStatus.UNACTIVE;
             }
         }
-
+        */
         //double newX = (double)(x - mCenterOfGravity.x);
         //double newY = (double)(y - mCenterOfGravity.y);
         /*
@@ -448,4 +470,23 @@ public class Data {
     }
 
 
+    /**
+     * BuildExtractedForegroundMatrix:
+     *
+     * Builds a matrix with a reference to the color points this is done foe easy way to delete points in a radius.
+     * we don't use this for the coloring itself becaues the array liat is faster when there is not a lot of points in the
+     * block rectangle
+     */
+    public void BuildExtractedForegroundMatrix()
+    {
+        // Build the extracted foregroundPoint Mat for easy of seraching
+        //mExtractForegroundMat = new Mat((int)(mMaxForegroundPoint.y -  mMinForegroundPoint.y),(int)(mMaxForegroundPoint.x -  mMinForegroundPoint.x), ImageMergeMainActivity.MAT_TYPE);
+        mExtractForegroundMat = new ColorPoint[(int)(mMaxForegroundPoint.y -  mMinForegroundPoint.y)+1][(int)(mMaxForegroundPoint.x -  mMinForegroundPoint.x)+1];
+
+        // Go over all the points in mExtractForeground an connect them to the matrix
+        for(ColorPoint point : mExtractForeground)
+        {
+            mExtractForegroundMat[(int)(point.y-mMinForegroundPoint.y)][(int)(point.x-mMinForegroundPoint.x)] = point;
+        }
+    }
 }
