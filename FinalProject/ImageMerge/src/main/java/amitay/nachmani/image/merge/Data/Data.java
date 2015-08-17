@@ -254,12 +254,12 @@ public class Data {
         int[] matCoordinate = new int[2];
         matCoordinate[0] = (int)(coordinate[0] - mMinForegroundPoint.x);
         matCoordinate[1] = (int)(coordinate[1] - mMinForegroundPoint.y);
-        
+
         for(int i = matCoordinate[1] - mRadius ; i <= matCoordinate[1] + mRadius ; i++)
         {
             for(int j = matCoordinate[0] - mRadius ; j <= matCoordinate[0] + mRadius ; j++)
             {
-                if(i >= 0 && i <= mExtractForegroundMat.length && j >= 0 && j <= mExtractForegroundMat[0].length)
+                if(i >= 0 && i < mExtractForegroundMat.length && j >= 0 && j < mExtractForegroundMat[0].length)
                 {
                     if (mExtractForegroundMat[i][j] != null) {
                         mExtractForegroundMat[i][j].mStatus = PointStatus.UNACTIVE;
