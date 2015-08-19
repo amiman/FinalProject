@@ -36,6 +36,7 @@ import android.os.Environment;
 import android.os.Handler;
 import android.support.v4.view.MotionEventCompat;
 import android.util.Log;
+import android.view.Display;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -110,6 +111,12 @@ public class ImageMergeMainActivity extends Activity implements CvCameraViewList
     private String[] mImageName;
     private SurfaceHolder mNewSurfaceHolder;
 
+    // Screen
+    private int mScreenWidth;
+    private int mScreenHeight;
+    private float mScreenToImageCorrectionWidth;
+    private float mScreenToImageCorrectionHight;
+
     // Progress bar
     private ProgressDialog mProgressBar;
     private int mProgressBarStatus;
@@ -128,6 +135,7 @@ public class ImageMergeMainActivity extends Activity implements CvCameraViewList
                 case LoaderCallbackInterface.SUCCESS:
                 {
                     Log.i(TAG, "OpenCV loaded successfully");
+                    BasicOnCreate();
                     if(mOpenCvCameraView != null) {
                         mOpenCvCameraView.enableView();
                     }
@@ -139,6 +147,20 @@ public class ImageMergeMainActivity extends Activity implements CvCameraViewList
             }
         }
     };
+
+    /**
+     * BasicOnCreate:
+     *
+     * only after loading the opencv library we can initialize the camera
+     *
+     */
+    private void BasicOnCreate() {
+
+        //setContentView(R.layout.main_surface_view);
+        mOpenCvCameraView = (CameraBridgeViewBase) findViewById(R.id.tutorial1_activity_java_surface_view);
+        mOpenCvCameraView.setVisibility(SurfaceView.VISIBLE);
+        mOpenCvCameraView.setCvCameraViewListener(this);
+    }
 
     public ImageMergeMainActivity() {
         Log.i(TAG, "Instantiated new " + this.getClass());
@@ -199,17 +221,27 @@ public class ImageMergeMainActivity extends Activity implements CvCameraViewList
         Log.d(GeneralInfo.DEBUG_TAG, "called onCreate");
         super.onCreate(savedInstanceState);
         OpenCVLoader.initAsync(OpenCVLoader.OPENCV_VERSION_2_4_9, this, mLoaderCallback);
-        /*if (!OpenCVLoader.initDebug()) {
+        if (!OpenCVLoader.initDebug()) {
             Log.i(TAG, "problem loading");
-        }*/
+        }
 
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
         // Set camera view base
+
         setContentView(R.layout.main_surface_view);
+        /*
         mOpenCvCameraView = (CameraBridgeViewBase) findViewById(R.id.tutorial1_activity_java_surface_view);
         mOpenCvCameraView.setVisibility(SurfaceView.VISIBLE);
         mOpenCvCameraView.setCvCameraViewListener(this);
+        */
+
+        // Get screen dimesions
+        Display display = getWindowManager().getDefaultDisplay();
+        android.graphics.Point size = new android.graphics.Point();
+        display.getSize(size);
+        mScreenWidth = size.x;
+        mScreenHeight = size.y;
 
         // Get Button
         mTakePictureButton = (ImageButton) findViewById(R.id.btnTakePicture);
@@ -359,6 +391,10 @@ public class ImageMergeMainActivity extends Activity implements CvCameraViewList
             // Initialize width and height
             mFrameHeight = returnedImage.height();
             mFrameWidth =  returnedImage.width();
+
+            // Initialize correction values
+            mScreenToImageCorrectionHight = (float) Math.floor((mScreenHeight - mFrameHeight)/2);
+            mScreenToImageCorrectionWidth = (float) Math.floor((mScreenWidth - mFrameWidth)/2);
 
             // Initialize scale
             InitializeScale();
@@ -926,8 +962,13 @@ public class ImageMergeMainActivity extends Activity implements CvCameraViewList
         // If this is stage of marking start to mark the pixels that are marked
         int action = MotionEventCompat.getActionMasked(event);
 
-        float x;
-        float y;
+        // Get the coordinate of the touch event
+        float x = event.getAxisValue(MotionEvent.AXIS_X);
+        float y = event.getAxisValue(MotionEvent.AXIS_Y);
+
+        // Correct coordinate using the screen coordinate
+        x = x - mScreenToImageCorrectionWidth;
+        y = y - mScreenToImageCorrectionHight;
 
         switch(action) {
             case (MotionEvent.ACTION_DOWN) :
@@ -937,20 +978,12 @@ public class ImageMergeMainActivity extends Activity implements CvCameraViewList
                 // Create a new tracker for the track
                 mTracker = new MovementTracker(mMark);
 
-                // Get the coordinate of the touch event
-                x = event.getAxisValue(MotionEvent.AXIS_X);
-                y = event.getAxisValue(MotionEvent.AXIS_Y);
-
                 // Add the point to the tracker
                 mTracker.AddPoint(new Point(x, y));
 
                 return true;
 
             case (MotionEvent.ACTION_MOVE) :
-
-                // Get the coordinate of the touch event
-                x = event.getAxisValue(MotionEvent.AXIS_X);
-                y = event.getAxisValue(MotionEvent.AXIS_Y);
 
                 // Add the point to the tracker
                 mTracker.AddPoint(new Point(x, y));
@@ -960,10 +993,6 @@ public class ImageMergeMainActivity extends Activity implements CvCameraViewList
             case (MotionEvent.ACTION_UP) :
 
                 // Stop tracking movement
-
-                // Get the coordinate of the touch event
-                x = event.getAxisValue(MotionEvent.AXIS_X);
-                y = event.getAxisValue(MotionEvent.AXIS_Y);
 
                 // Add the point to the tracker
                 mTracker.AddPoint(new Point(x, y));
@@ -984,8 +1013,13 @@ public class ImageMergeMainActivity extends Activity implements CvCameraViewList
     private boolean MoveForegroundAndEditTouchEvent(MotionEvent event) {
         int action = MotionEventCompat.getActionMasked(event);
 
-        float x;
-        float y;
+        // Get the coordinate of the touch event
+        float x = event.getAxisValue(MotionEvent.AXIS_X);
+        float y = event.getAxisValue(MotionEvent.AXIS_Y);
+
+        // Correct coordinate using the screen coordinate
+        x = x - mScreenToImageCorrectionWidth;
+        y = y - mScreenToImageCorrectionHight;
 
         switch(action) {
             case (MotionEvent.ACTION_DOWN) :
@@ -994,10 +1028,6 @@ public class ImageMergeMainActivity extends Activity implements CvCameraViewList
 
                 // Initialize new deletion track
                 mTracker = new MovementTracker(MarkValues.Marking.NO_MARK);
-
-                // Get the coordinate of the touch event
-                x = event.getAxisValue(MotionEvent.AXIS_X);
-                y = event.getAxisValue(MotionEvent.AXIS_Y);
 
                 // Add the current point to unactive track
                 mTracker.AddPoint(new Point(x,y));
@@ -1008,20 +1038,12 @@ public class ImageMergeMainActivity extends Activity implements CvCameraViewList
 
                 if(mButtonAction == ButtonAction.MOVE_FOREGROUND) { return true; }
 
-                // Get the coordinate of the touch event
-                x = event.getAxisValue(MotionEvent.AXIS_X);
-                y = event.getAxisValue(MotionEvent.AXIS_Y);
-
                 // Add the current point to unactive track
                 mTracker.AddPoint(new Point(x, y));
 
                 return true;
 
             case (MotionEvent.ACTION_UP) :
-
-                // Get the coordinate of the touch event
-                x = event.getAxisValue(MotionEvent.AXIS_X);
-                y = event.getAxisValue(MotionEvent.AXIS_Y);
 
                 // Depending on the current button action decide what to do
                 if(mButtonAction == ButtonAction.MOVE_FOREGROUND) {

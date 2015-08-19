@@ -9,5 +9,6 @@
         android:id="@+id/textView2"
         android:gravity="center"
         android:textStyle="bold|italic"
-        android:textSize="@dimen/title_text_size" />
+        android:textSize="@dimen/title_text_size"
+        android:background="@drawable/very_small_theme" />
 </LinearLayout>

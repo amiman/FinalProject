@@ -1,6 +1,7 @@
 package amitay.nachmani.image.merge.Adapters;
 
 import android.content.Context;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -56,12 +57,14 @@ public class ImagePagerAdapter extends ArrayAdapter<File> {
 
         // Show only the name of the image and not the full path
         String[] pathParts = mFiles.get(position).toString().split("/");
+        fileName.setGravity(Gravity.CENTER);
         fileName.setText(pathParts[pathParts.length - 1]);
 
         // Get last modified date
-        DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+        DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
         Date modifedDate = new Date(mFiles.get(position).lastModified());
         String formatedModifedDate = df.format(modifedDate);
+        fileDate.setGravity(Gravity.CENTER);
         fileDate.setText(formatedModifedDate);
 
         return rowView;
