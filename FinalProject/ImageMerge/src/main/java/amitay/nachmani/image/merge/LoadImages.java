@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v4.util.LruCache;
 import android.support.v4.view.ViewPager;
 import android.view.Gravity;
@@ -172,14 +173,23 @@ public class LoadImages extends ListActivity {
      */
     private ArrayList<File> GetImagesPaths()
     {
-        File imageDir = new File(GeneralInfo.APPLICATION_PATH);
-        File[] filesArray = imageDir.listFiles();
         ArrayList<File> files = new ArrayList<File>();
-        for(int i = 0 ; i < filesArray.length ; i++)
-        {
-            files.add(filesArray[i]);
-        }
 
+        // check if the folder exists
+        if(new File(GeneralInfo.APPLICATION_PATH).exists()) {
+            File imageDir = new File(GeneralInfo.APPLICATION_PATH);
+            File[] filesArray = imageDir.listFiles();
+            for (int i = 0; i < filesArray.length; i++) {
+                files.add(filesArray[i]);
+            }
+
+
+        } else {
+
+            // Create the folder
+            new File(GeneralInfo.APPLICATION_PATH).mkdir();
+
+        }
         return files;
     }
 

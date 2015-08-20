@@ -158,6 +158,7 @@ public class ImageMergeMainActivity extends Activity implements CvCameraViewList
 
         //setContentView(R.layout.main_surface_view);
         mOpenCvCameraView = (CameraBridgeViewBase) findViewById(R.id.tutorial1_activity_java_surface_view);
+        mOpenCvCameraView.setMaxFrameSize(1000,1000);
         mOpenCvCameraView.setVisibility(SurfaceView.VISIBLE);
         mOpenCvCameraView.setCvCameraViewListener(this);
     }
@@ -392,12 +393,12 @@ public class ImageMergeMainActivity extends Activity implements CvCameraViewList
             mFrameHeight = returnedImage.height();
             mFrameWidth =  returnedImage.width();
 
-            // Initialize correction values
-            mScreenToImageCorrectionHight = (float) Math.floor((mScreenHeight - mFrameHeight)/2);
-            mScreenToImageCorrectionWidth = (float) Math.floor((mScreenWidth - mFrameWidth)/2);
-
             // Initialize scale
             InitializeScale();
+
+            // Initialize correction values
+            mScreenToImageCorrectionHight = (float) Math.floor((mScreenHeight/mScale - mFrameHeight)/2);
+            mScreenToImageCorrectionWidth = (float) Math.floor((mScreenWidth/mScale - mFrameWidth)/2);
 
             // Initialize mData
             mData.Initialize(returnedImage.height(), returnedImage.width(), returnedImage.type());
@@ -454,14 +455,14 @@ public class ImageMergeMainActivity extends Activity implements CvCameraViewList
         } else if(mApplicationStage == ApplicationStage.SEGMENTATION_MARK_INITIALIZATION) {
 
             // Show the combination between the second image and the marked areas
-            Mat combinedMat = ImageProcessing.DrawTracks(mData.GetSecondImage(),mTracks);
+            //Mat combinedMat = ImageProcessing.DrawTracks(mData.GetSecondImage(),mTracks);
 
             // We don't need the camera any more so stop camera
             mOpenCvCameraView.disableFpsMeter();
             mOpenCvCameraView.disableView();
 
             //InitializeMarkSegmentationView();
-            return combinedMat;
+            return mData.GetSecondImage();
         }
 
 
@@ -858,6 +859,7 @@ public class ImageMergeMainActivity extends Activity implements CvCameraViewList
             // Draw current image
             DrawMat(mData.GetSecondImage());
 
+            InitializeMarkSegmentationView();
         }
     }
 
@@ -963,8 +965,8 @@ public class ImageMergeMainActivity extends Activity implements CvCameraViewList
         int action = MotionEventCompat.getActionMasked(event);
 
         // Get the coordinate of the touch event
-        float x = event.getAxisValue(MotionEvent.AXIS_X);
-        float y = event.getAxisValue(MotionEvent.AXIS_Y);
+        float x = event.getAxisValue(MotionEvent.AXIS_X)/mScale;
+        float y = event.getAxisValue(MotionEvent.AXIS_Y)/mScale;
 
         // Correct coordinate using the screen coordinate
         x = x - mScreenToImageCorrectionWidth;
@@ -1014,8 +1016,8 @@ public class ImageMergeMainActivity extends Activity implements CvCameraViewList
         int action = MotionEventCompat.getActionMasked(event);
 
         // Get the coordinate of the touch event
-        float x = event.getAxisValue(MotionEvent.AXIS_X);
-        float y = event.getAxisValue(MotionEvent.AXIS_Y);
+        float x = event.getAxisValue(MotionEvent.AXIS_X)/mScale;
+        float y = event.getAxisValue(MotionEvent.AXIS_Y)/mScale;
 
         // Correct coordinate using the screen coordinate
         x = x - mScreenToImageCorrectionWidth;
