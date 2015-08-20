@@ -454,9 +454,6 @@ public class ImageMergeMainActivity extends Activity implements CvCameraViewList
             return mMergeImage;
         } else if(mApplicationStage == ApplicationStage.SEGMENTATION_MARK_INITIALIZATION) {
 
-            // Show the combination between the second image and the marked areas
-            //Mat combinedMat = ImageProcessing.DrawTracks(mData.GetSecondImage(),mTracks);
-
             // We don't need the camera any more so stop camera
             mOpenCvCameraView.disableFpsMeter();
             mOpenCvCameraView.disableView();
@@ -859,6 +856,7 @@ public class ImageMergeMainActivity extends Activity implements CvCameraViewList
             // Draw current image
             DrawMat(mData.GetSecondImage());
 
+            // Initialize mark segmentation view
             InitializeMarkSegmentationView();
         }
     }

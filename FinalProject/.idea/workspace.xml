@@ -39,91 +39,7 @@
     <favorites_list name="FinalProject" />
   </component>
   <component name="FileEditorManager">
-    <leaf>
-      <file leaf-file-name="ImageMergeMainActivity.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/ImageMerge/src/main/java/amitay/nachmani/image/merge/ImageMergeMainActivity.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="2.3259053">
-              <caret line="861" column="45" selection-start-line="861" selection-start-column="45" selection-end-line="861" selection-end-column="45" />
-              <folding>
-                <element signature="docComment;field#mLoaderCallback#0;class#ImageMergeMainActivity#0" expanded="false" />
-                <element signature="class#4793:5398" expanded="false" />
-                <element signature="method#onManagerConnected#0;class#4793:5398" expanded="false" />
-                <element signature="docComment;method#BasicOnCreate#0;class#ImageMergeMainActivity#0" expanded="false" />
-                <element signature="method#BasicOnCreate#0;class#ImageMergeMainActivity#0" expanded="false" />
-                <element signature="method#onRestoreInstanceState#0;class#ImageMergeMainActivity#0" expanded="false" />
-                <element signature="method#onRestart#0;class#ImageMergeMainActivity#0" expanded="false" />
-                <element signature="method#onStart#0;class#ImageMergeMainActivity#0" expanded="false" />
-                <element signature="method#onStop#0;class#ImageMergeMainActivity#0" expanded="false" />
-                <element signature="method#onActivityReenter#0;class#ImageMergeMainActivity#0" expanded="false" />
-                <element signature="method#onWindowFocusChanged#0;class#ImageMergeMainActivity#0" expanded="false" />
-                <element signature="docComment;method#onCreate#0;class#ImageMergeMainActivity#0" expanded="false" />
-                <element signature="method#onCreate#0;class#ImageMergeMainActivity#0" expanded="false" />
-                <element signature="method#onPause#0;class#ImageMergeMainActivity#0" expanded="false" />
-                <element signature="method#onResume#0;class#ImageMergeMainActivity#0" expanded="false" />
-                <element signature="method#onDestroy#0;class#ImageMergeMainActivity#0" expanded="false" />
-                <element signature="docComment;method#onCameraViewStarted#0;class#ImageMergeMainActivity#0" expanded="false" />
-                <element signature="docComment;method#onCameraViewStopped#0;class#ImageMergeMainActivity#0" expanded="false" />
-                <element signature="method#onCameraViewStopped#0;class#ImageMergeMainActivity#0" expanded="false" />
-                <element signature="docComment;method#onCameraFrame#0;class#ImageMergeMainActivity#0" expanded="false" />
-                <element signature="e#13894#13964#0" expanded="false" />
-                <element signature="e#14483#14595#0" expanded="false" />
-                <element signature="e#14751#14797#0" expanded="false" />
-                <element signature="docComment;method#InitializeScale#0;class#ImageMergeMainActivity#0" expanded="false" />
-                <element signature="method#InitializeScale#0;class#ImageMergeMainActivity#0" expanded="false" />
-                <element signature="docComment;method#InitializeMarkSegmentationView#0;class#ImageMergeMainActivity#0" expanded="false" />
-                <element signature="method#InitializeMarkSegmentationView#0;class#ImageMergeMainActivity#0" expanded="false" />
-                <element signature="e#16572#16646#0" expanded="false" />
-                <element signature="e#20788#20837#0" expanded="false" />
-                <element signature="docComment;method#InitializeRunSegmentationAlgorithmView#0;class#ImageMergeMainActivity#0" expanded="false" />
-                <element signature="method#InitializeRunSegmentationAlgorithmView#0;class#ImageMergeMainActivity#0" expanded="false" />
-                <element signature="docComment;method#InitializeTracksForDeletionTracks#0;class#ImageMergeMainActivity#0" expanded="false" />
-                <element signature="method#InitializeTracksForDeletionTracks#0;class#ImageMergeMainActivity#0" expanded="false" />
-                <element signature="method#InitializeMoveForegroundAndEdit#0;class#ImageMergeMainActivity#0" expanded="false" />
-                <element signature="e#24953#24996#0" expanded="false" />
-                <element signature="docComment;method#SaveImageInitilazation#0;class#ImageMergeMainActivity#0" expanded="false" />
-                <element signature="method#SaveImageInitilazation#0;class#ImageMergeMainActivity#0" expanded="false" />
-                <element signature="e#28128#28204#0" expanded="false" />
-                <element signature="docComment;method#PopDialogFileName#0;class#ImageMergeMainActivity#0" expanded="false" />
-                <element signature="method#PopDialogFileName#0;class#ImageMergeMainActivity#0" expanded="false" />
-                <element signature="e#28524#28580#0" expanded="false" />
-                <element signature="docComment;method#SaveImageToData#0;class#ImageMergeMainActivity#0" expanded="false" />
-                <element signature="docComment;method#onTouchEvent#0;class#ImageMergeMainActivity#0" expanded="false" />
-                <element signature="method#onTouchEvent#0;class#ImageMergeMainActivity#0" expanded="false" />
-                <element signature="docComment;method#SegmentationTouchEvent#0;class#ImageMergeMainActivity#0" expanded="false" />
-                <element signature="method#SegmentationTouchEvent#0;class#ImageMergeMainActivity#0" expanded="false" />
-                <element signature="e#34957#34981#0" expanded="false" />
-                <element signature="e#35461#35486#0" expanded="false" />
-                <element signature="method#MoveForegroundAndEditTouchEvent#0;class#ImageMergeMainActivity#0" expanded="false" />
-                <element signature="docComment;method#DrawNewTracksOnView#0;class#ImageMergeMainActivity#0" expanded="false" />
-                <element signature="method#DrawNewTracksOnView#0;class#ImageMergeMainActivity#0" expanded="false" />
-                <element signature="docComment;method#DrawAlgorithmResult#0;class#ImageMergeMainActivity#0" expanded="false" />
-                <element signature="method#DrawAlgorithmResult#0;class#ImageMergeMainActivity#0" expanded="false" />
-                <element signature="docComment;method#DrawMat#0;class#ImageMergeMainActivity#0" expanded="false" />
-                <element signature="method#DrawMat#0;class#ImageMergeMainActivity#0" expanded="false" />
-                <element signature="docComment;method#DisplayBitmap#0;class#ImageMergeMainActivity#0" expanded="false" />
-                <element signature="method#DisplayBitmap#0;class#ImageMergeMainActivity#0" expanded="false" />
-                <element signature="docComment;method#MemoryChecker#0;class#ImageMergeMainActivity#0" expanded="false" />
-                <element signature="method#MemoryChecker#0;class#ImageMergeMainActivity#0" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="CameraBridgeViewBase.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/openCVLibrary2411/src/main/java/org/opencv/android/CameraBridgeViewBase.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="409" column="9" selection-start-line="409" selection-start-column="9" selection-end-line="409" selection-end-column="9" />
-              <folding>
-                <element signature="e#9449#9450#0" expanded="true" />
-                <element signature="e#9481#9482#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <leaf />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -3031,7 +2947,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32993197" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.37244898" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -3044,10 +2960,10 @@
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4047619" sideWeight="0.48335856" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Captures" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32980332" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Android" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.34183672" sideWeight="0.48487142" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.1734694" sideWeight="0.48487142" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4319728" sideWeight="0.50907713" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2980333" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2980333" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24962178" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
@@ -3518,7 +3434,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/openCVLibrary2411/src/main/java/org/opencv/android/CameraBridgeViewBase.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
+        <state vertical-scroll-proportion="0.18558952">
           <caret line="409" column="9" selection-start-line="409" selection-start-column="9" selection-end-line="409" selection-end-column="9" />
           <folding>
             <element signature="e#9449#9450#0" expanded="true" />
@@ -3529,8 +3445,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/ImageMerge/src/main/java/amitay/nachmani/image/merge/ImageMergeMainActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="2.3259053">
-          <caret line="861" column="45" selection-start-line="861" selection-start-column="45" selection-end-line="861" selection-end-column="45" />
+        <state vertical-scroll-proportion="6.941048">
+          <caret line="1214" column="5" selection-start-line="1214" selection-start-column="5" selection-end-line="1214" selection-end-column="5" />
           <folding>
             <element signature="docComment;field#mLoaderCallback#0;class#ImageMergeMainActivity#0" expanded="false" />
             <element signature="class#4793:5398" expanded="false" />
@@ -3552,6 +3468,7 @@
             <element signature="docComment;method#onCameraViewStopped#0;class#ImageMergeMainActivity#0" expanded="false" />
             <element signature="method#onCameraViewStopped#0;class#ImageMergeMainActivity#0" expanded="false" />
             <element signature="docComment;method#onCameraFrame#0;class#ImageMergeMainActivity#0" expanded="false" />
+            <element signature="method#onCameraFrame#0;class#ImageMergeMainActivity#0" expanded="false" />
             <element signature="e#13894#13964#0" expanded="false" />
             <element signature="e#14483#14595#0" expanded="false" />
             <element signature="e#14751#14797#0" expanded="false" />
@@ -3559,27 +3476,29 @@
             <element signature="method#InitializeScale#0;class#ImageMergeMainActivity#0" expanded="false" />
             <element signature="docComment;method#InitializeMarkSegmentationView#0;class#ImageMergeMainActivity#0" expanded="false" />
             <element signature="method#InitializeMarkSegmentationView#0;class#ImageMergeMainActivity#0" expanded="false" />
-            <element signature="e#16572#16646#0" expanded="false" />
-            <element signature="e#20788#20837#0" expanded="false" />
+            <element signature="e#16397#16471#0" expanded="false" />
+            <element signature="e#20613#20662#0" expanded="false" />
             <element signature="docComment;method#InitializeRunSegmentationAlgorithmView#0;class#ImageMergeMainActivity#0" expanded="false" />
             <element signature="method#InitializeRunSegmentationAlgorithmView#0;class#ImageMergeMainActivity#0" expanded="false" />
             <element signature="docComment;method#InitializeTracksForDeletionTracks#0;class#ImageMergeMainActivity#0" expanded="false" />
             <element signature="method#InitializeTracksForDeletionTracks#0;class#ImageMergeMainActivity#0" expanded="false" />
             <element signature="method#InitializeMoveForegroundAndEdit#0;class#ImageMergeMainActivity#0" expanded="false" />
-            <element signature="e#24953#24996#0" expanded="false" />
+            <element signature="e#24778#24821#0" expanded="false" />
             <element signature="docComment;method#SaveImageInitilazation#0;class#ImageMergeMainActivity#0" expanded="false" />
             <element signature="method#SaveImageInitilazation#0;class#ImageMergeMainActivity#0" expanded="false" />
-            <element signature="e#28128#28204#0" expanded="false" />
+            <element signature="e#27953#28029#0" expanded="false" />
             <element signature="docComment;method#PopDialogFileName#0;class#ImageMergeMainActivity#0" expanded="false" />
             <element signature="method#PopDialogFileName#0;class#ImageMergeMainActivity#0" expanded="false" />
-            <element signature="e#28524#28580#0" expanded="false" />
+            <element signature="e#28349#28405#0" expanded="false" />
             <element signature="docComment;method#SaveImageToData#0;class#ImageMergeMainActivity#0" expanded="false" />
+            <element signature="method#SaveImageToData#0;class#ImageMergeMainActivity#0" expanded="false" />
+            <element signature="method#SaveImageToDisk#0;class#ImageMergeMainActivity#0" expanded="false" />
             <element signature="docComment;method#onTouchEvent#0;class#ImageMergeMainActivity#0" expanded="false" />
             <element signature="method#onTouchEvent#0;class#ImageMergeMainActivity#0" expanded="false" />
             <element signature="docComment;method#SegmentationTouchEvent#0;class#ImageMergeMainActivity#0" expanded="false" />
             <element signature="method#SegmentationTouchEvent#0;class#ImageMergeMainActivity#0" expanded="false" />
-            <element signature="e#34957#34981#0" expanded="false" />
-            <element signature="e#35461#35486#0" expanded="false" />
+            <element signature="e#34831#34855#0" expanded="false" />
+            <element signature="e#35335#35360#0" expanded="false" />
             <element signature="method#MoveForegroundAndEditTouchEvent#0;class#ImageMergeMainActivity#0" expanded="false" />
             <element signature="docComment;method#DrawNewTracksOnView#0;class#ImageMergeMainActivity#0" expanded="false" />
             <element signature="method#DrawNewTracksOnView#0;class#ImageMergeMainActivity#0" expanded="false" />
