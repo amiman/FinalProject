@@ -457,9 +457,14 @@ public class ImageMergeMainActivity extends Activity implements CvCameraViewList
             // We don't need the camera any more so stop camera
             mOpenCvCameraView.disableFpsMeter();
             mOpenCvCameraView.disableView();
+            mNewSurfaceHolder = mOpenCvCameraView.getHolder();
+            mOpenCvCameraView = null;
+
+            // Change the application to SEGMENTATION_MARK
+            mApplicationStage = ApplicationStage.SEGMENTATION_MARK;
 
             //InitializeMarkSegmentationView();
-            return mData.GetSecondImage();
+            return null;
         }
 
 
@@ -490,8 +495,9 @@ public class ImageMergeMainActivity extends Activity implements CvCameraViewList
         //Make the switch between the opencv listener and the new view in order to
         // really disconnect from the thread that update the surface. this is done by keeping the surface holder in a new variable
         if(mTakePictureButton != null) {
-            mNewSurfaceHolder = mOpenCvCameraView.getHolder();
-            mOpenCvCameraView = null;
+            if(mOpenCvCameraView != null) {
+                mNewSurfaceHolder = mOpenCvCameraView.getHolder();
+            }
             ViewGroup layout = (ViewGroup) mTakePictureButton.getParent();
             if (null != layout) {//for safety only  as you are doing onClick
                 layout.removeView(mTakePictureButton);
@@ -580,7 +586,7 @@ public class ImageMergeMainActivity extends Activity implements CvCameraViewList
         frameMainLayout.addView(mDoneButton);
 
         // Forth Change the application stage to SEGMENTATION_MARK
-        mApplicationStage = ApplicationStage.SEGMENTATION_MARK;
+        //mApplicationStage = ApplicationStage.SEGMENTATION_MARK;
 
         // Fifth check if we can deallocate memory
         MemoryChecker();

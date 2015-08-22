@@ -1,8 +1,6 @@
 package amitay.nachmani.image.merge.Data;
 
 
-import android.util.Log;
-
 import org.opencv.core.Core;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
@@ -11,7 +9,6 @@ import org.opencv.core.Scalar;
 
 import java.util.ArrayList;
 
-import amitay.nachmani.image.merge.General.GeneralInfo;
 import amitay.nachmani.image.merge.General.MarkValues;
 import amitay.nachmani.image.merge.ImageProcessing.ColorPoint;
 import amitay.nachmani.image.merge.ImageProcessing.PointStatus;
@@ -32,11 +29,11 @@ public class Data {
 
     // Kmeans
     private Mat mKmeansMatrix;
-    private Mat mKmeansBestLabels;
+    private Mat mBestLabels;
 
     // Tracks data
-    private ArrayList<Point> mBackgroundPixels;
-    private ArrayList<Point> mForegroundPixels;
+    private ArrayList<ColorPoint> mBackgroundPixels;
+    private ArrayList<ColorPoint> mForegroundPixels;
     private Point mMinForegroundPoint;
     private Point mMaxForegroundPoint;
 
@@ -45,6 +42,11 @@ public class Data {
     private ColorPoint[][] mExtractForegroundMat;
     private Point mCenterOfGravity;
     private int mRadius;
+
+    // Statistical colors
+    private double[] mForegroundStatisticalColor;
+    private double[] mBackgroundStatisticalColor;
+    private int mNumberOfStatisticalBins ;
 
     // Status
     private boolean mMarkedImageMaskChanged = true;
@@ -95,15 +97,14 @@ public class Data {
         mKmeansMatrix = kMeansMatrix;
     }
 
-    public void SetKmeansBestLabels()
+    public void SetBestStartingLabels()
     {
-
-        mKmeansBestLabels = new Mat((int)mSecondImage.total(),1, CvType.CV_32SC1,new Scalar(0));
+        mBestLabels = new Mat((int)mSecondImage.total(),1, CvType.CV_32SC1,new Scalar(0));
     }
 
-    public void SetKmeansBestLabels(Mat labels)
+    public void SetBestStartingLabels(Mat labels)
     {
-        mKmeansBestLabels = labels;
+        mBestLabels = labels;
     }
 
     public void SetForegroundImage()
@@ -116,25 +117,11 @@ public class Data {
         mExtractForeground = new ArrayList<ColorPoint>();
     }
 
-    /*
-    public void BuildExtractedForegroundKDTree() {
+    public void SetForegroundStatistic(double[] foregroundStatistic) { mForegroundStatisticalColor = foregroundStatistic; }
 
-        // Build a KD_tree for two dimensions
-        mExtractForegroundKDTree = new KDTree(2);
+    public void SetBackgroundStatistic(double[] backgroundStatistic) { mBackgroundStatisticalColor = backgroundStatistic; }
 
-        // Iterate over all the points in the extracted foreground points and insert there coordinate to KD tree
-        for(ColorPoint point : mExtractForeground)
-        {
-            // The key in the KD tree will be the coordinate of the point
-            double[] coordinate = new double[2];
-            coordinate[0] = point.x;
-            coordinate[1] = point.y;
-
-            // Insert the point to the tree
-            mExtractForegroundKDTree.insert(coordinate,point);
-        }
-
-    }*/
+    public void SetStatisticalNumberOfBins(int numOfBins) { mNumberOfStatisticalBins = numOfBins; }
 
     /**
      * InitializeForegroundBackgroundPixels:
@@ -144,16 +131,16 @@ public class Data {
      */
     public void InitializeForegroundBackgroundPixels()
     {
-        mBackgroundPixels = new ArrayList<Point>();
-        mForegroundPixels = new ArrayList<Point>();
+        mBackgroundPixels = new ArrayList<ColorPoint>();
+        mForegroundPixels = new ArrayList<ColorPoint>();
     }
 
-    public void AddBackgroundPixel(Point point)
+    public void AddBackgroundPixel(ColorPoint point)
     {
         mBackgroundPixels.add(point);
     }
 
-    public void AddForegroundPixel(Point point)
+    public void AddForegroundPixel(ColorPoint point)
     {
         mForegroundPixels.add(point);
     }
@@ -345,9 +332,9 @@ public class Data {
         return mKmeansMatrix;
     }
 
-    public Mat GetKmeansBestLabels()
+    public Mat GetBestLabels()
     {
-        return mKmeansBestLabels;
+        return mBestLabels;
     }
 
     public Mat GetForegroundImage()
@@ -361,12 +348,12 @@ public class Data {
 
     public ArrayList<ColorPoint> GetExtractForegroundPoints() { return mExtractForeground; }
 
-    public ArrayList<Point> GetBackgroundPoints()
+    public ArrayList<ColorPoint> GetBackgroundPoints()
     {
         return mBackgroundPixels;
     }
 
-    public ArrayList<Point> GetForeroundPoints()
+    public ArrayList<ColorPoint> GetForeroundPoints()
     {
         return mForegroundPixels;
     }
@@ -375,6 +362,12 @@ public class Data {
     {
         return mCenterOfGravity;
     }
+
+    public double[] GetForegroundStatistic() { return mForegroundStatisticalColor; }
+
+    public double[] GetBackgroundStatistic() { return mBackgroundStatisticalColor; }
+
+    public int GetNumberOfStatisticalBin() { return mNumberOfStatisticalBins; }
 
     public void ReleaseCurrentImage()
     {
@@ -390,8 +383,8 @@ public class Data {
 
     public void ReleaseKmeansBestLabelsMatrix()
     {
-        mKmeansBestLabels.release();
-        mKmeansBestLabels = null;
+        mBestLabels.release();
+        mBestLabels = null;
         System.gc();
     }
 
@@ -454,7 +447,7 @@ public class Data {
 
         // Kmeans
         mKmeansMatrix = null;
-        mKmeansBestLabels = null;
+        mBestLabels = null;
 
         // Tracks data
         mBackgroundPixels = null;

@@ -29,6 +29,8 @@ public class ImageProcessing {
     // 3 color values and 2 coordinates
     private static final int mNumberOfAttributesForKmeans = 5;
 
+    private static AlgorithmName mAlgorithm = AlgorithmName.MY_ALGORITHM;
+
     /**
      *  DrawTracks:
      *  Draw all the tracks we have in tracks on background image
@@ -97,7 +99,6 @@ public class ImageProcessing {
      * @return
      */
     public static final int RunSegmentationAlgorithm(Data data,ArrayList<MovementTracker> tracks,int currentProgress) {
-        Mat background = data.GetSecondImage();
         if(currentProgress == 0) {
 
             // Initialize the return image
@@ -126,10 +127,23 @@ public class ImageProcessing {
 
             //TODO: change kMeans algorithm to a better segmentation algo
 
-            // Create Kmeans matrix
-            Log.d(GeneralInfo.DEBUG_TAG, "Start SetKmeansMatrix");
-            data.SetKmeansMatrix(CreateKMeansMatrix(data));
-            Log.d(GeneralInfo.DEBUG_TAG, "End SetKmeansMatrix");
+            switch(mAlgorithm) {
+                case MY_ALGORITHM:
+
+                    // Calculate color statistic of points
+                    Log.d(GeneralInfo.DEBUG_TAG, "Start CalculateForegroundBackgroundStatistic");
+                    CalculateForegroundBackgroundStatistic(data);
+                    Log.d(GeneralInfo.DEBUG_TAG, "End CalculateForegroundBackgroundStatistic");
+                    break;
+
+                case KMEANS:
+
+                    // Create Kmeans matrix
+                    Log.d(GeneralInfo.DEBUG_TAG, "Start SetKmeansMatrix");
+                    data.SetKmeansMatrix(CreateKMeansMatrix(data));
+                    Log.d(GeneralInfo.DEBUG_TAG, "End SetKmeansMatrix");
+                    break;
+            }
 
             currentProgress = 50;
 
@@ -137,16 +151,30 @@ public class ImageProcessing {
 
             //TODO: change kMeans algorithm to a better segmentation algo
 
-            // Run kmeans
-            Log.d(GeneralInfo.DEBUG_TAG, "Start CreateBestLabelsFromUserMarks");
-            CreateBestLabelsFromUserMarks(data);
-            Log.d(GeneralInfo.DEBUG_TAG, "End CreateBestLabelsFromUserMarks");
-            Log.d(GeneralInfo.DEBUG_TAG, "Start kmeans");
-            Core.kmeans(data.GetmKmeansMatrix(), 2, data.GetKmeansBestLabels(), new TermCriteria(TermCriteria.MAX_ITER | TermCriteria.EPS, 10, 0.0001), 1, Core.KMEANS_USE_INITIAL_LABELS);
-            Log.d(GeneralInfo.DEBUG_TAG, "End kmeans");
+            switch(mAlgorithm) {
+                case MY_ALGORITHM:
 
-            // Release unused matrix
-            data.ReleaseKmeansMatrix();
+                    // Calculate start label for each point in the image according to the statistic
+                    Log.d(GeneralInfo.DEBUG_TAG, "Start CalculateStartLabelAccordingToStatistic");
+                    CalculateStartLabelAccordingToStatistic(data);
+                    Log.d(GeneralInfo.DEBUG_TAG, "End CalculateStartLabelAccordingToStatistic");
+                    break;
+
+                case KMEANS:
+
+                    // Run kmeans
+                    Log.d(GeneralInfo.DEBUG_TAG, "Start CreateBestLabelsFromUserMarks");
+                    CreateBestLabelsFromUserMarks(data);
+                    Log.d(GeneralInfo.DEBUG_TAG, "End CreateBestLabelsFromUserMarks");
+                    Log.d(GeneralInfo.DEBUG_TAG, "Start kmeans");
+                    Core.kmeans(data.GetmKmeansMatrix(), 2, data.GetBestLabels(), new TermCriteria(TermCriteria.MAX_ITER | TermCriteria.EPS, 10, 0.0001), 1, Core.KMEANS_USE_INITIAL_LABELS);
+                    Log.d(GeneralInfo.DEBUG_TAG, "End kmeans");
+
+                    // Release unused matrix
+                    data.ReleaseKmeansMatrix();
+
+                    break;
+            }
 
             currentProgress = 75;
 
@@ -157,12 +185,16 @@ public class ImageProcessing {
             ConvertBestLabelsToForegroundImage(data);
             Log.d(GeneralInfo.DEBUG_TAG, "End ConvertBestLabelsToForegroundImage");
 
-            // Build a KDTree from the extracted foreground pixels
-            //data.BuildExtractedForegroundKDTree();
+            switch(mAlgorithm) {
+                case MY_ALGORITHM:
+                    break;
 
-            // Release unused matrix
-            data.ReleaseKmeansBestLabelsMatrix();
+                case KMEANS:
 
+                    // Release unused matrix
+                    data.ReleaseKmeansBestLabelsMatrix();
+                    break;
+            }
             currentProgress = 100;
         }
 
@@ -181,6 +213,8 @@ public class ImageProcessing {
         int size = (int) mask.total() * mask.channels();
         byte[] maskData = ConvertMatToPrimitive(mask);
 
+        Mat secondImage = data.GetSecondImage();
+
         // Go over all the pixels in the mask if we found a pixel with value of foreground or background add it.
         data.InitializeForegroundBackgroundPixels();
         for(int i = 0; i < size; i = i + mask.channels())
@@ -190,11 +224,15 @@ public class ImageProcessing {
             int x = normalizeI%mask.cols();
             int y = (int)Math.floor(normalizeI/mask.cols());
 
+            // Get color of the pixel from the second image
+            byte[] color = new byte[4];
+            secondImage.get(y, x, color);
+
             // Check if the color is a background or foreground color
             if(maskData[i] == MarkValues.FOREGROUND_VALUE_BYTE) {
-                data.AddForegroundPixel(new Point(x,y));
+                data.AddForegroundPixel(new ColorPoint(x,y,color));
             } else if(maskData[i] == MarkValues.BACKGROUND_VALUE_BYTE) {
-                data.AddBackgroundPixel(new Point(x,y));
+                data.AddBackgroundPixel(new ColorPoint(x,y,color));
             }
         }
 
@@ -202,6 +240,8 @@ public class ImageProcessing {
         data.ExtractMinMaxForegroundPoint();
     }
 
+
+    /**************************************************** KMeans **************************************************************/
     //TODO: finish this explanation
     /**
      * CreateKMeansMatrix:
@@ -253,8 +293,8 @@ public class ImageProcessing {
     {
 
         // Initialize
-        data.SetKmeansBestLabels();
-        Mat labels = data.GetKmeansBestLabels();
+        data.SetBestStartingLabels();
+        Mat labels = data.GetBestLabels();
 
         // Go over all the pixels that are foreground and change their label
         for(Point point : data.GetForeroundPoints())
@@ -263,14 +303,134 @@ public class ImageProcessing {
         }
 
         // Update best labels
-        data.SetKmeansBestLabels(labels);
+        data.SetBestStartingLabels(labels);
 
     }
+
+    /**************************************************** KMeans **************************************************************/
+
+    /**************************************************** My algorithm **************************************************************/
+
+    /**
+     * CalculateForegroundBackgroundStatistic:
+     *
+     * Go over all the pixels in the background and foreground and calculate statistic what is the chance of
+     * a given color to be part of the foreground and background
+     *
+     *
+     */
+    private static void CalculateForegroundBackgroundStatistic(Data data)
+    {
+        int numberOfBins = 16; // a power of 2
+
+        data.SetStatisticalNumberOfBins(numberOfBins);
+        data.SetForegroundStatistic(CalculateStatisticOfColorPoints(data.GetForeroundPoints(),numberOfBins));
+        data.SetBackgroundStatistic(CalculateStatisticOfColorPoints(data.GetBackgroundPoints(),numberOfBins));
+    }
+
+    /**
+     * CalculateStatisticOfColorPoints:
+     *
+     * Goes over all the point in points and calculate the chance of each color to be in this group of points
+     *
+     * @param points
+     * @param numberOfBins
+     * @return
+     */
+    private static double[] CalculateStatisticOfColorPoints(ArrayList<ColorPoint> points,int numberOfBins)
+    {
+        // Initialize 3-dimensional statistical bins
+        double[] statisticalBins = new double[numberOfBins*numberOfBins*numberOfBins];
+
+        // Go over foreground points
+        for(ColorPoint point : points)
+        {
+            // Find the bin the color of the point will be
+            int binIndex = 1;
+            for(int i = 0 ; i < 3 ; i++)
+            {
+                // convert the byte value to int
+                int channelColor = Math.abs(point.mColor[i]);
+
+                // binIndex of colors
+                binIndex *= channelColor/(256/numberOfBins);
+            }
+
+            // Count +1/numberOfPoints in the appropriate bin
+            statisticalBins[binIndex] = statisticalBins[binIndex] + 1d/points.size();
+        }
+
+        return statisticalBins;
+    }
+
+    /**
+     * CalculateStartLabelAccordingToStatistic:
+     *
+     *  Goes over all the pixels in the image and according to the calculated statistic decide if the point is part of
+     *  the foreground or the background.
+     * @param data
+     */
+    private static void CalculateStartLabelAccordingToStatistic(Data data)
+    {
+        Mat secondImage = data.GetSecondImage();
+
+        // Initialize
+        data.SetBestStartingLabels();
+        Mat labels = data.GetBestLabels();
+
+        // Get the number of statistical buns in order to calculate in which bin the color is in and statistical information
+        int numberOfBins = data.GetNumberOfStatisticalBin();
+        double[] backgroudStat = data.GetBackgroundStatistic();
+        double[] foregroudStat = data.GetForegroundStatistic();
+
+        for(int i = 0 ; i < foregroudStat.length ; i++)
+        {
+            Log.d(GeneralInfo.DEBUG_TAG,Double.toString(foregroudStat[i]));
+        }
+        // Go over all the pixel in the image
+        int size = (int) secondImage.total() * secondImage.channels();
+        byte[] secondImageData = ConvertMatToPrimitive(secondImage);
+
+        for(int i = 0; i < size; i = i + secondImage.channels())
+        {
+            // Convert index to x y coordinate
+            int normalizeI = i/secondImage.channels();
+            int x = normalizeI%secondImage.cols();
+            int y = (int)Math.floor(normalizeI/secondImage.cols());
+
+            // Find the bin the color of the point will be
+            int binIndex = 1;
+            for(int j = 0 ; j < 3 ; j++)
+            {
+                // convert the byte value to int
+                int channelColor = Math.abs(secondImageData[i+j]);
+
+                // binIndex of colors
+                binIndex *= channelColor/(256/numberOfBins);
+            }
+
+            // Check what is the probability to be in the foreground and the background
+            if(foregroudStat[binIndex] > backgroudStat[binIndex])
+            {
+                labels.put((y * data.GetSecondImage().cols() + x), 0, 1f);
+            } else if (foregroudStat[binIndex] < backgroudStat[binIndex]) {
+                labels.put((y * data.GetSecondImage().cols() + x), 0, 0f);
+            } else {
+
+                // TODO: fix consider the distance form each probability
+                labels.put((y * data.GetSecondImage().cols() + x), 0, 0f);
+            }
+
+        }
+    }
+
+    /**************************************************** My algorithm **************************************************************/
 
     /**
      * ConvertBestLabelsToForegroundImage:
      *
-     * creats the fpreground image based on the labels of the segmentation
+     * creates the foreground image based on the labels of the segmentation
+     *
      * @param data
      */
     private static void ConvertBestLabelsToForegroundImage(Data data)
@@ -279,7 +439,7 @@ public class ImageProcessing {
         //data.SetForegroundImage();
         Mat secondImage = data.GetSecondImage();
         //Mat foreground = data.GetForegroundImage();
-        Mat labels = data.GetKmeansBestLabels();
+        Mat labels = data.GetBestLabels();
 
         Core.MinMaxLocResult a = Core.minMaxLoc(labels);
         int[] value = new int[1];
@@ -297,6 +457,8 @@ public class ImageProcessing {
             labels.get(i,0,value);
             if(value[0] != 0)
             {
+                Log.d(GeneralInfo.DEBUG_TAG,"foreground pixel");
+
                 // a foreground pixel
                 int x = i%secondImage.cols();
                 int y = (int)Math.floor(i/secondImage.cols());
@@ -321,7 +483,6 @@ public class ImageProcessing {
 
         // Build the extracted foreground matrix
         data.BuildExtractedForegroundMatrix();
-
     }
 
     /**
