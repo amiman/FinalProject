@@ -35,19 +35,27 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="@string/mergeImage"
+            android:id="@+id/btnMerge"
+            android:visibility="invisible"
+            android:layout_weight="0.33" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:text="@string/Share"
             android:id="@+id/btnShare"
             android:visibility="invisible"
             android:focusable="false"
             android:layout_gravity="left"
-            android:layout_weight="0.5" />
+            android:layout_weight="0.333" />
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/delete_image"
             android:id="@+id/btnDeleteImage"
-            android:layout_weight="0.5"
+            android:layout_weight="0.333"
             android:visibility="invisible" />
     </LinearLayout>
 

@@ -83,6 +83,7 @@
     <string name="facebook_app_id">1620270164890984</string>
     <string name="hello_world">Hello world!</string>
     <string name="load_images">Load Images</string>
+    <string name="mergeImage">MERGE</string>
     <!-- From: file:/C:/Users/Amitay/Documents/GitHub/FinalProject/FinalProject/ImageMerge/build/intermediates/exploded-aar/com.facebook.android/facebook/4.4.0/res/values/values.xml -->
     <eat-comment/>
     <string name="messenger_send_button_text">Send</string>

@@ -19,6 +19,7 @@ public class GeneralInfo {
 
     // activities id's
     public static final String ACTIVITY_KEY_BUNDLE           = "activity";
+    public static final int ACTIVITY_ID_MERGE                = 4;
     public static final int ACTIVITY_ID_SHARE                = 3;
     public static final int  ACTIVITY_ID_LOAD                = 2;
     public static final int  ACTIVITY_ID_START               = 1;

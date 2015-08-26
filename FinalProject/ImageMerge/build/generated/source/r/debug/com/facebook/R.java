@@ -103,7 +103,7 @@ public final class R {
 		public static final int inline = 0x7f09000a;
 		public static final int large = 0x7f090012;
 		public static final int left = 0x7f09000d;
-		public static final int messenger_send_button = 0x7f09002c;
+		public static final int messenger_send_button = 0x7f09002d;
 		public static final int never_display = 0x7f090011;
 		public static final int normal = 0x7f090013;
 		public static final int open_graph = 0x7f090003;
@@ -142,7 +142,7 @@ public final class R {
 		public static final int com_facebook_send_button_text = 0x7f060013;
 		public static final int com_facebook_share_button_text = 0x7f060014;
 		public static final int com_facebook_tooltip_default = 0x7f060015;
-		public static final int messenger_send_button_text = 0x7f06001a;
+		public static final int messenger_send_button_text = 0x7f06001b;
 	}
 	public static final class style {
 		public static final int MessengerButton = 0x7f070000;

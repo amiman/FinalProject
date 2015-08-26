@@ -16,4 +16,5 @@
     <string name="delete_image">Delete</string>
     <string name="share">Share</string>
     <string name="load_images">Load Images</string>
+    <string name="mergeImage">MERGE</string>
 </resources>

@@ -10,6 +10,7 @@ import org.opencv.core.Scalar;
 import java.util.ArrayList;
 
 import amitay.nachmani.image.merge.General.MarkValues;
+import amitay.nachmani.image.merge.ImageProcessing.AlgorithmName;
 import amitay.nachmani.image.merge.ImageProcessing.ColorPoint;
 import amitay.nachmani.image.merge.ImageProcessing.PointStatus;
 import amitay.nachmani.image.merge.Tracker.MovementTracker;
@@ -46,7 +47,7 @@ public class Data {
     // Statistical colors
     private double[] mForegroundStatisticalColor;
     private double[] mBackgroundStatisticalColor;
-    private int mNumberOfStatisticalBins ;
+    private int mNumberOfStatisticalBins;
 
     // Status
     private boolean mMarkedImageMaskChanged = true;
@@ -73,6 +74,10 @@ public class Data {
         mFirstImage = mCurrentImage.clone();
     }
 
+    public void SetFirstImage(Mat firstImage) {
+        mFirstImage = firstImage;
+    }
+
     public void SetSecondImage()
     {
         mSecondImage = mCurrentImage.clone();
@@ -97,9 +102,13 @@ public class Data {
         mKmeansMatrix = kMeansMatrix;
     }
 
-    public void SetBestStartingLabels()
+    public void SetBestStartingLabels(AlgorithmName name)
     {
-        mBestLabels = new Mat((int)mSecondImage.total(),1, CvType.CV_32SC1,new Scalar(0));
+        if(name.equals(AlgorithmName.KMEANS)) {
+            mBestLabels = new Mat((int) mSecondImage.total(), 1, CvType.CV_32SC1, new Scalar(0));
+        } else if(name.equals(AlgorithmName.MY_ALGORITHM)) {
+            mBestLabels = new Mat((int) mSecondImage.rows(), (int) mSecondImage.cols(), CvType.CV_8UC1, new Scalar(0));
+        }
     }
 
     public void SetBestStartingLabels(Mat labels)
@@ -482,4 +491,6 @@ public class Data {
             mExtractForegroundMat[(int)(point.y-mMinForegroundPoint.y)][(int)(point.x-mMinForegroundPoint.x)] = point;
         }
     }
+
+
 }

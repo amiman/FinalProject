@@ -6,14 +6,19 @@ import android.util.Log;
 import org.opencv.core.Core;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
+import org.opencv.core.MatOfPoint;
 import org.opencv.core.Point;
+import org.opencv.core.Rect;
 import org.opencv.core.Scalar;
+import org.opencv.core.Size;
 import org.opencv.core.TermCriteria;
+import org.opencv.imgproc.Imgproc;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import amitay.nachmani.image.merge.Data.Data;
 import amitay.nachmani.image.merge.General.GeneralInfo;
@@ -118,7 +123,9 @@ public class ImageProcessing {
             Log.d(GeneralInfo.DEBUG_TAG, "End ExtractMaskPixels");
 
             // Release mask
-            data.ReleaseImageMask();
+            if(mAlgorithm.equals(AlgorithmName.KMEANS)) {
+                data.ReleaseImageMask();
+            }
 
             // return current progress
             currentProgress = 25;
@@ -158,6 +165,14 @@ public class ImageProcessing {
                     Log.d(GeneralInfo.DEBUG_TAG, "Start CalculateStartLabelAccordingToStatistic");
                     CalculateStartLabelAccordingToStatistic(data);
                     Log.d(GeneralInfo.DEBUG_TAG, "End CalculateStartLabelAccordingToStatistic");
+
+                    // Extracted connected component and fill holes
+                    Log.d(GeneralInfo.DEBUG_TAG, "Start ExtractConnectedComponent");
+                    //ExtractConnectedComponent(data);
+                    //ExtractConnectedComponent(data);
+                    FillAreasUsingOpening(data);
+                    Log.d(GeneralInfo.DEBUG_TAG, "End ExtractConnectedComponent");
+
                     break;
 
                 case KMEANS:
@@ -179,6 +194,9 @@ public class ImageProcessing {
             currentProgress = 75;
 
         } else if(currentProgress == 75) {
+
+            // Add original mark labels to final results
+            //AddMarksToFinalLabels(data);
 
             // Convert best labels to foreground image
             Log.d(GeneralInfo.DEBUG_TAG, "Start ConvertBestLabelsToForegroundImage");
@@ -293,7 +311,7 @@ public class ImageProcessing {
     {
 
         // Initialize
-        data.SetBestStartingLabels();
+        data.SetBestStartingLabels(AlgorithmName.KMEANS);
         Mat labels = data.GetBestLabels();
 
         // Go over all the pixels that are foreground and change their label
@@ -375,18 +393,19 @@ public class ImageProcessing {
         Mat secondImage = data.GetSecondImage();
 
         // Initialize
-        data.SetBestStartingLabels();
+        data.SetBestStartingLabels(AlgorithmName.MY_ALGORITHM);
         Mat labels = data.GetBestLabels();
 
         // Get the number of statistical buns in order to calculate in which bin the color is in and statistical information
         int numberOfBins = data.GetNumberOfStatisticalBin();
-        double[] backgroudStat = data.GetBackgroundStatistic();
-        double[] foregroudStat = data.GetForegroundStatistic();
+        double[] backgroundStat = data.GetBackgroundStatistic();
+        double[] foregroundStat = data.GetForegroundStatistic();
 
+        /*
         for(int i = 0 ; i < foregroudStat.length ; i++)
         {
             Log.d(GeneralInfo.DEBUG_TAG,Double.toString(foregroudStat[i]));
-        }
+        }*/
         // Go over all the pixel in the image
         int size = (int) secondImage.total() * secondImage.channels();
         byte[] secondImageData = ConvertMatToPrimitive(secondImage);
@@ -410,23 +429,159 @@ public class ImageProcessing {
             }
 
             // Check what is the probability to be in the foreground and the background
-            if(foregroudStat[binIndex] > backgroudStat[binIndex])
+            if(foregroundStat[binIndex] > backgroundStat[binIndex])
             {
-                labels.put((y * data.GetSecondImage().cols() + x), 0, 1f);
-            } else if (foregroudStat[binIndex] < backgroudStat[binIndex]) {
-                labels.put((y * data.GetSecondImage().cols() + x), 0, 0f);
+                labels.put(y, x, 1);
+            } else if (foregroundStat[binIndex] < backgroundStat[binIndex]) {
+                labels.put(y, x, 0);
             } else {
 
                 // TODO: fix consider the distance form each probability
-                labels.put((y * data.GetSecondImage().cols() + x), 0, 0f);
+                labels.put(y, x, 0);
             }
 
         }
     }
 
-    /**************************************************** My algorithm **************************************************************/
+    /**
+     *
+     * @param data
+     */
+    private static void ExtractConnectedComponent(Data data)
+    {
+        Mat labels = data.GetBestLabels();
+        Mat mask = new Mat(labels.rows()+2,labels.cols()+2,CvType.CV_8SC1);
+        byte[] value = new byte[1];
+
+        for(int i = 0 ; i < labels.rows() ; i++)
+        {
+            for(int j = 0 ; j < labels.cols() ; j++)
+            {
+                labels.get(i,j,value);
+                if(value[0] == 1)
+                {
+                    mask.put(i + 1, j + 1, 1);
+                }
+            }
+        }
+
+        // Find connected components in the labels
+        List<MatOfPoint> contours = new ArrayList<MatOfPoint>();
+        //Mat hierarchy = new Mat();
+        Imgproc.findContours(labels, contours, new Mat() , Imgproc.RETR_CCOMP, Imgproc.CHAIN_APPROX_SIMPLE);
+
+        // Go over the contours and for each contour if we found an original mark that add this mark keep the contour
+        // else discard it
+        Mat markMask = data.GetMarkedImageMask();
+        List<MatOfPoint> keepContours = new ArrayList<MatOfPoint>();
+        byte[] maskValue = new byte[4];
+        for(MatOfPoint contour : contours) {
+
+            boolean keepContour = false;
+
+            // Go over all the points in the contour
+            for (Point point : contour.toList()) {
+
+                // Check if the point of the contour is a part of the original user marks
+                markMask.get((int) point.y, (int) point.x, maskValue);
+
+                if(maskValue[0] == MarkValues.FOREGROUND_VALUE_BYTE)
+                {
+                    // Keep the current contour
+                    keepContour = true;
+                    break;
+                }
+            }
+
+            if(keepContour) {
+
+                // Add contour
+                keepContours.add(contour);
+            }
+        }
+
+        // Fill in the holes of each contour
+        int labelCount = 1;
+        for(MatOfPoint contour : keepContours) {
+            Point midPoint = CalculateContourCenter(contour.toList());
+            Imgproc.floodFill(labels, mask, new Point((int) midPoint.x, (int) midPoint.y), new Scalar(labelCount),new Rect(),new Scalar(0) ,new Scalar(0) , 8 | (1 << 8) );
+        }
+        data.SetBestStartingLabels(AlgorithmName.MY_ALGORITHM);
+        labels = data.GetBestLabels();
+        //Imgproc.drawContours(data.GetBestLabels(),keepContours,-1,new Scalar(1),-1);
+        //Imgproc.drawContours(data.GetBestLabels(),contours,-1,new Scalar(1),-1);
+
+        // Copy back from labels to fillmask
+        byte[] v = {1};
+        byte[] newMaskVal = new byte[1];
+        for(int i = 1 ; i < mask.rows()-1 ; i++)
+        {
+            for (int j = 1; j < mask.cols()-1; j++)
+            {
+                mask.get(i, j, newMaskVal);
+
+                if(newMaskVal[0] == 1)
+                {
+                    labels.put(i - 1, j - 1,1);
+                }
+            }
+        }
+
+        // Add the borders themself
+        for(MatOfPoint contour : contours) {
+
+            // Go over all the points in the contour
+            for (Point point : contour.toList()) {
+                labels.put((int) point.y, (int) point.x, 1);
+            }
+        }
+    }
 
     /**
+     *
+     * @param contour
+     * @retrun
+     */
+    private static Point CalculateContourCenter(List<Point> contour)
+    {
+        Point middleCoord = new Point();
+        for(Point point : contour)
+        {
+            middleCoord.x = middleCoord.x + point.x;
+            middleCoord.y = middleCoord.y + point.y;
+        }
+
+        middleCoord.x = middleCoord.x/contour.size();
+        middleCoord.y = middleCoord.y/contour.size();
+
+        return middleCoord;
+    }
+
+    private static void FillAreasUsingOpening(Data data)
+    {
+        Mat element = Imgproc.getStructuringElement(Imgproc.CV_SHAPE_ELLIPSE,new Size(15,15));
+        Imgproc.morphologyEx(data.GetBestLabels(),data.GetBestLabels(), Imgproc.MORPH_DILATE,element);
+    }
+
+    /**
+     *
+     * @param data
+     */
+    private static void AddMarksToFinalLabels(Data data)
+    {
+        Mat labels = data.GetBestLabels();
+
+        int[] value = {1};
+        // Go over all the original mark pixels and add them to the final image
+        for(ColorPoint point : data.GetForeroundPoints())
+        {
+            labels.put((int)point.y,(int)point.x,value);
+        }
+
+    }
+    /**************************************************** My algorithm **************************************************************/
+
+    /**`
      * ConvertBestLabelsToForegroundImage:
      *
      * creates the foreground image based on the labels of the segmentation
@@ -441,9 +596,10 @@ public class ImageProcessing {
         //Mat foreground = data.GetForegroundImage();
         Mat labels = data.GetBestLabels();
 
-        Core.MinMaxLocResult a = Core.minMaxLoc(labels);
-        int[] value = new int[1];
-        labels.get((int)a.maxLoc.y,(int)a.maxLoc.x,value);
+        //Core.MinMaxLocResult a = Core.minMaxLoc(labels);
+        //int[] value = new int[1];
+        byte[] value = new byte[1];
+        //labels.get((int)a.maxLoc.y,(int)a.maxLoc.x,value);
 
         // Get the max and min point of the foreground bounding point
         Point maxForegroundPoint = data.GetForegroundMaxPoint();
@@ -451,33 +607,58 @@ public class ImageProcessing {
 
         data.SetExtractForeground();
 
-        // Go over labels and create new foreground image
-        for(int i = 0 ; i < labels.rows() ; i++)
-        {
-            labels.get(i,0,value);
-            if(value[0] != 0)
-            {
-                Log.d(GeneralInfo.DEBUG_TAG,"foreground pixel");
+        if(mAlgorithm.equals(AlgorithmName.KMEANS)) {
+            // Go over labels and create new foreground image
+            for (int i = 0; i < labels.rows(); i++) {
+                labels.get(i, 0, value);
+                if (value[0] != 0) {
+                    //Log.d(GeneralInfo.DEBUG_TAG, "foreground pixel");
 
-                // a foreground pixel
-                int x = i%secondImage.cols();
-                int y = (int)Math.floor(i/secondImage.cols());
+                    // a foreground pixel
+                    int x = i % secondImage.cols();
+                    int y = (int) Math.floor(i / secondImage.cols());
 
-                // if the the pixel is out of the foreground bounding box continue
-                if(x > maxForegroundPoint.x || x < minForegroundPoint.x || y > maxForegroundPoint.y || y < minForegroundPoint.y)
-                {
-                    continue;
-                } else {
+                    // if the the pixel is out of the foreground bounding box continue
+                    if (x > maxForegroundPoint.x || x < minForegroundPoint.x || y > maxForegroundPoint.y || y < minForegroundPoint.y) {
+                        continue;
+                    } else {
 
-                    // The point is in the bounding box and a foreground pixel
-                    byte[] color = new byte[4];
-                    secondImage.get(y, x, color);
-                    //foreground.put(y,x,color);
+                        // The point is in the bounding box and a foreground pixel
+                        byte[] color = new byte[4];
+                        secondImage.get(y, x, color);
+                        //foreground.put(y,x,color);
 
-                    // Add the color data point
-                    data.AddExtractForegroundPoint(new ColorPoint(x,y,color));
+                        // Add the color data point
+                        data.AddExtractForegroundPoint(new ColorPoint(x, y, color));
+                    }
+
                 }
+            }
+        } else if(mAlgorithm.equals(AlgorithmName.MY_ALGORITHM)) {
+            // Go over labels and create new foreground image
+            for (int i = 0; i < labels.rows(); i++) {
+                for(int j = 0 ; j < labels.cols(); j++) {
 
+                    labels.get(i, j, value);
+                    if (value[0] != 0) {
+                        //Log.d(GeneralInfo.DEBUG_TAG, "foreground pixel");
+
+                        // a foreground pixel
+                        // if the the pixel is out of the foreground bounding box continue
+                        if (j > maxForegroundPoint.x || j < minForegroundPoint.x || i > maxForegroundPoint.y || i < minForegroundPoint.y) {
+                            continue;
+                        } else {
+
+                            // The point is in the bounding box and a foreground pixel
+                            byte[] color = new byte[4];
+                            secondImage.get(i, j, color);
+                            //foreground.put(y,x,color);
+
+                            // Add the color data point
+                            data.AddExtractForegroundPoint(new ColorPoint(j, i, color));
+                        }
+                    }
+                }
             }
         }
 

@@ -31,6 +31,9 @@ public class StartScreenActivity extends Activity {
 
                 // Start the main merge activity
                 Intent intent = new Intent(getApplicationContext(), ImageMergeMainActivity.class);
+                Bundle bundleForMergesActivity = new Bundle();
+                bundleForMergesActivity.putInt(GeneralInfo.ACTIVITY_KEY_BUNDLE, GeneralInfo.ACTIVITY_ID_START);
+                intent.putExtras(bundleForMergesActivity);
                 startActivity(intent);
             }
         });

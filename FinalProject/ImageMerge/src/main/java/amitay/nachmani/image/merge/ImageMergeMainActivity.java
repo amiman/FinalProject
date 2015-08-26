@@ -27,6 +27,7 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.graphics.SurfaceTexture;
@@ -89,6 +90,7 @@ public class ImageMergeMainActivity extends Activity implements CvCameraViewList
     private ApplicationStage mApplicationStage;
     private MarkValues.Marking mMark = MarkValues.Marking.BACKGROUND;
     private ButtonAction mButtonAction = ButtonAction.MOVE_FOREGROUND;
+    private int mStartingActivityID;
 
     // Movement tracker
     private MovementTracker mTracker;
@@ -97,10 +99,11 @@ public class ImageMergeMainActivity extends Activity implements CvCameraViewList
     // Image
     private Mat mMergeImage;
     private Bitmap mBitmap;
-    private float mScale = 0;
+    private float mScale;
 
     // View
     //private Button mTakePictureButton;
+    private Button mSaveFirstImage = null;
     private ImageButton mTakePictureButton;
     private Button mMarkBackgroundButton;
     private Button mMarkForegroundButton;
@@ -121,7 +124,6 @@ public class ImageMergeMainActivity extends Activity implements CvCameraViewList
     private ProgressDialog mProgressBar;
     private int mProgressBarStatus;
     private Handler mProgressBarHandler;
-
 
     /**
      * BaseLoaderCallback:
@@ -148,6 +150,7 @@ public class ImageMergeMainActivity extends Activity implements CvCameraViewList
         }
     };
 
+
     /**
      * BasicOnCreate:
      *
@@ -158,7 +161,7 @@ public class ImageMergeMainActivity extends Activity implements CvCameraViewList
 
         //setContentView(R.layout.main_surface_view);
         mOpenCvCameraView = (CameraBridgeViewBase) findViewById(R.id.tutorial1_activity_java_surface_view);
-        mOpenCvCameraView.setMaxFrameSize(1000,1000);
+        mOpenCvCameraView.setMaxFrameSize(1300, 1000);
         mOpenCvCameraView.setVisibility(SurfaceView.VISIBLE);
         mOpenCvCameraView.setCvCameraViewListener(this);
     }
@@ -169,7 +172,7 @@ public class ImageMergeMainActivity extends Activity implements CvCameraViewList
 
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
-        Log.d(GeneralInfo.DEBUG_TAG,"onRestoreInstanceState");
+        Log.d(GeneralInfo.DEBUG_TAG, "onRestoreInstanceState");
         super.onRestoreInstanceState(savedInstanceState);
     }
 
@@ -267,6 +270,11 @@ public class ImageMergeMainActivity extends Activity implements CvCameraViewList
 
         // bitmap and scale
         mBitmap = null;
+
+        // Check from were we started the activity
+        // Get the ID of the starting activity in order to choose actions
+        Bundle bundle = getIntent().getExtras();
+        mStartingActivityID = bundle.getInt(GeneralInfo.ACTIVITY_KEY_BUNDLE);
 
         // Change state to initialization
         mApplicationStage = ApplicationStage.INITIALIZATION;
@@ -389,6 +397,8 @@ public class ImageMergeMainActivity extends Activity implements CvCameraViewList
         {
             Mat returnedImage = inputFrame.rgba();
 
+            //BasicInitialization(returnedImage);
+
             // Initialize width and height
             mFrameHeight = returnedImage.height();
             mFrameWidth =  returnedImage.width();
@@ -404,11 +414,22 @@ public class ImageMergeMainActivity extends Activity implements CvCameraViewList
             mData.Initialize(returnedImage.height(), returnedImage.width(), returnedImage.type());
             mMergeImage = new Mat(mFrameWidth, mFrameHeight,MAT_TYPE);
 
-            // Save current frame
-            mData.SetCurrentImage(returnedImage);
+            // If the starting activity was LOAD we need to initialize basic data after we load the opencv libary
+            if(mStartingActivityID == GeneralInfo.ACTIVITY_ID_LOAD)
+            {
+                // Load the bitmap as the first image
+                String firstImagePath = getIntent().getStringExtra(GeneralInfo.BITMAP_BUNDLE_KEY);
+                LoadBitmapAndConvertToMat(firstImagePath);
+                mApplicationStage = ApplicationStage.SECOND_IMAGE;
 
-            // Change the stage to START
-            mApplicationStage = ApplicationStage.START;
+            } else {
+
+                // Save current frame
+                mData.SetCurrentImage(returnedImage);
+
+                // Change the stage to START
+                mApplicationStage = ApplicationStage.START;
+            }
 
             // Return
             return returnedImage;
@@ -438,6 +459,7 @@ public class ImageMergeMainActivity extends Activity implements CvCameraViewList
             return returnedImage;
         } else if(mApplicationStage == ApplicationStage.SECOND_IMAGE) {
 
+            if(mScale == 0 && mStartingActivityID == GeneralInfo.ACTIVITY_ID_LOAD) { InitializeScale(); }
             // When we present the image we give the first image as a reference by merging the first image with high opacity
             //Mat returnedImage = inputFrame.rgba();
 
@@ -472,6 +494,34 @@ public class ImageMergeMainActivity extends Activity implements CvCameraViewList
     }
 
     /********************************************* Initialization's *************************************************************/
+
+    /**
+     * BasicInitialization:
+     *
+     * When the application start and gets the first image it needs to initialize basic values.
+     *
+     * This function can be activated if we started a new image merge or if we want to merge an image with a new one.
+     *
+     * @param image
+     */
+    private void BasicInitialization(Mat image)
+    {
+        // Initialize width and height
+        mFrameHeight = image.height();
+        mFrameWidth =  image.width();
+
+        // Initialize scale
+        InitializeScale();
+
+        // Initialize correction values
+        mScreenToImageCorrectionHight = (float) Math.floor((mScreenHeight/mScale - mFrameHeight)/2);
+        mScreenToImageCorrectionWidth = (float) Math.floor((mScreenWidth/mScale - mFrameWidth)/2);
+
+        // Initialize mData
+        mData.Initialize(image.height(), image.width(), image.type());
+        mMergeImage = new Mat(mFrameWidth, mFrameHeight,MAT_TYPE);
+    }
+
     /**
      * InitializeScale:
      *
@@ -501,6 +551,9 @@ public class ImageMergeMainActivity extends Activity implements CvCameraViewList
             ViewGroup layout = (ViewGroup) mTakePictureButton.getParent();
             if (null != layout) {//for safety only  as you are doing onClick
                 layout.removeView(mTakePictureButton);
+                if(mSaveFirstImage != null) {
+                    layout.removeView(mSaveFirstImage);
+                }
                 mTakePictureButton = null;
                 //layout.removeView(mOpenCvCameraView);
             }
@@ -822,7 +875,14 @@ public class ImageMergeMainActivity extends Activity implements CvCameraViewList
                 Log.d(GeneralInfo.DEBUG_TAG,mImageName[0]);
 
                 // After we get the file name we save the image
-                SaveImageToDisk();
+                if(mApplicationStage == ApplicationStage.FIRST_IMAGE)
+                {
+                    SaveImageToDisk(mData.GetFirstImage());
+                } else {
+                    // Get the final merge image
+                    Mat imageMerge = ImageProcessing.MergeMatWithPoints(mData.GetFirstImage(), mData);
+                    SaveImageToDisk(imageMerge);
+                }
             }
         });
 
@@ -844,6 +904,21 @@ public class ImageMergeMainActivity extends Activity implements CvCameraViewList
         {
             // Save the current image to be the first image
             mData.SetFirstImage();
+
+            // Add a save image button
+            final FrameLayout frameMainLayout = (FrameLayout) findViewById(R.id.frame_main_layout);
+            mSaveFirstImage = new Button(frameMainLayout.getContext());
+            mSaveFirstImage.setText(SAVE_FILE);
+            mSaveFirstImage.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    PopDialogFileName(frameMainLayout);
+                }
+            });
+            FrameLayout.LayoutParams frameLayoutParmasAlgorithm = new FrameLayout.LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT);
+            frameLayoutParmasAlgorithm.gravity = Gravity.TOP | Gravity.CENTER_HORIZONTAL;
+            mSaveFirstImage.setLayoutParams(frameLayoutParmasAlgorithm);
+            frameMainLayout.addView(mSaveFirstImage);
 
             // Change stage to SECOND_IMAGE
             mApplicationStage = ApplicationStage.SECOND_IMAGE;
@@ -867,11 +942,11 @@ public class ImageMergeMainActivity extends Activity implements CvCameraViewList
         }
     }
 
-    public void SaveImageToDisk()
+    public void SaveImageToDisk(Mat image)
     {
 
         // Get the final merge image
-        Mat imageMerge = ImageProcessing.MergeMatWithPoints(mData.GetFirstImage(), mData);
+        //Mat imageMerge = ImageProcessing.MergeMatWithPoints(mData.GetFirstImage(), mData);
 
         // Allocate space for the bitmap that will contain the image
         if(mBitmap == null) {
@@ -879,7 +954,7 @@ public class ImageMergeMainActivity extends Activity implements CvCameraViewList
         }
 
         // Convert the algorithm result to bitmap
-        Utils.matToBitmap(imageMerge, mBitmap);
+        Utils.matToBitmap(image, mBitmap);
 
         // Save the image
         File appFolder = new File(GeneralInfo.APPLICATION_PATH);
@@ -1187,6 +1262,28 @@ public class ImageMergeMainActivity extends Activity implements CvCameraViewList
             }
             //mMySurfaceView.getHolder().unlockCanvasAndPost(canvas);
         }
+    }
+
+    /**
+     * LoadBitmapAndConvertToMat:
+     *
+     * Loads bitmap from memory and convert it to a opencv Mat object and set the first image to be this image
+     *
+     * @param bitmapPath
+     */
+    public void LoadBitmapAndConvertToMat(String bitmapPath)
+    {
+        // Load bitmap image
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inPreferredConfig = Bitmap.Config.ARGB_8888;
+        Bitmap imageBitmap = BitmapFactory.decodeFile(bitmapPath, options);
+
+        // Convert to Mat
+        Mat firstImage = new Mat();
+        Utils.bitmapToMat(imageBitmap,firstImage);
+
+        mData.SetFirstImage(firstImage);
+
     }
 
     /**

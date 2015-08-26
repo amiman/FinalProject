@@ -40,6 +40,7 @@ public class LoadImages extends ListActivity {
     private ImageView mImageView;
     private Button mBtnShare;
     private Button mBtnDelete;
+    private Button mBtnMerge;
 
 
     @Override
@@ -153,6 +154,26 @@ public class LoadImages extends ListActivity {
                 }
             });
 
+            // make delete button visible
+            mBtnMerge = (Button) v.findViewById(R.id.btnMerge);
+            mBtnMerge.setVisibility(View.VISIBLE);
+            mBtnMerge.setFocusable(false);
+
+            mBtnMerge.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    // Open this image as the first image in image merge activity
+                    Intent intent = new Intent(getApplicationContext(), ImageMergeMainActivity.class);
+                    Bundle bundleForMergeActivity = new Bundle();
+                    bundleForMergeActivity.putInt(GeneralInfo.ACTIVITY_KEY_BUNDLE, GeneralInfo.ACTIVITY_ID_LOAD);
+                    bundleForMergeActivity.putString(GeneralInfo.BITMAP_BUNDLE_KEY, photoPath.getAbsolutePath());
+                    intent.putExtras(bundleForMergeActivity);
+                    startActivity(intent);
+                    finish();
+                }
+            });
+
         } else {
 
             // Collapse image
@@ -161,6 +182,7 @@ public class LoadImages extends ListActivity {
             // Collapse button
             mBtnShare.setVisibility(View.INVISIBLE);
             mBtnDelete.setVisibility(View.INVISIBLE);
+            mBtnMerge.setVisibility(View.INVISIBLE);
         }
     }
 
