@@ -23,6 +23,7 @@ import java.util.List;
 import amitay.nachmani.image.merge.Data.Data;
 import amitay.nachmani.image.merge.General.GeneralInfo;
 import amitay.nachmani.image.merge.General.MarkValues;
+import amitay.nachmani.image.merge.ImageMergeMainActivity;
 import amitay.nachmani.image.merge.Tracker.MovementTracker;
 
 
@@ -83,6 +84,11 @@ public class ImageProcessing {
         {
             // Check if the point is active and we need to draw it or not
             if(point.mStatus == PointStatus.ACTIVE) {
+
+                // Check if the point is in the screen area
+                if((int) (point.y + centerOfGravity.y) > ImageMergeMainActivity.GetScreenHeight() || (int) (point.y + centerOfGravity.y) < 0) { continue; }
+                if((int) (point.x + centerOfGravity.x) > ImageMergeMainActivity.GetScreenWidth() || (int) (point.x + centerOfGravity.x) < 0) { continue; }
+
                 // Draw the points including movement about the center of gravity
                 mergeMat.put((int) (point.y + centerOfGravity.y), (int) (point.x + centerOfGravity.x), point.mColor);
             }

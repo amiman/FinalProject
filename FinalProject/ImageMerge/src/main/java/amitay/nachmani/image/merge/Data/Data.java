@@ -230,7 +230,7 @@ public class Data {
      * @param x
      * @param y
      */
-    public void UpdatePointStatus(float x,float y) {
+    public void UpdatePointStatus(float x,float y,PointStatus newStatus) {
 
         // Normalize the x and y point according to mCenterOfGravity
         double[] coordinate = new double[2];
@@ -258,7 +258,7 @@ public class Data {
                 if(i >= 0 && i < mExtractForegroundMat.length && j >= 0 && j < mExtractForegroundMat[0].length)
                 {
                     if (mExtractForegroundMat[i][j] != null) {
-                        mExtractForegroundMat[i][j].mStatus = PointStatus.UNACTIVE;
+                        mExtractForegroundMat[i][j].mStatus = newStatus;
                     }
                 }
             }
@@ -304,7 +304,7 @@ public class Data {
      *
      * @param tracks
      */
-    public void UpdatePointStatus(ArrayList<MovementTracker> tracks)
+    public void UpdatePointStatus(ArrayList<MovementTracker> tracks,PointStatus newStatus)
     {
         // Get the last track
         MovementTracker lastTrack = tracks.get(tracks.size() - 1);
@@ -312,7 +312,7 @@ public class Data {
         // Update each point deletion according to the track points
         for(Point point : lastTrack.GetMarkedPoints())
         {
-            UpdatePointStatus((float)point.x,(float)point.y);
+            UpdatePointStatus((float)point.x,(float)point.y,newStatus);
         }
     }
 

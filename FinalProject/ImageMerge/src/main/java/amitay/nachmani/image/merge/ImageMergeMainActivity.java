@@ -2,7 +2,6 @@ package amitay.nachmani.image.merge;
 
 import org.opencv.android.BaseLoaderCallback;
 import org.opencv.android.CameraBridgeViewBase.CvCameraViewFrame;
-import org.opencv.android.JavaCameraView;
 import org.opencv.android.LoaderCallbackInterface;
 import org.opencv.android.OpenCVLoader;
 import org.opencv.android.Utils;
@@ -19,6 +18,7 @@ import amitay.nachmani.image.merge.General.ButtonAction;
 import amitay.nachmani.image.merge.General.GeneralInfo;
 import amitay.nachmani.image.merge.General.MarkValues;
 import amitay.nachmani.image.merge.ImageProcessing.ImageProcessing;
+import amitay.nachmani.image.merge.ImageProcessing.PointStatus;
 import amitay.nachmani.image.merge.Tracker.MovementTracker;
 
 import android.app.Activity;
@@ -30,10 +30,8 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Rect;
-import android.graphics.SurfaceTexture;
 import android.hardware.Camera;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.Handler;
 import android.support.v4.view.MotionEventCompat;
 import android.util.Log;
@@ -108,6 +106,7 @@ public class ImageMergeMainActivity extends Activity implements CvCameraViewList
     private Button mMarkBackgroundButton;
     private Button mMarkForegroundButton;
     private ToggleButton mMarkingToggleButton;
+    private ImageButton mUndoButton;
     private Button mDoneButton;
     private Button mMoveForegroundPixelsToBack;
     private Button mMoveForeground;
@@ -115,8 +114,8 @@ public class ImageMergeMainActivity extends Activity implements CvCameraViewList
     private SurfaceHolder mNewSurfaceHolder;
 
     // Screen
-    private int mScreenWidth;
-    private int mScreenHeight;
+    private static int mScreenWidth;
+    private static int mScreenHeight;
     private float mScreenToImageCorrectionWidth;
     private float mScreenToImageCorrectionHight;
 
@@ -600,6 +599,22 @@ public class ImageMergeMainActivity extends Activity implements CvCameraViewList
         frameLayoutParmasMarkToogle.gravity = Gravity.CENTER | Gravity.TOP;
         mMarkingToggleButton.setLayoutParams(frameLayoutParmasMarkToogle);
 
+        // Undo button
+        mUndoButton = new ImageButton(this);
+        mUndoButton.setBackgroundResource(R.drawable.undo_arrow);
+        mUndoButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                // Delete the last track that we added
+                DeleteLastTrack();
+            }
+        });
+        FrameLayout.LayoutParams frameLayoutParmasUndo = new FrameLayout.LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT);
+        frameLayoutParmasUndo.gravity = Gravity.LEFT;
+        mUndoButton.setLayoutParams(frameLayoutParmasUndo);
+
+
         /*
         // Background Button
         mMarkBackgroundButton = new Button(this);
@@ -636,6 +651,7 @@ public class ImageMergeMainActivity extends Activity implements CvCameraViewList
         //frameMainLayout.addView(mMarkBackgroundButton);
         //frameMainLayout.addView(mMarkForegroundButton);
         frameMainLayout.addView(mMarkingToggleButton);
+        frameMainLayout.addView(mUndoButton);
         frameMainLayout.addView(mDoneButton);
 
         // Forth Change the application stage to SEGMENTATION_MARK
@@ -770,7 +786,7 @@ public class ImageMergeMainActivity extends Activity implements CvCameraViewList
             }
         });
         FrameLayout.LayoutParams frameLayoutParmasForegroundToBack = new FrameLayout.LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT);
-        frameLayoutParmasForegroundToBack.gravity = Gravity.LEFT;
+        frameLayoutParmasForegroundToBack.gravity = Gravity.TOP | Gravity.CENTER;
         mMoveForegroundPixelsToBack.setLayoutParams(frameLayoutParmasForegroundToBack);
 
         // Add move foreground button
@@ -801,6 +817,7 @@ public class ImageMergeMainActivity extends Activity implements CvCameraViewList
         FrameLayout frameMainLayout = (FrameLayout) findViewById(R.id.frame_main_layout);
         frameMainLayout.addView(mMoveForegroundPixelsToBack);
         frameMainLayout.addView(mMoveForeground);
+        //frameMainLayout.addView(mUndoButton);
 
         // Change application stage
         mApplicationStage = ApplicationStage.MOVE_FOREGROUND_AND_EDIT;
@@ -988,6 +1005,38 @@ public class ImageMergeMainActivity extends Activity implements CvCameraViewList
         }
     }
 
+    /**
+     * DeleteLastTrack:
+     *
+     * Delete the last track that the user added to the tracks and redraw the remaining tracks.
+     *
+     */
+    private void DeleteLastTrack()
+    {
+        if(mTracks.size() > 0) {
+
+            if(mApplicationStage.equals(ApplicationStage.SEGMENTATION_MARK)) {
+
+                // Remove the last track from tracks
+                mTracks.remove(mTracks.size() - 1);
+
+                // Redraw tracks on the screen
+                DrawNewTracksOnView();
+
+            } else if(mApplicationStage.equals(ApplicationStage.MOVE_FOREGROUND_AND_EDIT)) {
+
+                // First change back point status to original
+                mData.UpdatePointStatus(mTracks, PointStatus.ACTIVE);
+
+                // Second delete last track
+                mTracks.remove(mTracks.size() - 1);
+
+                // Draw new foreground view
+                DrawAlgorithmResult();
+            }
+        }
+    }
+
     ///////////////////////////////////////////////////// On touch ///////////////////////////////////////////////////////////
     /**
      * onTouchEvent:
@@ -1135,11 +1184,11 @@ public class ImageMergeMainActivity extends Activity implements CvCameraViewList
                     // Add the current point to unactive track
                     mTracker.AddPoint(new Point(x,y));
 
-                    // Add current deltion track to tracks
+                    // Add current deletion track to tracks
                     mTracks.add(mTracker);
 
                     // UpdatePointStauts
-                    mData.UpdatePointStatus(mTracks);
+                    mData.UpdatePointStatus(mTracks,PointStatus.UNACTIVE);
                 }
 
                 // Draw new foreground view
@@ -1285,6 +1334,10 @@ public class ImageMergeMainActivity extends Activity implements CvCameraViewList
         mData.SetFirstImage(firstImage);
 
     }
+
+    public static int GetScreenWidth() { return mScreenWidth; }
+
+    public static int GetScreenHeight() { return mScreenHeight; }
 
     /**
      * MemoryChecker:

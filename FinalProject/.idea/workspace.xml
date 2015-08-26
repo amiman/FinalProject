@@ -10,8 +10,8 @@
   </component>
   <component name="AndroidLogFilters">
     <option name="TOOL_WINDOW_CUSTOM_FILTER" value="ImageMerge" />
-    <option name="TOOL_WINDOW_LOG_LEVEL" value="DEBUG" />
-    <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="No Filters" />
+    <option name="TOOL_WINDOW_LOG_LEVEL" value="ERROR" />
+    <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="Show only selected application" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="39e8d9dc-9342-44d3-9be4-92548bbfede5" name="Default" comment="" />
@@ -41,65 +41,86 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="ImageMergeMainActivity.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="ImageProcessing.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/ImageMerge/src/main/java/amitay/nachmani/image/merge/ImageProcessing/ImageProcessing.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding>
+                <element signature="docComment;class#ImageProcessing#0" expanded="false" />
+                <element signature="docComment;method#DrawTracks#0;class#ImageProcessing#0" expanded="false" />
+                <element signature="method#DrawTracks#0;class#ImageProcessing#0" expanded="false" />
+                <element signature="docComment;method#MergeMatWithPoints#0;class#ImageProcessing#0" expanded="false" />
+                <element signature="e#3905#3935#0" expanded="false" />
+                <element signature="method#ExtractMaskPixels#0;class#ImageProcessing#0" expanded="false" />
+                <element signature="method#CreateKMeansMatrix#0;class#ImageProcessing#0" expanded="false" />
+                <element signature="e#11054#11191#0" expanded="false" />
+                <element signature="method#CreateBestLabelsFromUserMarks#0;class#ImageProcessing#0" expanded="false" />
+                <element signature="method#CalculateStatisticOfColorPoints#0;class#ImageProcessing#0" expanded="false" />
+                <element signature="method#CalculateStartLabelAccordingToStatistic#0;class#ImageProcessing#0" expanded="false" />
+                <element signature="method#CalculateContourCenter#0;class#ImageProcessing#0" expanded="false" />
+                <element signature="method#AddMarksToFinalLabels#0;class#ImageProcessing#0" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ImageMergeMainActivity.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/ImageMerge/src/main/java/amitay/nachmani/image/merge/ImageMergeMainActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.9209302">
-              <caret line="282" column="13" selection-start-line="282" selection-start-column="13" selection-end-line="282" selection-end-column="13" />
+            <state vertical-scroll-proportion="-12.448276">
+              <caret line="1190" column="72" selection-start-line="1190" selection-start-column="72" selection-end-line="1190" selection-end-column="72" />
               <folding>
                 <element signature="docComment;field#mLoaderCallback#0;class#ImageMergeMainActivity#0" expanded="false" />
-                <element signature="class#4907:5512" expanded="false" />
-                <element signature="method#onManagerConnected#0;class#4907:5512" expanded="false" />
+                <element signature="class#4909:5514" expanded="false" />
+                <element signature="method#onManagerConnected#0;class#4909:5514" expanded="false" />
                 <element signature="docComment;method#BasicOnCreate#0;class#ImageMergeMainActivity#0" expanded="false" />
-                <element signature="method#onRestoreInstanceState#0;class#ImageMergeMainActivity#0" expanded="false" />
-                <element signature="method#onRestart#0;class#ImageMergeMainActivity#0" expanded="false" />
-                <element signature="method#onStart#0;class#ImageMergeMainActivity#0" expanded="false" />
-                <element signature="method#onStop#0;class#ImageMergeMainActivity#0" expanded="false" />
-                <element signature="method#onActivityReenter#0;class#ImageMergeMainActivity#0" expanded="false" />
-                <element signature="method#onWindowFocusChanged#0;class#ImageMergeMainActivity#0" expanded="false" />
+                <element signature="e#6059#6060#0" expanded="true" />
+                <element signature="e#6124#6125#0" expanded="true" />
                 <element signature="docComment;method#onCreate#0;class#ImageMergeMainActivity#0" expanded="false" />
-                <element signature="method#onCreate#0;class#ImageMergeMainActivity#0" expanded="false" />
-                <element signature="e#9276#9318#0" expanded="false" />
-                <element signature="method#onPause#0;class#ImageMergeMainActivity#0" expanded="false" />
-                <element signature="method#onResume#0;class#ImageMergeMainActivity#0" expanded="false" />
+                <element signature="e#9278#9320#0" expanded="false" />
+                <element signature="e#11225#11226#0" expanded="true" />
+                <element signature="e#11252#11253#0" expanded="true" />
+                <element signature="e#11325#11326#0" expanded="true" />
+                <element signature="e#11352#11353#0" expanded="true" />
                 <element signature="docComment;method#onCameraViewStarted#0;class#ImageMergeMainActivity#0" expanded="false" />
+                <element signature="e#11578#11579#0" expanded="true" />
+                <element signature="e#11627#11628#0" expanded="true" />
                 <element signature="docComment;method#onCameraViewStopped#0;class#ImageMergeMainActivity#0" expanded="false" />
                 <element signature="method#onCameraViewStopped#0;class#ImageMergeMainActivity#0" expanded="false" />
                 <element signature="docComment;method#onCameraFrame#0;class#ImageMergeMainActivity#0" expanded="false" />
-                <element signature="method#onCameraFrame#0;class#ImageMergeMainActivity#0" expanded="false" />
-                <element signature="e#13157#13194#0" expanded="false" />
-                <element signature="e#14843#14913#0" expanded="false" />
-                <element signature="e#15538#15650#0" expanded="false" />
-                <element signature="e#15806#15852#0" expanded="false" />
+                <element signature="e#13159#13196#0" expanded="false" />
+                <element signature="e#14845#14915#0" expanded="false" />
+                <element signature="e#15540#15652#0" expanded="false" />
+                <element signature="e#15808#15854#0" expanded="false" />
                 <element signature="docComment;method#BasicInitialization#0;class#ImageMergeMainActivity#0" expanded="false" />
                 <element signature="method#BasicInitialization#0;class#ImageMergeMainActivity#0" expanded="false" />
                 <element signature="docComment;method#InitializeScale#0;class#ImageMergeMainActivity#0" expanded="false" />
+                <element signature="method#InitializeScale#0;class#ImageMergeMainActivity#0" expanded="false" />
                 <element signature="docComment;method#InitializeMarkSegmentationView#0;class#ImageMergeMainActivity#0" expanded="false" />
-                <element signature="e#18604#18678#0" expanded="false" />
-                <element signature="e#22964#23013#0" expanded="false" />
-                <element signature="e#23182#23240#0" expanded="false" />
+                <element signature="e#18606#18680#0" expanded="false" />
+                <element signature="e#19600#19624#0" expanded="true" />
+                <element signature="e#21568#21778#0" expanded="true" />
+                <element signature="e#21777#21778#0" expanded="true" />
+                <element signature="e#23608#23657#0" expanded="false" />
+                <element signature="e#23872#23930#0" expanded="false" />
                 <element signature="method#InitializeRunSegmentationAlgorithmView#0;class#ImageMergeMainActivity#0" expanded="false" />
                 <element signature="docComment;method#InitializeTracksForDeletionTracks#0;class#ImageMergeMainActivity#0" expanded="false" />
-                <element signature="method#InitializeTracksForDeletionTracks#0;class#ImageMergeMainActivity#0" expanded="false" />
-                <element signature="method#InitializeMoveForegroundAndEdit#0;class#ImageMergeMainActivity#0" expanded="false" />
-                <element signature="e#27131#27174#0" expanded="false" />
+                <element signature="e#27821#27864#0" expanded="false" />
                 <element signature="docComment;method#SaveImageInitilazation#0;class#ImageMergeMainActivity#0" expanded="false" />
-                <element signature="method#SaveImageInitilazation#0;class#ImageMergeMainActivity#0" expanded="false" />
-                <element signature="e#30306#30382#0" expanded="false" />
+                <element signature="e#31060#31136#0" expanded="false" />
                 <element signature="docComment;method#PopDialogFileName#0;class#ImageMergeMainActivity#0" expanded="false" />
                 <element signature="method#PopDialogFileName#0;class#ImageMergeMainActivity#0" expanded="false" />
-                <element signature="e#30702#30758#0" expanded="false" />
+                <element signature="e#31456#31512#0" expanded="false" />
                 <element signature="docComment;method#SaveImageToData#0;class#ImageMergeMainActivity#0" expanded="false" />
                 <element signature="method#SaveImageToData#0;class#ImageMergeMainActivity#0" expanded="false" />
                 <element signature="method#SaveImageToDisk#0;class#ImageMergeMainActivity#0" expanded="false" />
-                <element signature="e#34708#34736#0" expanded="false" />
-                <element signature="docComment;method#onTouchEvent#0;class#ImageMergeMainActivity#0" expanded="false" />
+                <element signature="e#35462#35490#0" expanded="false" />
+                <element signature="docComment;method#DeleteLastTrack#0;class#ImageMergeMainActivity#0" expanded="false" />
                 <element signature="method#onTouchEvent#0;class#ImageMergeMainActivity#0" expanded="false" />
-                <element signature="docComment;method#SegmentationTouchEvent#0;class#ImageMergeMainActivity#0" expanded="false" />
                 <element signature="method#SegmentationTouchEvent#0;class#ImageMergeMainActivity#0" expanded="false" />
-                <element signature="e#38414#38438#0" expanded="false" />
-                <element signature="e#38918#38943#0" expanded="false" />
-                <element signature="method#MoveForegroundAndEditTouchEvent#0;class#ImageMergeMainActivity#0" expanded="false" />
+                <element signature="e#40104#40128#0" expanded="false" />
+                <element signature="e#40608#40633#0" expanded="false" />
                 <element signature="docComment;method#DrawNewTracksOnView#0;class#ImageMergeMainActivity#0" expanded="false" />
                 <element signature="method#DrawNewTracksOnView#0;class#ImageMergeMainActivity#0" expanded="false" />
                 <element signature="docComment;method#DrawAlgorithmResult#0;class#ImageMergeMainActivity#0" expanded="false" />
@@ -110,8 +131,39 @@
                 <element signature="method#DisplayBitmap#0;class#ImageMergeMainActivity#0" expanded="false" />
                 <element signature="docComment;method#LoadBitmapAndConvertToMat#0;class#ImageMergeMainActivity#0" expanded="false" />
                 <element signature="method#LoadBitmapAndConvertToMat#0;class#ImageMergeMainActivity#0" expanded="false" />
-                <element signature="docComment;method#MemoryChecker#0;class#ImageMergeMainActivity#0" expanded="false" />
                 <element signature="method#MemoryChecker#0;class#ImageMergeMainActivity#0" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Data.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/ImageMerge/src/main/java/amitay/nachmani/image/merge/Data/Data.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.03214286">
+              <caret line="218" column="4" selection-start-line="218" selection-start-column="4" selection-end-line="218" selection-end-column="4" />
+              <folding>
+                <element signature="docComment;class#Data#0" expanded="false" />
+                <element signature="e#2267#2295#0" expanded="false" />
+                <element signature="method#ExtractMinMaxForegroundPoint#0;class#Data#0" expanded="false" />
+                <element signature="docComment;method#CalculateExtractForegroundCenterOfGravity#0;class#Data#0" expanded="false" />
+                <element signature="method#CalculateExtractForegroundCenterOfGravity#0;class#Data#0" expanded="false" />
+                <element signature="docComment;method#NormallizeExtractForegroundPointsByCenterOfMass#0;class#Data#0" expanded="false" />
+                <element signature="method#NormallizeExtractForegroundPointsByCenterOfMass#0;class#Data#0" expanded="false" />
+                <element signature="method#UpdateCenterOfGravity#0;class#Data#0" expanded="false" />
+                <element signature="docComment;method#UpdatePointStatus#0;class#Data#0" expanded="false" />
+                <element signature="method#UpdatePointStatus#0;class#Data#0" expanded="false" />
+                <element signature="e#9556#9605#0" expanded="false" />
+                <element signature="docComment;method#UpdatePointStatus#1;class#Data#0" expanded="false" />
+                <element signature="method#UpdatePointStatus#1;class#Data#0" expanded="false" />
+                <element signature="method#ReleaseKmeansMatrix#0;class#Data#0" expanded="false" />
+                <element signature="method#ReleaseKmeansBestLabelsMatrix#0;class#Data#0" expanded="false" />
+                <element signature="method#ReleaseImageMask#0;class#Data#0" expanded="false" />
+                <element signature="docComment;method#MarkPixelsInMarkedImage#0;class#Data#0" expanded="false" />
+                <element signature="docComment;method#MarkedMaskChange#0;class#Data#0" expanded="false" />
+                <element signature="method#CleanMemory#0;class#Data#0" expanded="false" />
+                <element signature="docComment;method#BuildExtractedForegroundMatrix#0;class#Data#0" expanded="false" />
+                <element signature="e#14916#14980#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -2637,11 +2689,11 @@
         <option value="$PROJECT_DIR$/ImageMerge/src/main/java/amitay/nachmani/image/merge/ImageProcessing/MyConnectedComponenetAlgorithm.java" />
         <option value="$PROJECT_DIR$/ImageMerge/src/main/res/layout/load_images_list_row.xml" />
         <option value="$PROJECT_DIR$/ImageMerge/src/main/java/amitay/nachmani/image/merge/General/GeneralInfo.java" />
-        <option value="$PROJECT_DIR$/ImageMerge/src/main/java/amitay/nachmani/image/merge/Data/Data.java" />
         <option value="$PROJECT_DIR$/ImageMerge/src/main/java/amitay/nachmani/image/merge/StartScreenActivity.java" />
         <option value="$PROJECT_DIR$/ImageMerge/src/main/java/amitay/nachmani/image/merge/LoadImages.java" />
-        <option value="$PROJECT_DIR$/ImageMerge/src/main/java/amitay/nachmani/image/merge/ImageMergeMainActivity.java" />
         <option value="$PROJECT_DIR$/ImageMerge/src/main/java/amitay/nachmani/image/merge/ImageProcessing/ImageProcessing.java" />
+        <option value="$PROJECT_DIR$/ImageMerge/src/main/java/amitay/nachmani/image/merge/Data/Data.java" />
+        <option value="$PROJECT_DIR$/ImageMerge/src/main/java/amitay/nachmani/image/merge/ImageMergeMainActivity.java" />
       </list>
     </option>
   </component>
@@ -2717,6 +2769,80 @@
               <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
             </PATH_ELEMENT>
           </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="FinalProject" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ImageMerge" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="res" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidResFolderNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="FinalProject" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ImageMerge" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="res" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidResFolderNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="drawable" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidResFolderTypeNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="FinalProject" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ImageMerge" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="FinalProject" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ImageMerge" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidSourceTypeNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="FinalProject" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ImageMerge" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidSourceTypeNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="merge" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
         </subPane>
       </pane>
       <pane id="ProjectPane">
@@ -2768,7 +2894,7 @@
     <property name="FullScreen" value="false" />
     <property name="android.project.structure.last.selected" value="ImageMerge" />
     <property name="android.project.structure.proportion" value="0.15" />
-    <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_SERIALS" value="HT157TJ00409" />
+    <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_SERIALS" value="3004cfa748463100" />
     <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_AVD" value="Nexus_5_API_21_x86" />
     <property name="OverrideImplement.combined" value="true" />
     <property name="OverrideImplement.overriding.sorted" value="false" />
@@ -2782,8 +2908,8 @@
       <recent name="amitay.nachmani.image.merge" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\Amitay\Documents\GitHub\FinalProject\FinalProject\ImageMerge\src\main\res\layout" />
       <recent name="C:\Users\Amitay\Documents\GitHub\FinalProject\FinalProject\ImageMerge\src\main\res\drawable" />
+      <recent name="C:\Users\Amitay\Documents\GitHub\FinalProject\FinalProject\ImageMerge\src\main\res\layout" />
       <recent name="C:\Users\Amitay\Documents\GitHub\FinalProject\FinalProject\facebook\src" />
       <recent name="C:\Users\Amitay\Documents\GitHub\FinalProject\FinalProject\ImageMerge\src\main\java\libs" />
     </key>
@@ -3024,7 +3150,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
+    <frame x="-8" y="-8" width="1382" height="744" extended-state="7" />
     <editor active="true" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32993197" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -3038,7 +3164,7 @@
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4047619" sideWeight="0.48335856" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Captures" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32980332" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.22108844" sideWeight="0.48487142" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.56462586" sideWeight="0.48487142" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4319728" sideWeight="0.50907713" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24281392" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -3128,58 +3254,55 @@
           <caret line="167" column="0" selection-start-line="167" selection-start-column="0" selection-end-line="167" selection-end-column="0" />
           <folding>
             <element signature="docComment;field#mLoaderCallback#0;class#ImageMergeMainActivity#0" expanded="false" />
-            <element signature="class#4907:5512" expanded="false" />
-            <element signature="method#onManagerConnected#0;class#4907:5512" expanded="false" />
+            <element signature="class#4909:5514" expanded="false" />
+            <element signature="method#onManagerConnected#0;class#4909:5514" expanded="false" />
             <element signature="docComment;method#BasicOnCreate#0;class#ImageMergeMainActivity#0" expanded="false" />
-            <element signature="method#onRestoreInstanceState#0;class#ImageMergeMainActivity#0" expanded="false" />
-            <element signature="method#onRestart#0;class#ImageMergeMainActivity#0" expanded="false" />
-            <element signature="method#onStart#0;class#ImageMergeMainActivity#0" expanded="false" />
-            <element signature="method#onStop#0;class#ImageMergeMainActivity#0" expanded="false" />
-            <element signature="method#onActivityReenter#0;class#ImageMergeMainActivity#0" expanded="false" />
-            <element signature="method#onWindowFocusChanged#0;class#ImageMergeMainActivity#0" expanded="false" />
+            <element signature="e#6059#6060#0" expanded="true" />
+            <element signature="e#6124#6125#0" expanded="true" />
             <element signature="docComment;method#onCreate#0;class#ImageMergeMainActivity#0" expanded="false" />
-            <element signature="method#onCreate#0;class#ImageMergeMainActivity#0" expanded="false" />
-            <element signature="e#9276#9318#0" expanded="false" />
-            <element signature="method#onPause#0;class#ImageMergeMainActivity#0" expanded="false" />
-            <element signature="method#onResume#0;class#ImageMergeMainActivity#0" expanded="false" />
+            <element signature="e#9278#9320#0" expanded="false" />
+            <element signature="e#11225#11226#0" expanded="true" />
+            <element signature="e#11252#11253#0" expanded="true" />
+            <element signature="e#11325#11326#0" expanded="true" />
+            <element signature="e#11352#11353#0" expanded="true" />
             <element signature="docComment;method#onCameraViewStarted#0;class#ImageMergeMainActivity#0" expanded="false" />
+            <element signature="e#11578#11579#0" expanded="true" />
+            <element signature="e#11627#11628#0" expanded="true" />
             <element signature="docComment;method#onCameraViewStopped#0;class#ImageMergeMainActivity#0" expanded="false" />
             <element signature="method#onCameraViewStopped#0;class#ImageMergeMainActivity#0" expanded="false" />
             <element signature="docComment;method#onCameraFrame#0;class#ImageMergeMainActivity#0" expanded="false" />
-            <element signature="method#onCameraFrame#0;class#ImageMergeMainActivity#0" expanded="false" />
-            <element signature="e#13157#13194#0" expanded="false" />
-            <element signature="e#14843#14913#0" expanded="false" />
-            <element signature="e#15538#15650#0" expanded="false" />
-            <element signature="e#15806#15852#0" expanded="false" />
+            <element signature="e#13159#13196#0" expanded="false" />
+            <element signature="e#14845#14915#0" expanded="false" />
+            <element signature="e#15540#15652#0" expanded="false" />
+            <element signature="e#15808#15854#0" expanded="false" />
             <element signature="docComment;method#BasicInitialization#0;class#ImageMergeMainActivity#0" expanded="false" />
             <element signature="method#BasicInitialization#0;class#ImageMergeMainActivity#0" expanded="false" />
             <element signature="docComment;method#InitializeScale#0;class#ImageMergeMainActivity#0" expanded="false" />
+            <element signature="method#InitializeScale#0;class#ImageMergeMainActivity#0" expanded="false" />
             <element signature="docComment;method#InitializeMarkSegmentationView#0;class#ImageMergeMainActivity#0" expanded="false" />
-            <element signature="e#18604#18678#0" expanded="false" />
-            <element signature="e#22964#23013#0" expanded="false" />
-            <element signature="e#23182#23240#0" expanded="false" />
+            <element signature="e#18606#18680#0" expanded="false" />
+            <element signature="e#19600#19624#0" expanded="true" />
+            <element signature="e#21568#21778#0" expanded="true" />
+            <element signature="e#21777#21778#0" expanded="true" />
+            <element signature="e#23608#23657#0" expanded="false" />
+            <element signature="e#23872#23930#0" expanded="false" />
             <element signature="method#InitializeRunSegmentationAlgorithmView#0;class#ImageMergeMainActivity#0" expanded="false" />
             <element signature="docComment;method#InitializeTracksForDeletionTracks#0;class#ImageMergeMainActivity#0" expanded="false" />
-            <element signature="method#InitializeTracksForDeletionTracks#0;class#ImageMergeMainActivity#0" expanded="false" />
-            <element signature="method#InitializeMoveForegroundAndEdit#0;class#ImageMergeMainActivity#0" expanded="false" />
-            <element signature="e#27131#27174#0" expanded="false" />
+            <element signature="e#27821#27864#0" expanded="false" />
             <element signature="docComment;method#SaveImageInitilazation#0;class#ImageMergeMainActivity#0" expanded="false" />
-            <element signature="method#SaveImageInitilazation#0;class#ImageMergeMainActivity#0" expanded="false" />
-            <element signature="e#30306#30382#0" expanded="false" />
+            <element signature="e#31060#31136#0" expanded="false" />
             <element signature="docComment;method#PopDialogFileName#0;class#ImageMergeMainActivity#0" expanded="false" />
             <element signature="method#PopDialogFileName#0;class#ImageMergeMainActivity#0" expanded="false" />
-            <element signature="e#30702#30758#0" expanded="false" />
+            <element signature="e#31456#31512#0" expanded="false" />
             <element signature="docComment;method#SaveImageToData#0;class#ImageMergeMainActivity#0" expanded="false" />
             <element signature="method#SaveImageToData#0;class#ImageMergeMainActivity#0" expanded="false" />
             <element signature="method#SaveImageToDisk#0;class#ImageMergeMainActivity#0" expanded="false" />
-            <element signature="e#34708#34736#0" expanded="false" />
-            <element signature="docComment;method#onTouchEvent#0;class#ImageMergeMainActivity#0" expanded="false" />
+            <element signature="e#35462#35490#0" expanded="false" />
+            <element signature="docComment;method#DeleteLastTrack#0;class#ImageMergeMainActivity#0" expanded="false" />
             <element signature="method#onTouchEvent#0;class#ImageMergeMainActivity#0" expanded="false" />
-            <element signature="docComment;method#SegmentationTouchEvent#0;class#ImageMergeMainActivity#0" expanded="false" />
             <element signature="method#SegmentationTouchEvent#0;class#ImageMergeMainActivity#0" expanded="false" />
-            <element signature="e#38414#38438#0" expanded="false" />
-            <element signature="e#38918#38943#0" expanded="false" />
-            <element signature="method#MoveForegroundAndEditTouchEvent#0;class#ImageMergeMainActivity#0" expanded="false" />
+            <element signature="e#40104#40128#0" expanded="false" />
+            <element signature="e#40608#40633#0" expanded="false" />
             <element signature="docComment;method#DrawNewTracksOnView#0;class#ImageMergeMainActivity#0" expanded="false" />
             <element signature="method#DrawNewTracksOnView#0;class#ImageMergeMainActivity#0" expanded="false" />
             <element signature="docComment;method#DrawAlgorithmResult#0;class#ImageMergeMainActivity#0" expanded="false" />
@@ -3190,7 +3313,6 @@
             <element signature="method#DisplayBitmap#0;class#ImageMergeMainActivity#0" expanded="false" />
             <element signature="docComment;method#LoadBitmapAndConvertToMat#0;class#ImageMergeMainActivity#0" expanded="false" />
             <element signature="method#LoadBitmapAndConvertToMat#0;class#ImageMergeMainActivity#0" expanded="false" />
-            <element signature="docComment;method#MemoryChecker#0;class#ImageMergeMainActivity#0" expanded="false" />
             <element signature="method#MemoryChecker#0;class#ImageMergeMainActivity#0" expanded="false" />
           </folding>
         </state>
@@ -3540,59 +3662,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ImageMerge/src/main/java/amitay/nachmani/image/merge/Data/Data.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="77" column="33" selection-start-line="77" selection-start-column="33" selection-end-line="77" selection-end-column="33" />
-          <folding>
-            <element signature="docComment;class#Data#0" expanded="false" />
-            <element signature="e#1755#1756#0" expanded="true" />
-            <element signature="e#1815#1816#0" expanded="true" />
-            <element signature="e#1981#1982#0" expanded="true" />
-            <element signature="e#2032#2033#0" expanded="true" />
-            <element signature="e#2081#2082#0" expanded="true" />
-            <element signature="e#2121#2122#0" expanded="true" />
-            <element signature="e#2161#2162#0" expanded="true" />
-            <element signature="e#2213#2214#0" expanded="true" />
-            <element signature="e#2267#2295#0" expanded="false" />
-            <element signature="e#2753#2754#0" expanded="true" />
-            <element signature="e#2797#2798#0" expanded="true" />
-            <element signature="e#3262#3263#0" expanded="true" />
-            <element signature="e#3298#3299#0" expanded="true" />
-            <element signature="e#3491#3492#0" expanded="true" />
-            <element signature="e#3555#3556#0" expanded="true" />
-            <element signature="e#4519#4520#0" expanded="true" />
-            <element signature="e#4564#4565#0" expanded="true" />
-            <element signature="method#ExtractMinMaxForegroundPoint#0;class#Data#0" expanded="false" />
-            <element signature="docComment;method#CalculateExtractForegroundCenterOfGravity#0;class#Data#0" expanded="false" />
-            <element signature="method#CalculateExtractForegroundCenterOfGravity#0;class#Data#0" expanded="false" />
-            <element signature="docComment;method#NormallizeExtractForegroundPointsByCenterOfMass#0;class#Data#0" expanded="false" />
-            <element signature="method#NormallizeExtractForegroundPointsByCenterOfMass#0;class#Data#0" expanded="false" />
-            <element signature="method#UpdateCenterOfGravity#0;class#Data#0" expanded="false" />
-            <element signature="docComment;method#UpdatePointStatus#0;class#Data#0" expanded="false" />
-            <element signature="method#UpdatePointStatus#0;class#Data#0" expanded="false" />
-            <element signature="e#9545#9594#0" expanded="false" />
-            <element signature="docComment;method#UpdatePointStatus#1;class#Data#0" expanded="false" />
-            <element signature="e#11144#11145#0" expanded="true" />
-            <element signature="e#11187#11188#0" expanded="true" />
-            <element signature="e#11677#11678#0" expanded="true" />
-            <element signature="e#11716#11717#0" expanded="true" />
-            <element signature="e#12014#12015#0" expanded="true" />
-            <element signature="e#12053#12054#0" expanded="true" />
-            <element signature="method#ReleaseKmeansMatrix#0;class#Data#0" expanded="false" />
-            <element signature="method#ReleaseKmeansBestLabelsMatrix#0;class#Data#0" expanded="false" />
-            <element signature="method#ReleaseImageMask#0;class#Data#0" expanded="false" />
-            <element signature="docComment;method#MarkPixelsInMarkedImage#0;class#Data#0" expanded="false" />
-            <element signature="docComment;method#MarkedMaskChange#0;class#Data#0" expanded="false" />
-            <element signature="e#13824#13825#0" expanded="true" />
-            <element signature="e#13870#13871#0" expanded="true" />
-            <element signature="method#CleanMemory#0;class#Data#0" expanded="false" />
-            <element signature="docComment;method#BuildExtractedForegroundMatrix#0;class#Data#0" expanded="false" />
-            <element signature="e#14873#14937#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/ImageMerge/src/main/java/amitay/nachmani/image/merge/Adapters/ImagePagerAdapter.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="1.170426">
@@ -3615,86 +3684,61 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ImageMerge/src/main/java/amitay/nachmani/image/merge/ImageProcessing/ImageProcessing.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="561" column="91" selection-start-line="561" selection-start-column="91" selection-end-line="561" selection-end-column="91" />
-          <folding>
-            <element signature="docComment;class#ImageProcessing#0" expanded="false" />
-            <element signature="docComment;method#DrawTracks#0;class#ImageProcessing#0" expanded="false" />
-            <element signature="method#DrawTracks#0;class#ImageProcessing#0" expanded="false" />
-            <element signature="docComment;method#MergeMatWithPoints#0;class#ImageProcessing#0" expanded="false" />
-            <element signature="e#3473#3503#0" expanded="false" />
-            <element signature="method#ExtractMaskPixels#0;class#ImageProcessing#0" expanded="false" />
-            <element signature="method#CreateKMeansMatrix#0;class#ImageProcessing#0" expanded="false" />
-            <element signature="e#10622#10759#0" expanded="false" />
-            <element signature="method#CreateBestLabelsFromUserMarks#0;class#ImageProcessing#0" expanded="false" />
-            <element signature="method#CalculateStatisticOfColorPoints#0;class#ImageProcessing#0" expanded="false" />
-            <element signature="method#CalculateStartLabelAccordingToStatistic#0;class#ImageProcessing#0" expanded="false" />
-            <element signature="method#CalculateContourCenter#0;class#ImageProcessing#0" expanded="false" />
-            <element signature="method#AddMarksToFinalLabels#0;class#ImageProcessing#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/ImageMerge/src/main/java/amitay/nachmani/image/merge/ImageMergeMainActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.9209302">
-          <caret line="282" column="13" selection-start-line="282" selection-start-column="13" selection-end-line="282" selection-end-column="13" />
+        <state vertical-scroll-proportion="-12.448276">
+          <caret line="1190" column="72" selection-start-line="1190" selection-start-column="72" selection-end-line="1190" selection-end-column="72" />
           <folding>
             <element signature="docComment;field#mLoaderCallback#0;class#ImageMergeMainActivity#0" expanded="false" />
-            <element signature="class#4907:5512" expanded="false" />
-            <element signature="method#onManagerConnected#0;class#4907:5512" expanded="false" />
+            <element signature="class#4909:5514" expanded="false" />
+            <element signature="method#onManagerConnected#0;class#4909:5514" expanded="false" />
             <element signature="docComment;method#BasicOnCreate#0;class#ImageMergeMainActivity#0" expanded="false" />
-            <element signature="method#onRestoreInstanceState#0;class#ImageMergeMainActivity#0" expanded="false" />
-            <element signature="method#onRestart#0;class#ImageMergeMainActivity#0" expanded="false" />
-            <element signature="method#onStart#0;class#ImageMergeMainActivity#0" expanded="false" />
-            <element signature="method#onStop#0;class#ImageMergeMainActivity#0" expanded="false" />
-            <element signature="method#onActivityReenter#0;class#ImageMergeMainActivity#0" expanded="false" />
-            <element signature="method#onWindowFocusChanged#0;class#ImageMergeMainActivity#0" expanded="false" />
+            <element signature="e#6059#6060#0" expanded="true" />
+            <element signature="e#6124#6125#0" expanded="true" />
             <element signature="docComment;method#onCreate#0;class#ImageMergeMainActivity#0" expanded="false" />
-            <element signature="method#onCreate#0;class#ImageMergeMainActivity#0" expanded="false" />
-            <element signature="e#9276#9318#0" expanded="false" />
-            <element signature="method#onPause#0;class#ImageMergeMainActivity#0" expanded="false" />
-            <element signature="method#onResume#0;class#ImageMergeMainActivity#0" expanded="false" />
+            <element signature="e#9278#9320#0" expanded="false" />
+            <element signature="e#11225#11226#0" expanded="true" />
+            <element signature="e#11252#11253#0" expanded="true" />
+            <element signature="e#11325#11326#0" expanded="true" />
+            <element signature="e#11352#11353#0" expanded="true" />
             <element signature="docComment;method#onCameraViewStarted#0;class#ImageMergeMainActivity#0" expanded="false" />
+            <element signature="e#11578#11579#0" expanded="true" />
+            <element signature="e#11627#11628#0" expanded="true" />
             <element signature="docComment;method#onCameraViewStopped#0;class#ImageMergeMainActivity#0" expanded="false" />
             <element signature="method#onCameraViewStopped#0;class#ImageMergeMainActivity#0" expanded="false" />
             <element signature="docComment;method#onCameraFrame#0;class#ImageMergeMainActivity#0" expanded="false" />
-            <element signature="method#onCameraFrame#0;class#ImageMergeMainActivity#0" expanded="false" />
-            <element signature="e#13157#13194#0" expanded="false" />
-            <element signature="e#14843#14913#0" expanded="false" />
-            <element signature="e#15538#15650#0" expanded="false" />
-            <element signature="e#15806#15852#0" expanded="false" />
+            <element signature="e#13159#13196#0" expanded="false" />
+            <element signature="e#14845#14915#0" expanded="false" />
+            <element signature="e#15540#15652#0" expanded="false" />
+            <element signature="e#15808#15854#0" expanded="false" />
             <element signature="docComment;method#BasicInitialization#0;class#ImageMergeMainActivity#0" expanded="false" />
             <element signature="method#BasicInitialization#0;class#ImageMergeMainActivity#0" expanded="false" />
             <element signature="docComment;method#InitializeScale#0;class#ImageMergeMainActivity#0" expanded="false" />
+            <element signature="method#InitializeScale#0;class#ImageMergeMainActivity#0" expanded="false" />
             <element signature="docComment;method#InitializeMarkSegmentationView#0;class#ImageMergeMainActivity#0" expanded="false" />
-            <element signature="e#18604#18678#0" expanded="false" />
-            <element signature="e#22964#23013#0" expanded="false" />
-            <element signature="e#23182#23240#0" expanded="false" />
+            <element signature="e#18606#18680#0" expanded="false" />
+            <element signature="e#19600#19624#0" expanded="true" />
+            <element signature="e#21568#21778#0" expanded="true" />
+            <element signature="e#21777#21778#0" expanded="true" />
+            <element signature="e#23608#23657#0" expanded="false" />
+            <element signature="e#23872#23930#0" expanded="false" />
             <element signature="method#InitializeRunSegmentationAlgorithmView#0;class#ImageMergeMainActivity#0" expanded="false" />
             <element signature="docComment;method#InitializeTracksForDeletionTracks#0;class#ImageMergeMainActivity#0" expanded="false" />
-            <element signature="method#InitializeTracksForDeletionTracks#0;class#ImageMergeMainActivity#0" expanded="false" />
-            <element signature="method#InitializeMoveForegroundAndEdit#0;class#ImageMergeMainActivity#0" expanded="false" />
-            <element signature="e#27131#27174#0" expanded="false" />
+            <element signature="e#27821#27864#0" expanded="false" />
             <element signature="docComment;method#SaveImageInitilazation#0;class#ImageMergeMainActivity#0" expanded="false" />
-            <element signature="method#SaveImageInitilazation#0;class#ImageMergeMainActivity#0" expanded="false" />
-            <element signature="e#30306#30382#0" expanded="false" />
+            <element signature="e#31060#31136#0" expanded="false" />
             <element signature="docComment;method#PopDialogFileName#0;class#ImageMergeMainActivity#0" expanded="false" />
             <element signature="method#PopDialogFileName#0;class#ImageMergeMainActivity#0" expanded="false" />
-            <element signature="e#30702#30758#0" expanded="false" />
+            <element signature="e#31456#31512#0" expanded="false" />
             <element signature="docComment;method#SaveImageToData#0;class#ImageMergeMainActivity#0" expanded="false" />
             <element signature="method#SaveImageToData#0;class#ImageMergeMainActivity#0" expanded="false" />
             <element signature="method#SaveImageToDisk#0;class#ImageMergeMainActivity#0" expanded="false" />
-            <element signature="e#34708#34736#0" expanded="false" />
-            <element signature="docComment;method#onTouchEvent#0;class#ImageMergeMainActivity#0" expanded="false" />
+            <element signature="e#35462#35490#0" expanded="false" />
+            <element signature="docComment;method#DeleteLastTrack#0;class#ImageMergeMainActivity#0" expanded="false" />
             <element signature="method#onTouchEvent#0;class#ImageMergeMainActivity#0" expanded="false" />
-            <element signature="docComment;method#SegmentationTouchEvent#0;class#ImageMergeMainActivity#0" expanded="false" />
             <element signature="method#SegmentationTouchEvent#0;class#ImageMergeMainActivity#0" expanded="false" />
-            <element signature="e#38414#38438#0" expanded="false" />
-            <element signature="e#38918#38943#0" expanded="false" />
-            <element signature="method#MoveForegroundAndEditTouchEvent#0;class#ImageMergeMainActivity#0" expanded="false" />
+            <element signature="e#40104#40128#0" expanded="false" />
+            <element signature="e#40608#40633#0" expanded="false" />
             <element signature="docComment;method#DrawNewTracksOnView#0;class#ImageMergeMainActivity#0" expanded="false" />
             <element signature="method#DrawNewTracksOnView#0;class#ImageMergeMainActivity#0" expanded="false" />
             <element signature="docComment;method#DrawAlgorithmResult#0;class#ImageMergeMainActivity#0" expanded="false" />
@@ -3705,8 +3749,59 @@
             <element signature="method#DisplayBitmap#0;class#ImageMergeMainActivity#0" expanded="false" />
             <element signature="docComment;method#LoadBitmapAndConvertToMat#0;class#ImageMergeMainActivity#0" expanded="false" />
             <element signature="method#LoadBitmapAndConvertToMat#0;class#ImageMergeMainActivity#0" expanded="false" />
-            <element signature="docComment;method#MemoryChecker#0;class#ImageMergeMainActivity#0" expanded="false" />
             <element signature="method#MemoryChecker#0;class#ImageMergeMainActivity#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ImageMerge/src/main/java/amitay/nachmani/image/merge/ImageProcessing/ImageProcessing.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="docComment;class#ImageProcessing#0" expanded="false" />
+            <element signature="docComment;method#DrawTracks#0;class#ImageProcessing#0" expanded="false" />
+            <element signature="method#DrawTracks#0;class#ImageProcessing#0" expanded="false" />
+            <element signature="docComment;method#MergeMatWithPoints#0;class#ImageProcessing#0" expanded="false" />
+            <element signature="e#3905#3935#0" expanded="false" />
+            <element signature="method#ExtractMaskPixels#0;class#ImageProcessing#0" expanded="false" />
+            <element signature="method#CreateKMeansMatrix#0;class#ImageProcessing#0" expanded="false" />
+            <element signature="e#11054#11191#0" expanded="false" />
+            <element signature="method#CreateBestLabelsFromUserMarks#0;class#ImageProcessing#0" expanded="false" />
+            <element signature="method#CalculateStatisticOfColorPoints#0;class#ImageProcessing#0" expanded="false" />
+            <element signature="method#CalculateStartLabelAccordingToStatistic#0;class#ImageProcessing#0" expanded="false" />
+            <element signature="method#CalculateContourCenter#0;class#ImageProcessing#0" expanded="false" />
+            <element signature="method#AddMarksToFinalLabels#0;class#ImageProcessing#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ImageMerge/src/main/java/amitay/nachmani/image/merge/Data/Data.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.03214286">
+          <caret line="218" column="4" selection-start-line="218" selection-start-column="4" selection-end-line="218" selection-end-column="4" />
+          <folding>
+            <element signature="docComment;class#Data#0" expanded="false" />
+            <element signature="e#2267#2295#0" expanded="false" />
+            <element signature="method#ExtractMinMaxForegroundPoint#0;class#Data#0" expanded="false" />
+            <element signature="docComment;method#CalculateExtractForegroundCenterOfGravity#0;class#Data#0" expanded="false" />
+            <element signature="method#CalculateExtractForegroundCenterOfGravity#0;class#Data#0" expanded="false" />
+            <element signature="docComment;method#NormallizeExtractForegroundPointsByCenterOfMass#0;class#Data#0" expanded="false" />
+            <element signature="method#NormallizeExtractForegroundPointsByCenterOfMass#0;class#Data#0" expanded="false" />
+            <element signature="method#UpdateCenterOfGravity#0;class#Data#0" expanded="false" />
+            <element signature="docComment;method#UpdatePointStatus#0;class#Data#0" expanded="false" />
+            <element signature="method#UpdatePointStatus#0;class#Data#0" expanded="false" />
+            <element signature="e#9556#9605#0" expanded="false" />
+            <element signature="docComment;method#UpdatePointStatus#1;class#Data#0" expanded="false" />
+            <element signature="method#UpdatePointStatus#1;class#Data#0" expanded="false" />
+            <element signature="method#ReleaseKmeansMatrix#0;class#Data#0" expanded="false" />
+            <element signature="method#ReleaseKmeansBestLabelsMatrix#0;class#Data#0" expanded="false" />
+            <element signature="method#ReleaseImageMask#0;class#Data#0" expanded="false" />
+            <element signature="docComment;method#MarkPixelsInMarkedImage#0;class#Data#0" expanded="false" />
+            <element signature="docComment;method#MarkedMaskChange#0;class#Data#0" expanded="false" />
+            <element signature="method#CleanMemory#0;class#Data#0" expanded="false" />
+            <element signature="docComment;method#BuildExtractedForegroundMatrix#0;class#Data#0" expanded="false" />
+            <element signature="e#14916#14980#0" expanded="false" />
           </folding>
         </state>
       </provider>

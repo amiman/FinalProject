@@ -237,8 +237,9 @@ containing a value of this type.
         public static final int oval_button=0x7f020021;
         public static final int take_picture_button=0x7f020022;
         public static final int theme=0x7f020023;
-        public static final int very_small_theme=0x7f020024;
-        public static final int whatsapp_icon=0x7f020025;
+        public static final int undo_arrow=0x7f020024;
+        public static final int very_small_theme=0x7f020025;
+        public static final int whatsapp_icon=0x7f020026;
     }
     public static final class id {
         public static final int action_settings=0x7f090030;
