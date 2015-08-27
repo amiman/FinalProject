@@ -2,13 +2,6 @@
 <items version="2" >
 
     <item
-        jar="C:\Users\Amitay\Documents\GitHub\FinalProject\FinalProject\ImageMerge\build\intermediates\exploded-aar\com.facebook.android\facebook\4.4.0\libs\android-support-v4.jar"
-        jumboMode="false"
-        revision="22.0.0"
-        sha1="33b27a8d2a5b87e6eb6c60e87a5374ffbfeacc3a">
-        <dex dex="C:\Users\Amitay\Documents\GitHub\FinalProject\FinalProject\ImageMerge\build\intermediates\pre-dexed\debug\android-support-v4-77526fa840f1983a288c621513a938c6232cf94e.jar" />
-    </item>
-    <item
         jar="C:\Users\Amitay\.gradle\caches\modules-2\files-2.1\com.parse.bolts\bolts-android\1.2.0\6ee2953ccf51ce72b6d548c30c4633b99eb4f9dd\bolts-android-1.2.0.jar"
         jumboMode="false"
         revision="22.0.0"
@@ -16,11 +9,11 @@
         <dex dex="C:\Users\Amitay\Documents\GitHub\FinalProject\FinalProject\ImageMerge\build\intermediates\pre-dexed\debug\bolts-android-1.2.0-e153b39edf23b19b23a1bebe87db0c7a6b0af0c8.jar" />
     </item>
     <item
-        jar="C:\Users\Amitay\Documents\GitHub\FinalProject\FinalProject\ImageMerge\build\intermediates\exploded-aar\FinalProject\openCVLibrary2411\unspecified\classes.jar"
+        jar="C:\Users\Amitay\Documents\GitHub\FinalProject\FinalProject\ImageMerge\build\intermediates\exploded-aar\com.facebook.android\facebook\4.4.0\libs\android-support-v4.jar"
         jumboMode="false"
         revision="22.0.0"
-        sha1="8d43b950d50b988dab8eb3db747de4ce810fb12b">
-        <dex dex="C:\Users\Amitay\Documents\GitHub\FinalProject\FinalProject\ImageMerge\build\intermediates\pre-dexed\debug\classes-f9c8244b23c03448fe709b049080d92cb10c6d66.jar" />
+        sha1="33b27a8d2a5b87e6eb6c60e87a5374ffbfeacc3a">
+        <dex dex="C:\Users\Amitay\Documents\GitHub\FinalProject\FinalProject\ImageMerge\build\intermediates\pre-dexed\debug\android-support-v4-77526fa840f1983a288c621513a938c6232cf94e.jar" />
     </item>
     <item
         jar="C:\Users\Amitay\Documents\GitHub\FinalProject\FinalProject\ImageMerge\build\intermediates\exploded-aar\com.facebook.android\facebook\4.4.0\classes.jar"
@@ -28,6 +21,13 @@
         revision="22.0.0"
         sha1="34748c3d8d3e47243082208cdeebea37dc98eaa4">
         <dex dex="C:\Users\Amitay\Documents\GitHub\FinalProject\FinalProject\ImageMerge\build\intermediates\pre-dexed\debug\classes-b8327cb91595fbb5394205457b9baa053e6250df.jar" />
+    </item>
+    <item
+        jar="C:\Users\Amitay\Documents\GitHub\FinalProject\FinalProject\ImageMerge\build\intermediates\exploded-aar\FinalProject\openCVLibrary2411\unspecified\classes.jar"
+        jumboMode="false"
+        revision="22.0.0"
+        sha1="8d43b950d50b988dab8eb3db747de4ce810fb12b">
+        <dex dex="C:\Users\Amitay\Documents\GitHub\FinalProject\FinalProject\ImageMerge\build\intermediates\pre-dexed\debug\classes-f9c8244b23c03448fe709b049080d92cb10c6d66.jar" />
     </item>
 
 </items>

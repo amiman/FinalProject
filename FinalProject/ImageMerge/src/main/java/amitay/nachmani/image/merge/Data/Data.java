@@ -1,6 +1,8 @@
 package amitay.nachmani.image.merge.Data;
 
 
+import android.util.Log;
+
 import org.opencv.core.Core;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
@@ -9,6 +11,7 @@ import org.opencv.core.Scalar;
 
 import java.util.ArrayList;
 
+import amitay.nachmani.image.merge.General.GeneralInfo;
 import amitay.nachmani.image.merge.General.MarkValues;
 import amitay.nachmani.image.merge.ImageProcessing.AlgorithmName;
 import amitay.nachmani.image.merge.ImageProcessing.ColorPoint;
@@ -48,6 +51,10 @@ public class Data {
     private double[] mForegroundStatisticalColor;
     private double[] mBackgroundStatisticalColor;
     private int mNumberOfStatisticalBins;
+
+    // GrowCut
+    private Mat mGrowCutBasicLabel;
+
 
     // Status
     private boolean mMarkedImageMaskChanged = true;
@@ -108,6 +115,8 @@ public class Data {
             mBestLabels = new Mat((int) mSecondImage.total(), 1, CvType.CV_32SC1, new Scalar(0));
         } else if(name.equals(AlgorithmName.MY_ALGORITHM)) {
             mBestLabels = new Mat((int) mSecondImage.rows(), (int) mSecondImage.cols(), CvType.CV_8UC1, new Scalar(0));
+        } else if(name.equals(AlgorithmName.GROW_CUT)) {
+            mBestLabels = new Mat((int) mSecondImage.rows(), (int) mSecondImage.cols(), CvType.CV_8UC1, new Scalar(0));
         }
     }
 
@@ -131,6 +140,11 @@ public class Data {
     public void SetBackgroundStatistic(double[] backgroundStatistic) { mBackgroundStatisticalColor = backgroundStatistic; }
 
     public void SetStatisticalNumberOfBins(int numOfBins) { mNumberOfStatisticalBins = numOfBins; }
+
+
+
+    public void SetGrowCutBasicLabelMatrix() { mGrowCutBasicLabel = new Mat(mSecondImage.rows(),mSecondImage.cols(),CvType.CV_8UC1); }
+
 
     /**
      * InitializeForegroundBackgroundPixels:
@@ -171,6 +185,22 @@ public class Data {
             if(p.x < mMinForegroundPoint.x) { mMinForegroundPoint.x = p.x; }
             if(p.y < mMinForegroundPoint.y) { mMinForegroundPoint.y = p.y; }
         }
+    }
+
+    public void ExtractMinMaxForegroundPointFromExtractedForegroundPoints()
+    {
+        // Go over the point in the foreground and find the bounding box
+        mMinForegroundPoint = new Point(mSecondImage.rows(),mSecondImage.cols());
+        mMaxForegroundPoint = new Point(0,0);
+        for(Point p : mExtractForeground)
+        {
+            if(p.x > mMaxForegroundPoint.x) { mMaxForegroundPoint.x = p.x; }
+            if(p.y > mMaxForegroundPoint.y) { mMaxForegroundPoint.y = p.y; }
+            if(p.x < mMinForegroundPoint.x) { mMinForegroundPoint.x = p.x; }
+            if(p.y < mMinForegroundPoint.y) { mMinForegroundPoint.y = p.y; }
+        }
+
+        Log.d(GeneralInfo.DEBUG_TAG,"xMax: " + mMaxForegroundPoint.x + "yMax: " + mMaxForegroundPoint.y + "xMin: " + mMinForegroundPoint.x +"yMin: " + mMinForegroundPoint.y);
     }
 
     /**
@@ -355,6 +385,8 @@ public class Data {
 
     public Point GetForegroundMinPoint() { return mMinForegroundPoint; }
 
+    public Mat GetGrowCutBasicLabelMatrix() { return mGrowCutBasicLabel; }
+
     public ArrayList<ColorPoint> GetExtractForegroundPoints() { return mExtractForeground; }
 
     public ArrayList<ColorPoint> GetBackgroundPoints()
@@ -483,6 +515,7 @@ public class Data {
     {
         // Build the extracted foregroundPoint Mat for easy of seraching
         //mExtractForegroundMat = new Mat((int)(mMaxForegroundPoint.y -  mMinForegroundPoint.y),(int)(mMaxForegroundPoint.x -  mMinForegroundPoint.x), ImageMergeMainActivity.MAT_TYPE);
+        Log.d(GeneralInfo.DEBUG_TAG," " + (int)(mMaxForegroundPoint.y -  mMinForegroundPoint.y)+1 + " " + (int)(mMaxForegroundPoint.x -  mMinForegroundPoint.x)+1);
         mExtractForegroundMat = new ColorPoint[(int)(mMaxForegroundPoint.y -  mMinForegroundPoint.y)+1][(int)(mMaxForegroundPoint.x -  mMinForegroundPoint.x)+1];
 
         // Go over all the points in mExtractForeground an connect them to the matrix
@@ -491,6 +524,7 @@ public class Data {
             mExtractForegroundMat[(int)(point.y-mMinForegroundPoint.y)][(int)(point.x-mMinForegroundPoint.x)] = point;
         }
     }
+
 
 
 }

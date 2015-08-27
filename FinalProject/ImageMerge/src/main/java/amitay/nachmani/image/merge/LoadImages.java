@@ -124,6 +124,8 @@ public class LoadImages extends ListActivity {
                 }
             });
 
+            if(mStartingActivityID == GeneralInfo.ACTIVITY_ID_SHARE) { return; }
+
             // make delete button visible
             mBtnDelete = (Button) v.findViewById(R.id.btnDeleteImage);
             mBtnDelete.setVisibility(View.VISIBLE);
@@ -181,6 +183,7 @@ public class LoadImages extends ListActivity {
 
             // Collapse button
             mBtnShare.setVisibility(View.INVISIBLE);
+            if(mStartingActivityID == GeneralInfo.ACTIVITY_ID_SHARE) { return; }
             mBtnDelete.setVisibility(View.INVISIBLE);
             mBtnMerge.setVisibility(View.INVISIBLE);
         }

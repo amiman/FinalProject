@@ -74,6 +74,7 @@ public class ImageMergeMainActivity extends Activity implements CvCameraViewList
     private static final String CANT_CREATE_FOLDER          = "Couldn't create folder for app so the image wpuldnot be saved to phone";
     private static final String POSTIVE_DIALOG_BUTTON       = "OK";
     private static final String SAVE_FILE                   = "Save File";
+    private static final String UNDO                        = "UNDO";
 
     // Camera
     private CameraBridgeViewBase    mOpenCvCameraView;
@@ -106,7 +107,7 @@ public class ImageMergeMainActivity extends Activity implements CvCameraViewList
     private Button mMarkBackgroundButton;
     private Button mMarkForegroundButton;
     private ToggleButton mMarkingToggleButton;
-    private ImageButton mUndoButton;
+    private Button mUndoButton;
     private Button mDoneButton;
     private Button mMoveForegroundPixelsToBack;
     private Button mMoveForeground;
@@ -600,8 +601,9 @@ public class ImageMergeMainActivity extends Activity implements CvCameraViewList
         mMarkingToggleButton.setLayoutParams(frameLayoutParmasMarkToogle);
 
         // Undo button
-        mUndoButton = new ImageButton(this);
-        mUndoButton.setBackgroundResource(R.drawable.undo_arrow);
+        mUndoButton = new Button(this);
+        //mUndoButton.setBackgroundResource(R.drawable.undo_arrow);
+        mUndoButton.setText(UNDO);
         mUndoButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

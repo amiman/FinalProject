@@ -2,6 +2,7 @@ package amitay.nachmani.image.merge.ImageProcessing;
 
 import android.graphics.Bitmap;
 import android.util.Log;
+import android.widget.MultiAutoCompleteTextView;
 
 import org.opencv.core.Core;
 import org.opencv.core.CvType;
@@ -34,8 +35,10 @@ public class ImageProcessing {
 
     // 3 color values and 2 coordinates
     private static final int mNumberOfAttributesForKmeans = 5;
+    private static final int MAX_ITER = 60;
+    private static final float MAXC = 255 * 255 * 255;
 
-    private static AlgorithmName mAlgorithm = AlgorithmName.MY_ALGORITHM;
+    private static AlgorithmName mAlgorithm = AlgorithmName.GROW_CUT;
 
     /**
      *  DrawTracks:
@@ -141,6 +144,14 @@ public class ImageProcessing {
             //TODO: change kMeans algorithm to a better segmentation algo
 
             switch(mAlgorithm) {
+
+                case GROW_CUT:
+                    // Prepare basic data fro grow cut algorithm
+                    Log.d(GeneralInfo.DEBUG_TAG, "Start PrepareDataForGrowCut");
+                    PrepareDataForGrowCut(data);
+                    Log.d(GeneralInfo.DEBUG_TAG, "End PrepareDataForGrowCut");
+                    break;
+
                 case MY_ALGORITHM:
 
                     // Calculate color statistic of points
@@ -160,11 +171,23 @@ public class ImageProcessing {
 
             currentProgress = 50;
 
-        } else if(currentProgress == 50) {
+        } else if(currentProgress >= 50 && currentProgress < 75) {
 
             //TODO: change kMeans algorithm to a better segmentation algo
 
             switch(mAlgorithm) {
+                case GROW_CUT:
+
+                    // Run grow cut
+                    Log.d(GeneralInfo.DEBUG_TAG, "Start RunGrowCut");
+                    //RunGrowCut(data);
+                    RunGrowCutOptimize(data,currentProgress);
+                    Log.d(GeneralInfo.DEBUG_TAG, "End RunGrowCut");
+                    //currentProgress+=10;
+                    currentProgress = 75;
+
+                    break;
+
                 case MY_ALGORITHM:
 
                     // Calculate start label for each point in the image according to the statistic
@@ -178,7 +201,7 @@ public class ImageProcessing {
                     //ExtractConnectedComponent(data);
                     FillAreasUsingOpening(data);
                     Log.d(GeneralInfo.DEBUG_TAG, "End ExtractConnectedComponent");
-
+                    currentProgress = 75;
                     break;
 
                 case KMEANS:
@@ -193,13 +216,13 @@ public class ImageProcessing {
 
                     // Release unused matrix
                     data.ReleaseKmeansMatrix();
-
+                    currentProgress = 75;
                     break;
             }
 
-            currentProgress = 75;
 
-        } else if(currentProgress == 75) {
+
+        } else if(currentProgress >= 75) {
 
             // Add original mark labels to final results
             //AddMarksToFinalLabels(data);
@@ -565,7 +588,7 @@ public class ImageProcessing {
 
     private static void FillAreasUsingOpening(Data data)
     {
-        Mat element = Imgproc.getStructuringElement(Imgproc.CV_SHAPE_ELLIPSE,new Size(15,15));
+        Mat element = Imgproc.getStructuringElement(Imgproc.CV_SHAPE_ELLIPSE, new Size(15, 15));
         Imgproc.morphologyEx(data.GetBestLabels(),data.GetBestLabels(), Imgproc.MORPH_DILATE,element);
     }
 
@@ -586,6 +609,317 @@ public class ImageProcessing {
 
     }
     /**************************************************** My algorithm **************************************************************/
+
+    /**************************************************** Grow cut ******************************************************************/
+
+    /**
+     *
+     * @param data
+     */
+    private static void PrepareDataForGrowCut(Data data)
+    {
+        // Initialize basic grow cut label matrix
+        //data.SetGrowCutBasicLabelMatrix();
+        //Mat basicGrowCutLabels = data.GetGrowCutBasicLabelMatrix();
+        data.SetBestStartingLabels(AlgorithmName.GROW_CUT);
+        Mat basicGrowCutLabels = data.GetBestLabels();
+
+        // Go over all the user marks and initialize the basic growcut matrix
+        Mat mask = data.GetMarkedImageMask();
+        int size = (int) mask.total() * mask.channels();
+        byte[] maskData = ConvertMatToPrimitive(mask);
+
+        // Go over all the pixels in the mask if we found a pixel with value of foreground or background add it.
+        for(int i = 0; i < size; i = i + mask.channels())
+        {
+            // Convert index to x y coordinate
+            int normalizeI = i/mask.channels();
+            int x = normalizeI%mask.cols();
+            int y = (int)Math.floor(normalizeI/mask.cols());
+
+            // Check if the color is a background or foreground color
+            if(maskData[i] == MarkValues.FOREGROUND_VALUE_BYTE) {
+                basicGrowCutLabels.put(y,x,2);
+            } else if(maskData[i] == MarkValues.BACKGROUND_VALUE_BYTE) {
+                basicGrowCutLabels.put(y,x,1);
+            }
+        }
+    }
+
+    /**
+     *
+     * @param data
+     */
+    private static void RunGrowCut(Data data)
+    {
+
+        //Mat labels = data.GetGrowCutBasicLabelMatrix();
+        Mat labels = data.GetBestLabels();
+        Mat labelsTplusOne = labels.clone();
+        Mat strengthPixels = new Mat();
+        labels.convertTo(strengthPixels,CvType.CV_32F);
+        Mat strengthPixelsTplusOne = strengthPixels.clone();
+        Mat colorValues = data.GetSecondImage();
+
+        // Start to iterate over all pixels and calculate thier new strength and label
+        int numOfIterations = 0;
+        boolean converged = false;
+        byte[] pColor = new byte[4];
+        byte[] qColor = new byte[4];
+
+        float[] pStrength = new float[1];
+        float[] qStrength = new float[1];
+
+        while(!converged)
+        {
+            converged = true; // Unless we have some change in the labels
+
+            //copy prev result
+            strengthPixels.copyTo(strengthPixelsTplusOne);
+            labels.copyTo(labelsTplusOne);
+
+            // Go over all pixels in the image
+            byte[] neighborLabel = new byte[1];
+
+            for(int i = 1 ; i < labels.rows()-1 ; i++)
+            {
+                for (int j = 1; j < labels.cols()-1 ; j++)
+                {
+                    // Get the pixel current color and strength
+                    colorValues.get(i,j,pColor);
+                    strengthPixelsTplusOne.get(i,j,pStrength);
+
+                    // Go over all the neighbors of the current pixel
+                    for(int n = -1 ; n < 2 ; n++)
+                    {
+                        for(int m = -1 ; m < 2 ; m++)
+                        {
+                            // Check the label of the neighbor
+                            labels.get(i + n, j + m, neighborLabel);
+
+                            if (neighborLabel[0] == 0) {
+                                continue;
+                            } // an un label pixel is not attacking anyone
+
+                            // Get the color of the neighbor for attack strength
+                            colorValues.get(i+n,j+m,qColor);
+                            strengthPixels.get(i+n,j+m,qStrength);
+
+                            // Calculate the strength
+                            int bDiff = (pColor[0] - qColor[0]);
+                            int gDiff = (pColor[1] - qColor[1]);
+                            int rDiff = (pColor[2] - qColor[2]);
+                            double C = Math.sqrt((bDiff*bDiff + rDiff*rDiff + gDiff*gDiff)); // Norm2 of the difference in colors
+
+                            // Attack force
+                            double g = 1 - (C/MAXC);
+
+                            // Check if attack succeeds
+                            if(g*qStrength[0]>pStrength[0])
+                            {
+                                strengthPixels.put(i,j,g*qStrength[0]);
+                                labelsTplusOne.put(i,j,neighborLabel[0]);
+                                converged = false;
+                            }
+                        }
+                    }
+                }
+            }
+
+            //copy prev result
+            labelsTplusOne.copyTo(labels);
+
+            numOfIterations++;
+            if(numOfIterations > MAX_ITER)
+            {
+                converged = true;
+            }
+
+            Log.d(GeneralInfo.DEBUG_TAG,Integer.toString(numOfIterations));
+        }
+    }
+
+    /**
+     * RunGrowCutOptimize:
+     *
+     * Run growcut cut algorithm.
+     *
+     * in order to make it run faster first downsmaple it by factor of 4
+     * @param data
+     * @param stage
+     */
+    private static void RunGrowCutOptimize(Data data,int stage)
+    {
+
+        double divisonFactor = 1;
+        int stageIter = 1;
+
+        divisonFactor = 4;
+        stageIter = MAX_ITER;
+
+        /*
+        switch (stage) {
+            case 50:
+                divisonFactor = 4;
+                stageIter = MAX_ITER;
+                break;
+            case 60:
+                divisonFactor = 2;
+                stageIter = 2;
+                break;
+            case 70:
+                divisonFactor = 1;
+                stageIter = 1;
+                break;
+        }*/
+
+        //Mat colorValues = data.GetSecondImage();
+        //Mat labels = data.GetBestLabels();
+        Mat secondImage = data.GetSecondImage();
+        Mat colorValues = new Mat();
+        Imgproc.resize(secondImage,colorValues,new Size(),1/divisonFactor,1/divisonFactor,Imgproc.INTER_AREA);
+
+        Mat labelsOr = data.GetBestLabels();
+        Mat labels = new Mat();
+        Imgproc.resize(labelsOr,labels,new Size(),1/divisonFactor,1/divisonFactor,Imgproc.INTER_AREA);
+
+        int size = (int) colorValues.total() * colorValues.channels();
+        byte[] colorValuesData = ConvertMatToPrimitive(colorValues);
+
+        byte[] labelsData = ConvertMatToPrimitive(labels);
+        byte[] labelsDataTPlusOne = labelsData.clone();
+
+        Mat strengthPixels = new Mat();
+        labels.convertTo(strengthPixels,CvType.CV_32F);
+        float[] strengthPixelsData = ConvertMatToPrimitiveFloat(strengthPixels);
+        float[] strengthPixelsTplusOne = strengthPixelsData.clone();
+
+        // Start to iterate over all pixels and calculate thier new strength and label
+        int numOfIterations = 0;
+        boolean converged = false;
+        byte[] pColor = new byte[4];
+        byte[] qColor = new byte[4];
+
+        float pStrength;
+        float qStrength;
+
+        byte neighborLabel;
+
+        while(!converged)
+        {
+
+            converged = true; // Unless we have some change in the labels
+
+            //copy prev result
+            System.arraycopy(strengthPixelsData,0,strengthPixelsTplusOne,0,strengthPixelsTplusOne.length);
+            System.arraycopy(labelsData, 0, labelsDataTPlusOne,0,labelsDataTPlusOne.length);
+
+            // Go over all pixels in the extracted points
+            for(int i = (colorValues.cols() + 1)*colorValues.channels() ; i < (size - (colorValues.cols() + 1)*colorValues.channels()) ; i = i + colorValues.channels()) {
+
+                // Convert index to x y coordinate
+                int normalizeI = i / colorValues.channels();
+                //int x = normalizeI % colorValues.cols();
+                //int y = (int) Math.floor(normalizeI / colorValues.cols());
+
+                // Get the pixel current color and strength
+                pColor[0] = colorValuesData[i];
+                pColor[1] = colorValuesData[i+1];
+                pColor[2] = colorValuesData[i+2];
+
+                pStrength = strengthPixelsTplusOne[normalizeI]/2;
+
+                // Go over all the neighbors of the current pixel
+                for (int n = -1; n < 2; n++) {
+                    for (int m = -1; m < 2; m++) {
+
+                        // Check the label of the neighbor
+                        int neigbhorIndex = normalizeI + labels.cols()*n + m;
+                        neighborLabel = labelsData[neigbhorIndex];
+
+                        if (neighborLabel == 0) {
+                            continue;
+                        } // an un label pixel is not attacking anyone
+
+                        // Get the color of the neighbor for attack strength
+                        int neigbhorIndexColor = neigbhorIndex*colorValues.channels();
+                        qColor[0] = colorValuesData[neigbhorIndexColor];
+                        qColor[1] = colorValuesData[neigbhorIndexColor+1];
+                        qColor[2] = colorValuesData[neigbhorIndexColor+2];
+
+                        qStrength = strengthPixelsData[neigbhorIndex]/3;
+
+                        // Calculate the strength
+                        int bDiff = (pColor[0] - qColor[0]);
+                        int gDiff = (pColor[1] - qColor[1]);
+                        int rDiff = (pColor[2] - qColor[2]);
+                        float C = (float)Math.sqrt((bDiff * bDiff + rDiff * rDiff + gDiff * gDiff)); // Norm2 of the difference in colors
+
+                        // Attack force
+                        float g = 1 - (C / MAXC);
+
+                        // Check if attack succeeds
+                        if (g * qStrength > pStrength) {
+                            strengthPixelsData[normalizeI] = g * qStrength;
+                            labelsDataTPlusOne[normalizeI] = neighborLabel;
+                            converged = false;
+                        }
+                    }
+                }
+            }
+
+            //copy prev result
+            System.arraycopy(labelsDataTPlusOne, 0, labelsData,0,labelsData.length);
+
+            numOfIterations++;
+            if(numOfIterations > stageIter)
+            {
+                converged = true;
+            }
+
+            Log.d(GeneralInfo.DEBUG_TAG,Integer.toString(numOfIterations));
+        }
+
+        // Convert back to labels
+        labels.put(0,0,labelsData);
+
+        // Resize
+        Imgproc.resize(labels,labelsOr,new Size(),divisonFactor,divisonFactor,Imgproc.INTER_CUBIC);
+    }
+
+    private static ArrayList<ColorPoint> ExtractPointsForIteration(ArrayList<ColorPoint> colorPoints,Mat labels,Mat colors)
+    {
+        ArrayList<ColorPoint> points = new ArrayList<ColorPoint>();
+        byte[] neighborLabel = new byte[1];
+        byte[] qColor = new byte[4];
+
+        for(Point point : colorPoints)
+        {
+            // Check the neighbors
+            for(int n = -1 ; n < 2 ; n++)
+            {
+                for (int m = -1; m < 2; m++)
+                {
+                    // Check the label of the neighbor
+                    labels.get((int)point.y + n, (int)point.x + m, neighborLabel);
+
+                    if (neighborLabel[0] == 0) {
+
+                        colors.get((int) point.y + n, (int) point.x + m, qColor);
+
+                        // Add this point
+                        points.add(new ColorPoint((int) point.x + m,(int) point.y + n, qColor));
+                    }
+
+                }
+            }
+        }
+        return points;
+    }
+
+
+    /**************************************************** Grow cut ******************************************************************/
+
 
     /**`
      * ConvertBestLabelsToForegroundImage:
@@ -666,6 +1000,31 @@ public class ImageProcessing {
                     }
                 }
             }
+        }  else if(mAlgorithm.equals(AlgorithmName.GROW_CUT)) {
+
+            // Resize to original size
+            Imgproc.resize(labels,labels,new Size(secondImage.cols(),secondImage.rows()));
+
+            // Go over labels and create new foreground image
+            for (int i = 0; i < labels.rows(); i++) {
+                for(int j = 0 ; j < labels.cols(); j++) {
+
+                    labels.get(i, j, value);
+                    if (value[0] == 2) {
+                        // a foreground pixel
+                        // The point is in the bounding box and a foreground pixel
+                        byte[] color = new byte[4];
+                        secondImage.get(i, j, color);
+                        //foreground.put(y,x,color);
+
+                        // Add the color data point
+                        data.AddExtractForegroundPoint(new ColorPoint(j, i, color));
+                    }
+                }
+            }
+
+            data.ExtractMinMaxForegroundPointFromExtractedForegroundPoints();
+
         }
 
         // Build the extracted foreground matrix
@@ -764,6 +1123,28 @@ public class ImageProcessing {
         // Calculate the number of total values in the mat
         int size = (int) src.total() * src.channels();
         byte[] buff = new byte[size];
+
+        // Get the data values and return them as byte array
+        src.get(0, 0, buff);
+
+        return buff;
+    }
+
+    /**
+     * ConvertMatToPrimitiveFloat:
+     *
+     * Converts the Mat data to primitive array. This is done for efficiency reasons.
+     *
+     * Note:
+     * Assumes the mat is of type UC (unsigned char) and not something else
+     * @param src
+     * @return
+     */
+    public static float[] ConvertMatToPrimitiveFloat(Mat src)
+    {
+        // Calculate the number of total values in the mat
+        int size = (int) src.total() * src.channels();
+        float[] buff = new float[size];
 
         // Get the data values and return them as byte array
         src.get(0, 0, buff);

@@ -5,5 +5,5 @@ package amitay.nachmani.image.merge.ImageProcessing;
  */
 public enum AlgorithmName {
 
-    MY_ALGORITHM,KMEANS;
+    MY_ALGORITHM,KMEANS, GROW_CUT;
 }
