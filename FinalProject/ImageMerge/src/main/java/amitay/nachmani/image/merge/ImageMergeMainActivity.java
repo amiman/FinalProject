@@ -65,16 +65,20 @@ public class ImageMergeMainActivity extends Activity implements CvCameraViewList
     // Constants
     public  static final int    MAT_TYPE                    = CvType.CV_8UC4;
     private static final String TAG                         = "OCVSample::Activity";
-    private static final String FOREGROUND                  = "FOREGROUND";
-    private static final String BACKGROUND                  = "BACKGROUND";
+    private static final String FOREGROUND                  = "SAVE";
+    private static final String BACKGROUND                  = "RETAKE";
     private static final String DONE                        = "DONE";
-    private static final String MOVE_TO_BACK                = "MOVE TO BACKGROUND";
-    private static final String MOVE_FOREGROUND             = "MOVE EXTRACT AREA";
+    private static final String MOVE_TO_BACK                = "ERASE";
+    private static final String MOVE_FOREGROUND             = "MOVE";
     private static final String PROGRESS_MESSAGE            = "Running Algorithm Please Wait";
     private static final String CANT_CREATE_FOLDER          = "Couldn't create folder for app so the image wpuldnot be saved to phone";
     private static final String POSTIVE_DIALOG_BUTTON       = "OK";
     private static final String SAVE_FILE                   = "Save File";
     private static final String UNDO                        = "UNDO";
+    private static final String MARK_ATL_LEAST_ONE          = "You must mark at least one place as foreground and at least one place as background";
+    private static final String SAVE                        = "SAVE";
+    private static final String RETAKE                      = "RETAKE";
+
 
     // Camera
     private CameraBridgeViewBase    mOpenCvCameraView;
@@ -87,7 +91,7 @@ public class ImageMergeMainActivity extends Activity implements CvCameraViewList
 
     // Status
     private ApplicationStage mApplicationStage;
-    private MarkValues.Marking mMark = MarkValues.Marking.BACKGROUND;
+    private MarkValues.Marking mMark = MarkValues.Marking.FOREGROUND;
     private ButtonAction mButtonAction = ButtonAction.MOVE_FOREGROUND;
     private int mStartingActivityID;
 
@@ -103,9 +107,11 @@ public class ImageMergeMainActivity extends Activity implements CvCameraViewList
     // View
     //private Button mTakePictureButton;
     private Button mSaveFirstImage = null;
+    private Button mKeepImage;
+    private Button mDiscardImage;
     private ImageButton mTakePictureButton;
-    private Button mMarkBackgroundButton;
-    private Button mMarkForegroundButton;
+    //private Button mMarkBackgroundButton;
+    //private Button mMarkForegroundButton;
     private ToggleButton mMarkingToggleButton;
     private Button mUndoButton;
     private Button mDoneButton;
@@ -440,8 +446,6 @@ public class ImageMergeMainActivity extends Activity implements CvCameraViewList
             // Save current frame
             mData.SetCurrentImage(returnedImage);
 
-            // TODO: Check if we need another stage or jump stright to FIRST_IMAGE
-
             // Change the stage to FIRST_IMAGE
             mApplicationStage = ApplicationStage.FIRST_IMAGE;
 
@@ -457,6 +461,11 @@ public class ImageMergeMainActivity extends Activity implements CvCameraViewList
 
             // Return
             return returnedImage;
+        } else if(mApplicationStage == ApplicationStage.FIRST_IMAGE_KEEP_DISCARD) {
+
+            // While the user didn't decide if he wants to keep the first image return show it
+            return mData.GetFirstImage();
+
         } else if(mApplicationStage == ApplicationStage.SECOND_IMAGE) {
 
             if(mScale == 0 && mStartingActivityID == GeneralInfo.ACTIVITY_ID_LOAD) { InitializeScale(); }
@@ -474,6 +483,11 @@ public class ImageMergeMainActivity extends Activity implements CvCameraViewList
             Core.addWeighted(mData.GetFirstImage(), alpha, mData.GetCurrentImage(), beta, gamma, mMergeImage);
 
             return mMergeImage;
+        } else if(mApplicationStage == ApplicationStage.SECOND_IMAGE_KEEP_DISCARD) {
+
+            // While the user didn't decide if he wants to keep the first image return show it
+            return mData.GetSecondImage();
+
         } else if(mApplicationStage == ApplicationStage.SEGMENTATION_MARK_INITIALIZATION) {
 
             // We don't need the camera any more so stop camera
@@ -567,11 +581,33 @@ public class ImageMergeMainActivity extends Activity implements CvCameraViewList
             @Override
             public void onClick(View view) {
 
-                // Change application stage
-                mApplicationStage = ApplicationStage.SEGMENTATION_ALGORITHM;
+                // Check that the user marked at least one point as foreground and one point as background
+                if(mTracks.isEmpty())
+                {
+                    Toast.makeText(view.getContext(), MARK_ATL_LEAST_ONE, Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                boolean backgroundMark = false;
+                boolean foregroundMark = false;
+                for(MovementTracker track : mTracks)
+                {
+                    if(track.GetMarking().equals(MarkValues.Marking.BACKGROUND))
+                    {
+                        backgroundMark = true;
+                    } else if(track.GetMarking().equals(MarkValues.Marking.FOREGROUND)) {
+                        foregroundMark = true;
+                    }
+                }
 
-                // Go to run segmentation algorithm view
-                InitializeRunSegmentationAlgorithmView();
+                if(backgroundMark && foregroundMark) {
+                    // Change application stage
+                    mApplicationStage = ApplicationStage.SEGMENTATION_ALGORITHM;
+
+                    // Go to run segmentation algorithm view
+                    InitializeRunSegmentationAlgorithmView();
+                } else {
+                    Toast.makeText(view.getContext(), MARK_ATL_LEAST_ONE, Toast.LENGTH_SHORT).show();
+                }
             }
         });
         FrameLayout.LayoutParams frameLayoutParmasAlgorithm = new FrameLayout.LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT);
@@ -581,18 +617,18 @@ public class ImageMergeMainActivity extends Activity implements CvCameraViewList
         // Second add the tools we need for image segmentation and set there position in the frame layout
 
         mMarkingToggleButton = new ToggleButton(this);
-        mMarkingToggleButton.setText(BACKGROUND);
-        mMarkingToggleButton.setTextOn(FOREGROUND);
-        mMarkingToggleButton.setTextOff(BACKGROUND);
+        mMarkingToggleButton.setText(FOREGROUND);
+        mMarkingToggleButton.setTextOff(FOREGROUND);
+        mMarkingToggleButton.setTextOn(BACKGROUND);
         mMarkingToggleButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean markState) {
 
                 if(markState)
                 {
-                    mMark = MarkValues.Marking.FOREGROUND;
-                } else {
                     mMark = MarkValues.Marking.BACKGROUND;
+                } else {
+                    mMark = MarkValues.Marking.FOREGROUND;
                 }
             }
         });
@@ -937,10 +973,57 @@ public class ImageMergeMainActivity extends Activity implements CvCameraViewList
             FrameLayout.LayoutParams frameLayoutParmasAlgorithm = new FrameLayout.LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT);
             frameLayoutParmasAlgorithm.gravity = Gravity.TOP | Gravity.CENTER_HORIZONTAL;
             mSaveFirstImage.setLayoutParams(frameLayoutParmasAlgorithm);
+
+            // Add Keep Discard Buttons
+            mKeepImage = new Button(frameMainLayout.getContext());
+            mKeepImage.setText(SAVE);
+            mKeepImage.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    // Change stage to SECOND_IMAGE
+                    mApplicationStage = ApplicationStage.SECOND_IMAGE;
+
+                    // Get rid of the keep discard and save file buttons
+                    frameMainLayout.removeView(mSaveFirstImage);
+                    frameMainLayout.removeView(mDiscardImage);
+                    frameMainLayout.removeView(mKeepImage);
+                }
+            });
+            FrameLayout.LayoutParams frameLayoutParmasKeep = new FrameLayout.LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT);
+            frameLayoutParmasKeep.gravity = Gravity.BOTTOM | Gravity.LEFT;
+            mKeepImage.setLayoutParams(frameLayoutParmasKeep);
+
+            mDiscardImage = new Button(frameMainLayout.getContext());
+            mDiscardImage.setText(RETAKE);
+            mDiscardImage.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    // Discard first image and move back to take first image stage
+                    mApplicationStage = ApplicationStage.FIRST_IMAGE;
+
+                    // Get rid of the keep discard and save file buttons
+                    frameMainLayout.removeView(mSaveFirstImage);
+                    frameMainLayout.removeView(mDiscardImage);
+                    frameMainLayout.removeView(mKeepImage);
+                }
+            });
+            FrameLayout.LayoutParams frameLayoutParmasDiscard = new FrameLayout.LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT);
+            frameLayoutParmasDiscard.gravity = Gravity.BOTTOM | Gravity.RIGHT;
+            mDiscardImage.setLayoutParams(frameLayoutParmasDiscard);
+
+
             frameMainLayout.addView(mSaveFirstImage);
+            frameMainLayout.addView(mKeepImage);
+            frameMainLayout.addView(mDiscardImage);
+
+
+            // Change stage to FIRST_IMAGE_KEEP_DISCARD
+            mApplicationStage = ApplicationStage.FIRST_IMAGE_KEEP_DISCARD;
 
             // Change stage to SECOND_IMAGE
-            mApplicationStage = ApplicationStage.SECOND_IMAGE;
+            //mApplicationStage = ApplicationStage.SECOND_IMAGE;
 
         } else if(mApplicationStage == ApplicationStage.SECOND_IMAGE) {
 
@@ -951,13 +1034,61 @@ public class ImageMergeMainActivity extends Activity implements CvCameraViewList
             mData.ReleaseCurrentImage();
 
             // Change stage to SEGMENTATION_MARK_INITIALIZATION
-            mApplicationStage = ApplicationStage.SEGMENTATION_MARK_INITIALIZATION;
+            //mApplicationStage = ApplicationStage.SEGMENTATION_MARK_INITIALIZATION;
+
+            // Change stage to SECOND_IMAGE_KEEP_DISCARD
+            mApplicationStage = ApplicationStage.SECOND_IMAGE_KEEP_DISCARD;
+
+            // Add Keep Discard Buttons
+            final FrameLayout frameMainLayout = (FrameLayout) findViewById(R.id.frame_main_layout);
+            mKeepImage = new Button(frameMainLayout.getContext());
+            mKeepImage.setText(SAVE);
+            mKeepImage.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    // Change stage to SEGMENTATION_MARK_INITIALIZATION
+                    mApplicationStage = ApplicationStage.SEGMENTATION_MARK_INITIALIZATION;
+
+                    // Get rid of the keep discard and save file buttons
+                    frameMainLayout.removeView(mDiscardImage);
+                    frameMainLayout.removeView(mKeepImage);
+
+                    // Initialize mark segmentation view
+                    InitializeMarkSegmentationView();
+                }
+            });
+            FrameLayout.LayoutParams frameLayoutParmasKeep = new FrameLayout.LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT);
+            frameLayoutParmasKeep.gravity = Gravity.BOTTOM | Gravity.LEFT;
+            mKeepImage.setLayoutParams(frameLayoutParmasKeep);
+
+            mDiscardImage = new Button(frameMainLayout.getContext());
+            mDiscardImage.setText(RETAKE);
+            mDiscardImage.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    // Discard first image and move back to take second image stage
+                    mApplicationStage = ApplicationStage.SECOND_IMAGE;
+
+                    // Get rid of the keep discard and save file buttons
+                    frameMainLayout.removeView(mDiscardImage);
+                    frameMainLayout.removeView(mKeepImage);
+                }
+            });
+            FrameLayout.LayoutParams frameLayoutParmasDiscard = new FrameLayout.LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT);
+            frameLayoutParmasDiscard.gravity = Gravity.BOTTOM | Gravity.RIGHT;
+            mDiscardImage.setLayoutParams(frameLayoutParmasDiscard);
+
+            frameMainLayout.addView(mKeepImage);
+            frameMainLayout.addView(mDiscardImage);
+
 
             // Draw current image
             DrawMat(mData.GetSecondImage());
 
             // Initialize mark segmentation view
-            InitializeMarkSegmentationView();
+            //InitializeMarkSegmentationView();
         }
     }
 
@@ -1358,8 +1489,8 @@ public class ImageMergeMainActivity extends Activity implements CvCameraViewList
                 System.gc();
                 break;
             case MOVE_FOREGROUND_AND_EDIT:
-                mMarkBackgroundButton = null;
-                mMarkForegroundButton = null;
+                //mMarkBackgroundButton = null;
+                //mMarkForegroundButton = null;
                 System.gc();
                 break;
             case FINALIZE:

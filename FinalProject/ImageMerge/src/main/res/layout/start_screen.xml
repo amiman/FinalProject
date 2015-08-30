@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+    android:layout_width="fill_parent"
     android:layout_height="match_parent"
     android:background="@drawable/main_screen">
 
@@ -9,24 +9,22 @@
         android:layout_height="wrap_content"
         android:text="@string/ButtonImageMerge"
         android:id="@+id/btnImageMerge"
-        android:layout_centerInParent="true"
         android:layout_marginBottom="@dimen/padding_button"
-        android:textSize="@dimen/button_text_size" />
+        android:textSize="@dimen/button_start_screen_size"
+        android:layout_centerVertical="true"
+        android:layout_alignRight="@+id/btnLoadImage"
+        android:layout_alignEnd="@+id/btnLoadImage"
+        android:layout_alignLeft="@+id/btnLoadImage"
+        android:layout_alignStart="@+id/btnLoadImage" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/ButtonLoadImage"
         android:id="@+id/btnLoadImage"
+        android:textSize="@dimen/button_start_screen_size"
         android:layout_below="@+id/btnImageMerge"
-        android:layout_alignLeft="@+id/btnImageMerge"
-        android:layout_alignStart="@+id/btnImageMerge"
-        android:layout_alignRight="@+id/btnImageMerge"
-        android:layout_alignEnd="@+id/btnImageMerge"
-        android:layout_centerInParent="true"
-        android:layout_marginTop="@dimen/padding_button"
-        android:layout_marginBottom="@dimen/padding_button"
-        android:textSize="@dimen/button_text_size" />
+        android:layout_centerHorizontal="true" />
 
     <Button
         android:layout_width="wrap_content"
@@ -36,10 +34,10 @@
         android:layout_below="@+id/btnLoadImage"
         android:layout_alignLeft="@+id/btnLoadImage"
         android:layout_alignStart="@+id/btnLoadImage"
-        android:layout_alignRight="@+id/btnLoadImage"
-        android:layout_alignEnd="@+id/btnLoadImage"
-        android:layout_centerInParent="true"
         android:layout_marginTop="@dimen/padding_button"
-        android:textSize="@dimen/button_text_size" />
+        android:textSize="@dimen/button_start_screen_size"
+        android:layout_centerVertical="true"
+        android:layout_alignRight="@+id/btnLoadImage"
+        android:layout_alignEnd="@+id/btnLoadImage" />
 </RelativeLayout>
 

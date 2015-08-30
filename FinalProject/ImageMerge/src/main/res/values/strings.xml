@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Image Merge</string>
-    <string name="ButtonImageMerge">Merge Images</string>
-    <string name="ButtonLoadImage">Load Image</string>
+    <string name="ButtonImageMerge">New</string>
+    <string name="ButtonLoadImage">Gallery</string>
     <string name="ButtonShare">Share</string>
     <string name="title_activity_start_screen">StartScreenActivity</string>
 
@@ -16,5 +16,5 @@
     <string name="delete_image">DELETE</string>
     <string name="share">Share</string>
     <string name="load_images">Load Images</string>
-    <string name="mergeImage">MERGE</string>
+    <string name="mergeImage">ADD</string>
 </resources>

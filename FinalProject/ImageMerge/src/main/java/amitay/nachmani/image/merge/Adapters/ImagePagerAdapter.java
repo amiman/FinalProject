@@ -14,6 +14,8 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 
 import amitay.nachmani.image.merge.R;
@@ -31,7 +33,31 @@ public class ImagePagerAdapter extends ArrayAdapter<File> {
         super(context, resource, files);
 
         mContext = context;
-        mFiles = files;
+
+        mFiles = SortImagesByDate(files);
+        //mFiles = files;
+    }
+
+    /**
+     * SortImagesByDate:
+     *
+     * Sorts the images according to date
+     *
+     * @param files
+     * @return
+     */
+    private ArrayList<File> SortImagesByDate(ArrayList<File> files) {
+
+        Collections.sort(files, new Comparator<File>() {
+            public int compare(File f1, File f2) {
+                DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
+                Date modifedDateF1 = new Date(f1.lastModified());
+                Date modifedDateF2 = new Date(f2.lastModified());
+                return modifedDateF1.compareTo(modifedDateF2);
+            }
+        });
+
+        return files;
     }
 
     public void UpdateFilesArray(ArrayList<File> newFile)

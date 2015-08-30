@@ -23,6 +23,7 @@
     <eat-comment/>
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="button_start_screen_size">40dp</dimen>
     <dimen name="button_text_size">25dp</dimen>
     <!-- From: file:/C:/Users/Amitay/Documents/GitHub/FinalProject/FinalProject/ImageMerge/build/intermediates/exploded-aar/com.facebook.android/facebook/4.4.0/res/values/values.xml -->
     <eat-comment/>
@@ -49,12 +50,13 @@
     <eat-comment/>
     <dimen name="padding_button">20dp</dimen>
     <dimen name="padding_share_images">40dp</dimen>
+    <dimen name="start_buttons">100dp</dimen>
     <dimen name="title_text_size">60dp</dimen>
     <dimen name="tkae_picture_size">55dp</dimen>
     <!-- From: file:/C:/Users/Amitay/Documents/GitHub/FinalProject/FinalProject/ImageMerge/src/main/res/values/strings.xml -->
     <eat-comment/>
-    <string name="ButtonImageMerge">Merge Images</string>
-    <string name="ButtonLoadImage">Load Image</string>
+    <string name="ButtonImageMerge">New</string>
+    <string name="ButtonLoadImage">Gallery</string>
     <string name="ButtonShare">Share</string>
     <string name="Share">SHARE</string>
     <string name="action_settings">Settings</string>
@@ -83,7 +85,7 @@
     <string name="facebook_app_id">1620270164890984</string>
     <string name="hello_world">Hello world!</string>
     <string name="load_images">Load Images</string>
-    <string name="mergeImage">MERGE</string>
+    <string name="mergeImage">ADD</string>
     <!-- From: file:/C:/Users/Amitay/Documents/GitHub/FinalProject/FinalProject/ImageMerge/build/intermediates/exploded-aar/com.facebook.android/facebook/4.4.0/res/values/values.xml -->
     <eat-comment/>
     <string name="messenger_send_button_text">Send</string>

@@ -445,7 +445,7 @@ public class Data {
      */
     public void MarkPixelsInMarkedImage(MovementTracker tracker)
     {
-        // Go over all the points that been marked by the user and marked the line between eac two of them
+        // Go over all the points that been marked by the user and marked the line between each two of them
         for(int i = 0 ; i < tracker.GetMarkedPoints().size() ; i++)
         {
             //Log.d(GeneralInfo.DEBUG_TAG, Double.toString(tracker.GetPoint(i - 1).x) + " " + Double.toString(tracker.GetPoint(i - 1).y));
