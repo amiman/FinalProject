@@ -47,14 +47,12 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.view.ViewGroup.LayoutParams;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.ToggleButton;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -67,6 +65,8 @@ public class ImageMergeMainActivity extends Activity implements CvCameraViewList
     private static final String TAG                         = "OCVSample::Activity";
     private static final String FOREGROUND                  = "SAVE";
     private static final String BACKGROUND                  = "RETAKE";
+    private static final String MARK_KEEP                   = "KEEP";
+    private static final String MARK_DISCARD                = "DISCARD";
     private static final String DONE                        = "DONE";
     private static final String MOVE_TO_BACK                = "ERASE";
     private static final String MOVE_FOREGROUND             = "MOVE";
@@ -110,15 +110,16 @@ public class ImageMergeMainActivity extends Activity implements CvCameraViewList
     private Button mKeepImage;
     private Button mDiscardImage;
     private ImageButton mTakePictureButton;
-    //private Button mMarkBackgroundButton;
-    //private Button mMarkForegroundButton;
-    private ToggleButton mMarkingToggleButton;
+    private Button mMarkBackgroundButton;
+    private Button mMarkForegroundButton;
+    //private ToggleButton mMarkingToggleButton;
     private Button mUndoButton;
     private Button mDoneButton;
     private Button mMoveForegroundPixelsToBack;
     private Button mMoveForeground;
     private String[] mImageName;
     private SurfaceHolder mNewSurfaceHolder;
+    private LinearLayout mLinearLayout = null;
 
     // Screen
     private static int mScreenWidth;
@@ -573,6 +574,11 @@ public class ImageMergeMainActivity extends Activity implements CvCameraViewList
             }
         }
 
+        if(mLinearLayout != null) { mLinearLayout.removeAllViews(); }
+        mLinearLayout = new LinearLayout(this);
+        mLinearLayout.setGravity(Gravity.TOP);
+
+        // Done button
         mDoneButton = new Button(this);
         mDoneButton.setText(DONE);
         mDoneButton.setBackgroundResource(R.drawable.oval_button);
@@ -615,11 +621,11 @@ public class ImageMergeMainActivity extends Activity implements CvCameraViewList
         mDoneButton.setLayoutParams(frameLayoutParmasAlgorithm);
 
         // Second add the tools we need for image segmentation and set there position in the frame layout
-
+        /*
         mMarkingToggleButton = new ToggleButton(this);
-        mMarkingToggleButton.setText(FOREGROUND);
-        mMarkingToggleButton.setTextOff(FOREGROUND);
-        mMarkingToggleButton.setTextOn(BACKGROUND);
+        mMarkingToggleButton.setText(MARK_KEEP);
+        mMarkingToggleButton.setTextOff(MARK_KEEP);
+        mMarkingToggleButton.setTextOn(MARK_DISCARD);
         mMarkingToggleButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean markState) {
@@ -635,6 +641,7 @@ public class ImageMergeMainActivity extends Activity implements CvCameraViewList
         FrameLayout.LayoutParams frameLayoutParmasMarkToogle = new FrameLayout.LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT);
         frameLayoutParmasMarkToogle.gravity = Gravity.CENTER | Gravity.TOP;
         mMarkingToggleButton.setLayoutParams(frameLayoutParmasMarkToogle);
+        */
 
         // Undo button
         mUndoButton = new Button(this);
@@ -648,15 +655,16 @@ public class ImageMergeMainActivity extends Activity implements CvCameraViewList
                 DeleteLastTrack();
             }
         });
-        FrameLayout.LayoutParams frameLayoutParmasUndo = new FrameLayout.LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT);
-        frameLayoutParmasUndo.gravity = Gravity.LEFT;
-        mUndoButton.setLayoutParams(frameLayoutParmasUndo);
+        //FrameLayout.LayoutParams frameLayoutParmasUndo = new FrameLayout.LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT);
+        //frameLayoutParmasUndo.gravity = Gravity.LEFT;
+        //mUndoButton.setLayoutParams(frameLayoutParmasUndo);
+        LinearLayout.LayoutParams linearLayoutParmasUndo = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT);
+        linearLayoutParmasUndo.weight = 0.333f;
+        mUndoButton.setLayoutParams(linearLayoutParmasUndo);
 
-
-        /*
         // Background Button
         mMarkBackgroundButton = new Button(this);
-        mMarkBackgroundButton.setText(BACKGROUND);
+        mMarkBackgroundButton.setText(MARK_DISCARD);
         mMarkBackgroundButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -665,13 +673,16 @@ public class ImageMergeMainActivity extends Activity implements CvCameraViewList
                 mMark = MarkValues.Marking.BACKGROUND;
             }
         });
-        FrameLayout.LayoutParams frameLayoutParmasBackground = new FrameLayout.LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT);
-        frameLayoutParmasBackground.gravity = Gravity.LEFT;
-        mMarkBackgroundButton.setLayoutParams(frameLayoutParmasBackground);
+        //FrameLayout.LayoutParams frameLayoutParmasBackground = new FrameLayout.LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT);
+        //frameLayoutParmasBackground.gravity = Gravity.LEFT;
+        //mMarkBackgroundButton.setLayoutParams(frameLayoutParmasBackground);
+        LinearLayout.LayoutParams linearLayoutParmasBackground = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT);
+        linearLayoutParmasBackground.weight = 0.333f;
+        mMarkBackgroundButton.setLayoutParams(linearLayoutParmasBackground);
 
         // Foreground Button
         mMarkForegroundButton = new Button(this);
-        mMarkForegroundButton.setText(FOREGROUND);
+        mMarkForegroundButton.setText(MARK_KEEP);
         mMarkForegroundButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -680,16 +691,24 @@ public class ImageMergeMainActivity extends Activity implements CvCameraViewList
                 mMark = MarkValues.Marking.FOREGROUND;
             }
         });
-        FrameLayout.LayoutParams frameLayoutParmasForeground = new FrameLayout.LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT);
-        frameLayoutParmasForeground.gravity = Gravity.RIGHT;
-        mMarkForegroundButton.setLayoutParams(frameLayoutParmasForeground);
-        */
+        //FrameLayout.LayoutParams frameLayoutParmasForeground = new FrameLayout.LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT);
+        //frameLayoutParmasForeground.gravity = Gravity.RIGHT;
+        //mMarkForegroundButton.setLayoutParams(frameLayoutParmasForeground);
+        LinearLayout.LayoutParams linearLayoutParmasForeground = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT);
+        linearLayoutParmasForeground.weight = 0.333f;
+        mMarkForegroundButton.setLayoutParams(linearLayoutParmasForeground);
+
         // Third Add the buttons to the view
         FrameLayout frameMainLayout = (FrameLayout) findViewById(R.id.frame_main_layout);
+        mLinearLayout.addView(mUndoButton);
+        mLinearLayout.addView(mMarkBackgroundButton);
+        mLinearLayout.addView(mMarkForegroundButton);
+
         //frameMainLayout.addView(mMarkBackgroundButton);
         //frameMainLayout.addView(mMarkForegroundButton);
-        frameMainLayout.addView(mMarkingToggleButton);
-        frameMainLayout.addView(mUndoButton);
+        //frameMainLayout.addView(mMarkingToggleButton);
+        //frameMainLayout.addView(mUndoButton);
+        frameMainLayout.addView(mLinearLayout);
         frameMainLayout.addView(mDoneButton);
 
         // Forth Change the application stage to SEGMENTATION_MARK
@@ -803,14 +822,20 @@ public class ImageMergeMainActivity extends Activity implements CvCameraViewList
     private void InitializeMoveForegroundAndEdit()
     {
         // Remove the unnecessary buttons
-        ViewGroup layout = (ViewGroup) mMarkingToggleButton.getParent();
+        ViewGroup layout = (ViewGroup) mMarkBackgroundButton.getParent();
+        //ViewGroup layout = (ViewGroup) mMarkingToggleButton.getParent();
         if(null!=layout)
         {
             //for safety only  as you are doing onClick
-            //layout.removeView(mMarkBackgroundButton);
-            //layout.removeView(mMarkForegroundButton);
-            layout.removeView(mMarkingToggleButton);
+            layout.removeView(mMarkBackgroundButton);
+            layout.removeView(mMarkForegroundButton);
+            layout.removeView(mUndoButton);
+            //layout.removeView(mMarkingToggleButton);
         }
+
+        if(mLinearLayout != null) { mLinearLayout.removeAllViews(); }
+        mLinearLayout = new LinearLayout(this);
+        mLinearLayout.setGravity(Gravity.TOP);
 
         // Add move extract foreground to background image button
         mMoveForegroundPixelsToBack = new Button(this);
@@ -823,9 +848,12 @@ public class ImageMergeMainActivity extends Activity implements CvCameraViewList
                 mButtonAction = ButtonAction.MOVE_FOREGROUND_TO_BACK;
             }
         });
-        FrameLayout.LayoutParams frameLayoutParmasForegroundToBack = new FrameLayout.LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT);
-        frameLayoutParmasForegroundToBack.gravity = Gravity.TOP | Gravity.CENTER;
-        mMoveForegroundPixelsToBack.setLayoutParams(frameLayoutParmasForegroundToBack);
+        //FrameLayout.LayoutParams frameLayoutParmasForegroundToBack = new FrameLayout.LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT);
+        //frameLayoutParmasForegroundToBack.gravity = Gravity.TOP | Gravity.CENTER;
+        //mMoveForegroundPixelsToBack.setLayoutParams(frameLayoutParmasForegroundToBack);
+        LinearLayout.LayoutParams linearLayoutParmasForegroundToBack = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT);
+        linearLayoutParmasForegroundToBack.weight = 0.333f;
+        mMoveForegroundPixelsToBack.setLayoutParams(linearLayoutParmasForegroundToBack);
 
         // Add move foreground button
         mMoveForeground = new Button(this);
@@ -838,9 +866,12 @@ public class ImageMergeMainActivity extends Activity implements CvCameraViewList
                 mButtonAction = ButtonAction.MOVE_FOREGROUND;
             }
         });
-        FrameLayout.LayoutParams frameLayoutParmasMoveForeground = new FrameLayout.LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT);
-        frameLayoutParmasMoveForeground.gravity = Gravity.RIGHT;
-        mMoveForeground.setLayoutParams(frameLayoutParmasMoveForeground);
+        //FrameLayout.LayoutParams frameLayoutParmasMoveForeground = new FrameLayout.LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT);
+        //frameLayoutParmasMoveForeground.gravity = Gravity.RIGHT;
+        //mMoveForeground.setLayoutParams(frameLayoutParmasMoveForeground);
+        LinearLayout.LayoutParams linearLayoutParmasMoveForeground = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT);
+        linearLayoutParmasMoveForeground.weight = 0.333f;
+        mMoveForeground.setLayoutParams(linearLayoutParmasMoveForeground);
 
         // Change the action the DONE button does
         mDoneButton.setOnClickListener(new View.OnClickListener() {
@@ -853,9 +884,14 @@ public class ImageMergeMainActivity extends Activity implements CvCameraViewList
 
         // Add buttons to view
         FrameLayout frameMainLayout = (FrameLayout) findViewById(R.id.frame_main_layout);
-        frameMainLayout.addView(mMoveForegroundPixelsToBack);
-        frameMainLayout.addView(mMoveForeground);
+        mLinearLayout.addView(mUndoButton);
+        mLinearLayout.addView(mMoveForegroundPixelsToBack);
+        mLinearLayout.addView(mMoveForeground);
+        frameMainLayout.addView(mLinearLayout);
+        //frameMainLayout.addView(mMoveForegroundPixelsToBack);
+        //frameMainLayout.addView(mMoveForeground);
         //frameMainLayout.addView(mUndoButton);
+
 
         // Change application stage
         mApplicationStage = ApplicationStage.MOVE_FOREGROUND_AND_EDIT;
@@ -960,8 +996,11 @@ public class ImageMergeMainActivity extends Activity implements CvCameraViewList
             // Save the current image to be the first image
             mData.SetFirstImage();
 
-            // Add a save image button
+            // Remove the take picture image
             final FrameLayout frameMainLayout = (FrameLayout) findViewById(R.id.frame_main_layout);
+            frameMainLayout.removeView(mTakePictureButton);
+
+            // Add a save image button
             mSaveFirstImage = new Button(frameMainLayout.getContext());
             mSaveFirstImage.setText(SAVE_FILE);
             mSaveFirstImage.setOnClickListener(new View.OnClickListener() {
@@ -970,9 +1009,13 @@ public class ImageMergeMainActivity extends Activity implements CvCameraViewList
                     PopDialogFileName(frameMainLayout);
                 }
             });
-            FrameLayout.LayoutParams frameLayoutParmasAlgorithm = new FrameLayout.LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT);
+            final FrameLayout.LayoutParams frameLayoutParmasAlgorithm = new FrameLayout.LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT);
             frameLayoutParmasAlgorithm.gravity = Gravity.TOP | Gravity.CENTER_HORIZONTAL;
             mSaveFirstImage.setLayoutParams(frameLayoutParmasAlgorithm);
+
+            if(mLinearLayout != null) { mLinearLayout.removeAllViews(); }
+            mLinearLayout = new LinearLayout(this);
+            mLinearLayout.setGravity(Gravity.BOTTOM);
 
             // Add Keep Discard Buttons
             mKeepImage = new Button(frameMainLayout.getContext());
@@ -986,13 +1029,20 @@ public class ImageMergeMainActivity extends Activity implements CvCameraViewList
 
                     // Get rid of the keep discard and save file buttons
                     frameMainLayout.removeView(mSaveFirstImage);
-                    frameMainLayout.removeView(mDiscardImage);
-                    frameMainLayout.removeView(mKeepImage);
+                    frameMainLayout.removeView(mLinearLayout);
+                    //frameMainLayout.removeView(mDiscardImage);
+                    //frameMainLayout.removeView(mKeepImage);
+
+                    // Return take picture button
+                    frameMainLayout.addView(mTakePictureButton);
                 }
             });
-            FrameLayout.LayoutParams frameLayoutParmasKeep = new FrameLayout.LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT);
-            frameLayoutParmasKeep.gravity = Gravity.BOTTOM | Gravity.LEFT;
-            mKeepImage.setLayoutParams(frameLayoutParmasKeep);
+            //FrameLayout.LayoutParams frameLayoutParmasKeep = new FrameLayout.LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT);
+            //frameLayoutParmasKeep.gravity = Gravity.BOTTOM | Gravity.LEFT;
+            //mKeepImage.setLayoutParams(frameLayoutParmasKeep);
+            LinearLayout.LayoutParams linearLayoutParmasKeep = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT);
+            linearLayoutParmasKeep.weight = 0.333f;
+            mKeepImage.setLayoutParams(linearLayoutParmasKeep);
 
             mDiscardImage = new Button(frameMainLayout.getContext());
             mDiscardImage.setText(RETAKE);
@@ -1005,18 +1055,28 @@ public class ImageMergeMainActivity extends Activity implements CvCameraViewList
 
                     // Get rid of the keep discard and save file buttons
                     frameMainLayout.removeView(mSaveFirstImage);
-                    frameMainLayout.removeView(mDiscardImage);
-                    frameMainLayout.removeView(mKeepImage);
+                    frameMainLayout.removeView(mLinearLayout);
+                    //frameMainLayout.removeView(mDiscardImage);
+                    //frameMainLayout.removeView(mKeepImage);
+
+                    // Return take picture button
+                    frameMainLayout.addView(mTakePictureButton);
                 }
             });
-            FrameLayout.LayoutParams frameLayoutParmasDiscard = new FrameLayout.LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT);
-            frameLayoutParmasDiscard.gravity = Gravity.BOTTOM | Gravity.RIGHT;
-            mDiscardImage.setLayoutParams(frameLayoutParmasDiscard);
+            //FrameLayout.LayoutParams frameLayoutParmasDiscard = new FrameLayout.LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT);
+            //frameLayoutParmasDiscard.gravity = Gravity.BOTTOM | Gravity.RIGHT;
+            //mDiscardImage.setLayoutParams(frameLayoutParmasDiscard);
+            LinearLayout.LayoutParams linearLayoutParmasDiscard = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT);
+            linearLayoutParmasDiscard.weight = 0.333f;
+            mDiscardImage.setLayoutParams(linearLayoutParmasDiscard);
 
 
             frameMainLayout.addView(mSaveFirstImage);
-            frameMainLayout.addView(mKeepImage);
-            frameMainLayout.addView(mDiscardImage);
+            mLinearLayout.addView(mKeepImage);
+            mLinearLayout.addView(mDiscardImage);
+            frameMainLayout.addView(mLinearLayout);
+            //frameMainLayout.addView(mKeepImage);
+            //frameMainLayout.addView(mDiscardImage);
 
 
             // Change stage to FIRST_IMAGE_KEEP_DISCARD
@@ -1039,8 +1099,15 @@ public class ImageMergeMainActivity extends Activity implements CvCameraViewList
             // Change stage to SECOND_IMAGE_KEEP_DISCARD
             mApplicationStage = ApplicationStage.SECOND_IMAGE_KEEP_DISCARD;
 
-            // Add Keep Discard Buttons
+            // Remove take picture button
             final FrameLayout frameMainLayout = (FrameLayout) findViewById(R.id.frame_main_layout);
+            frameMainLayout.removeView(mTakePictureButton);
+
+            if(mLinearLayout != null) { mLinearLayout.removeAllViews(); }
+            mLinearLayout = new LinearLayout(this);
+            mLinearLayout.setGravity(Gravity.BOTTOM);
+
+            // Add Keep Discard Buttons
             mKeepImage = new Button(frameMainLayout.getContext());
             mKeepImage.setText(SAVE);
             mKeepImage.setOnClickListener(new View.OnClickListener() {
@@ -1051,16 +1118,20 @@ public class ImageMergeMainActivity extends Activity implements CvCameraViewList
                     mApplicationStage = ApplicationStage.SEGMENTATION_MARK_INITIALIZATION;
 
                     // Get rid of the keep discard and save file buttons
-                    frameMainLayout.removeView(mDiscardImage);
-                    frameMainLayout.removeView(mKeepImage);
+                    frameMainLayout.removeView(mLinearLayout);
+                    //frameMainLayout.removeView(mDiscardImage);
+                    //frameMainLayout.removeView(mKeepImage);
+
+                    // Return take picture button
+                    frameMainLayout.addView(mTakePictureButton);
 
                     // Initialize mark segmentation view
                     InitializeMarkSegmentationView();
                 }
             });
-            FrameLayout.LayoutParams frameLayoutParmasKeep = new FrameLayout.LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT);
-            frameLayoutParmasKeep.gravity = Gravity.BOTTOM | Gravity.LEFT;
-            mKeepImage.setLayoutParams(frameLayoutParmasKeep);
+            LinearLayout.LayoutParams linearLayoutParmasKeep = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT);
+            linearLayoutParmasKeep.weight = 0.333f;
+            mKeepImage.setLayoutParams(linearLayoutParmasKeep);
 
             mDiscardImage = new Button(frameMainLayout.getContext());
             mDiscardImage.setText(RETAKE);
@@ -1072,16 +1143,21 @@ public class ImageMergeMainActivity extends Activity implements CvCameraViewList
                     mApplicationStage = ApplicationStage.SECOND_IMAGE;
 
                     // Get rid of the keep discard and save file buttons
-                    frameMainLayout.removeView(mDiscardImage);
-                    frameMainLayout.removeView(mKeepImage);
+                    frameMainLayout.removeView(mLinearLayout);
+                    //frameMainLayout.removeView(mDiscardImage);
+                    //frameMainLayout.removeView(mKeepImage);
+
+                    // Return take picture button
+                    frameMainLayout.addView(mTakePictureButton);
                 }
             });
-            FrameLayout.LayoutParams frameLayoutParmasDiscard = new FrameLayout.LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT);
-            frameLayoutParmasDiscard.gravity = Gravity.BOTTOM | Gravity.RIGHT;
-            mDiscardImage.setLayoutParams(frameLayoutParmasDiscard);
+            LinearLayout.LayoutParams linearLayoutParmasDiscard = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT);
+            linearLayoutParmasDiscard.weight = 0.333f;
+            mDiscardImage.setLayoutParams(linearLayoutParmasDiscard);
 
-            frameMainLayout.addView(mKeepImage);
-            frameMainLayout.addView(mDiscardImage);
+            mLinearLayout.addView(mKeepImage);
+            mLinearLayout.addView(mDiscardImage);
+            frameMainLayout.addView(mLinearLayout);
 
 
             // Draw current image
@@ -1367,6 +1443,11 @@ public class ImageMergeMainActivity extends Activity implements CvCameraViewList
     {
         // Merge the foreground pixels to the firstImage image
         Mat combinedMat = ImageProcessing.MergeMatWithPoints(mData.GetFirstImage(), mData);
+
+        // Add center og gravity of extracted foreground to image
+        if(mData.GetCenterOfGravity() != null) {
+            combinedMat = ImageProcessing.AddCenterOfGravityCurserToImage(combinedMat, mData);
+        }
 
         // Allocate space for the bitmap that will contain the image
         if(mBitmap == null) {

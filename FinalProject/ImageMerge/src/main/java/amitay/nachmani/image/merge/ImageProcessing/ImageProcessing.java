@@ -2,7 +2,6 @@ package amitay.nachmani.image.merge.ImageProcessing;
 
 import android.graphics.Bitmap;
 import android.util.Log;
-import android.widget.MultiAutoCompleteTextView;
 
 import org.opencv.core.Core;
 import org.opencv.core.CvType;
@@ -15,10 +14,7 @@ import org.opencv.core.Size;
 import org.opencv.core.TermCriteria;
 import org.opencv.imgproc.Imgproc;
 
-import java.nio.ByteBuffer;
-import java.nio.ByteOrder;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import amitay.nachmani.image.merge.Data.Data;
@@ -1272,6 +1268,34 @@ public class ImageProcessing {
         }
     }
 
+    /**
+     * AddCenterOfGravityCurserToImage:
+     *
+     * Adds a cursor to where the center of gravity of the image is
+     *
+     * @param combinedMat
+     * @param data
+     * @return
+     */
+    public static Mat AddCenterOfGravityCurserToImage(Mat combinedMat, Data data)
+    {
+        Mat imageWithCurser = combinedMat;
+
+        // Paint the center of gravity on the image
+        int sizeOfCurser = 5;
+        for(int i = -1*sizeOfCurser ; i < sizeOfCurser ; i++)
+        {
+            Log.d(GeneralInfo.DEBUG_TAG,"Y: " + (int)(data.GetCenterOfGravity().y + i) + " X: " + (int)data.GetCenterOfGravity().x);
+            Log.d(GeneralInfo.DEBUG_TAG,"Y: " + (int)(data.GetCenterOfGravity().y) + " X: " + (int)(data.GetCenterOfGravity().x+i));
+
+            imageWithCurser.put((int)(data.GetCenterOfGravity().y + i),(int)data.GetCenterOfGravity().x,MarkValues.CURSER_COLOR);
+            imageWithCurser.put((int)data.GetCenterOfGravity().y,(int)(data.GetCenterOfGravity().x+i),MarkValues.CURSER_COLOR);
+
+        }
+
+
+        return imageWithCurser;
+    }
 }
 
 /*

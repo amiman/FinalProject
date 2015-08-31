@@ -18,6 +18,7 @@ public class MarkValues {
     public static final byte[] BACKGROUND_VALUE_BYTE_ARRAY = {(byte)124,(byte)124,(byte)124,1};
     public static final byte[] NO_MARK_VALUE_BYTE_ARRAY = {(byte)0,(byte)0,(byte)0,1};
 
+    public static final byte[] CURSER_COLOR = {(byte)255,(byte)0,(byte)0,1};
 
     /**
      * Marking:
