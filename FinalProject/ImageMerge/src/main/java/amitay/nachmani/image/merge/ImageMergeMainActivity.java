@@ -63,8 +63,8 @@ public class ImageMergeMainActivity extends Activity implements CvCameraViewList
     // Constants
     public  static final int    MAT_TYPE                    = CvType.CV_8UC4;
     private static final String TAG                         = "OCVSample::Activity";
-    private static final String FOREGROUND                  = "SAVE";
-    private static final String BACKGROUND                  = "RETAKE";
+    //private static final String FOREGROUND                  = "SAVE";
+    //private static final String BACKGROUND                  = "RETAKE";
     private static final String MARK_KEEP                   = "KEEP";
     private static final String MARK_DISCARD                = "DISCARD";
     private static final String DONE                        = "DONE";
@@ -179,38 +179,38 @@ public class ImageMergeMainActivity extends Activity implements CvCameraViewList
 
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
-        Log.d(GeneralInfo.DEBUG_TAG, "onRestoreInstanceState");
+        //Log.d(GeneralInfo.DEBUG_TAG, "onRestoreInstanceState");
         super.onRestoreInstanceState(savedInstanceState);
     }
 
     @Override
     protected void onRestart() {
-        Log.d(GeneralInfo.DEBUG_TAG, "Restart");
+        //Log.d(GeneralInfo.DEBUG_TAG, "Restart");
         super.onRestart();
     }
 
     @Override
     protected void onStart() {
-        Log.d(GeneralInfo.DEBUG_TAG, "OnStart");
+        //Log.d(GeneralInfo.DEBUG_TAG, "OnStart");
         super.onStart();
     }
 
     @Override
     protected void onStop() {
-        Log.d(GeneralInfo.DEBUG_TAG, "OnStop");
+        //Log.d(GeneralInfo.DEBUG_TAG, "OnStop");
         super.onStop();
     }
 
     @Override
     public void onActivityReenter(int resultCode, Intent data) {
-        Log.d(GeneralInfo.DEBUG_TAG, "onActivityReenter");
+        //Log.d(GeneralInfo.DEBUG_TAG, "onActivityReenter");
         super.onActivityReenter(resultCode, data);
     }
 
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
-        Log.d(GeneralInfo.DEBUG_TAG, "onWindowFocusChanged");
-        Log.d(GeneralInfo.DEBUG_TAG, "onWindowFocusChanged: " + mApplicationStage);
+        //Log.d(GeneralInfo.DEBUG_TAG, "onWindowFocusChanged");
+        //Log.d(GeneralInfo.DEBUG_TAG, "onWindowFocusChanged: " + mApplicationStage);
         super.onWindowFocusChanged(hasFocus);
         switch(mApplicationStage)
         {
@@ -229,7 +229,7 @@ public class ImageMergeMainActivity extends Activity implements CvCameraViewList
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        Log.d(GeneralInfo.DEBUG_TAG, "called onCreate");
+        //Log.d(GeneralInfo.DEBUG_TAG, "called onCreate");
         super.onCreate(savedInstanceState);
         OpenCVLoader.initAsync(OpenCVLoader.OPENCV_VERSION_2_4_9, this, mLoaderCallback);
         if (!OpenCVLoader.initDebug()) {
@@ -290,7 +290,7 @@ public class ImageMergeMainActivity extends Activity implements CvCameraViewList
     @Override
     public void onPause()
     {
-        Log.d(GeneralInfo.DEBUG_TAG, "Pause");
+        //Log.d(GeneralInfo.DEBUG_TAG, "Pause");
         switch(mApplicationStage) {
             case SEGMENTATION_MARK_INITIALIZATION:
                 break;
@@ -307,17 +307,17 @@ public class ImageMergeMainActivity extends Activity implements CvCameraViewList
         }
 
         super.onPause();
-        Log.d(GeneralInfo.DEBUG_TAG, "End Pause");
+        //Log.d(GeneralInfo.DEBUG_TAG, "End Pause");
     }
 
     @Override
     public void onResume()
     {
         super.onResume();
-        Log.d(GeneralInfo.DEBUG_TAG, "Resume");
+        //Log.d(GeneralInfo.DEBUG_TAG, "Resume");
         OpenCVLoader.initAsync(OpenCVLoader.OPENCV_VERSION_2_4_9, this, mLoaderCallback);
 
-        Log.d(GeneralInfo.DEBUG_TAG, mApplicationStage.name());
+        //Log.d(GeneralInfo.DEBUG_TAG, mApplicationStage.name());
 
         // According to the current stage initialize the proper stage
         switch(mApplicationStage)
@@ -330,11 +330,11 @@ public class ImageMergeMainActivity extends Activity implements CvCameraViewList
                     mOpenCvCameraView.enableView();
                 break;
         }
-        Log.d(GeneralInfo.DEBUG_TAG, "End Resume");
+        //Log.d(GeneralInfo.DEBUG_TAG, "End Resume");
     }
 
     public void onDestroy() {
-        Log.d(GeneralInfo.DEBUG_TAG, "Destroy");
+        //Log.d(GeneralInfo.DEBUG_TAG, "Destroy");
         super.onDestroy();
         if (mOpenCvCameraView != null)
             mOpenCvCameraView.disableView();
@@ -366,7 +366,7 @@ public class ImageMergeMainActivity extends Activity implements CvCameraViewList
      */
     public void onCameraViewStopped() {
 
-        Log.d(GeneralInfo.DEBUG_TAG, "onCameraViewStopped");
+        //Log.d(GeneralInfo.DEBUG_TAG, "onCameraViewStopped");
 
         /*
         // When we stop retrieving images we change the last image to be the second image wait for tracks to be made
@@ -929,8 +929,6 @@ public class ImageMergeMainActivity extends Activity implements CvCameraViewList
     /**
      * PopDialogFileName:
      *
-     *
-     * @return
      */
     private void PopDialogFileName(final View v)
     {
@@ -963,7 +961,7 @@ public class ImageMergeMainActivity extends Activity implements CvCameraViewList
                 // Get the input text from edit text view
                 mImageName[0] = inputImageName.getText().toString();
 
-                Log.d(GeneralInfo.DEBUG_TAG,mImageName[0]);
+                //Log.d(GeneralInfo.DEBUG_TAG,mImageName[0]);
 
                 // After we get the file name we save the image
                 if(mApplicationStage == ApplicationStage.FIRST_IMAGE)
@@ -1207,7 +1205,7 @@ public class ImageMergeMainActivity extends Activity implements CvCameraViewList
             // Go back to start activity
             finish();
 
-            Log.d(GeneralInfo.DEBUG_TAG,"after finsish()");
+            //Log.d(GeneralInfo.DEBUG_TAG,"after finsish()");
             return;
         } catch (Exception e) {
             e.printStackTrace();
@@ -1501,7 +1499,7 @@ public class ImageMergeMainActivity extends Activity implements CvCameraViewList
 
         if (canvas != null) {
             canvas.drawColor(0, android.graphics.PorterDuff.Mode.CLEAR);
-            Log.d(TAG, "mStretch value: " + mScale);
+            //Log.d(TAG, "mStretch value: " + mScale);
 
             if (mScale != 0) {
                 canvas.drawBitmap(mBitmap, new Rect(0, 0, mBitmap.getWidth(), mBitmap.getHeight()),

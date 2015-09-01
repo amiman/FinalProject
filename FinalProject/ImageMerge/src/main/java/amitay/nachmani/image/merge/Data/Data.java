@@ -200,7 +200,7 @@ public class Data {
             if(p.y < mMinForegroundPoint.y) { mMinForegroundPoint.y = p.y; }
         }
 
-        Log.d(GeneralInfo.DEBUG_TAG,"xMax: " + mMaxForegroundPoint.x + "yMax: " + mMaxForegroundPoint.y + "xMin: " + mMinForegroundPoint.x +"yMin: " + mMinForegroundPoint.y);
+        //Log.d(GeneralInfo.DEBUG_TAG,"xMax: " + mMaxForegroundPoint.x + "yMax: " + mMaxForegroundPoint.y + "xMin: " + mMinForegroundPoint.x +"yMin: " + mMinForegroundPoint.y);
     }
 
     /**
@@ -515,7 +515,7 @@ public class Data {
     {
         // Build the extracted foregroundPoint Mat for easy of seraching
         //mExtractForegroundMat = new Mat((int)(mMaxForegroundPoint.y -  mMinForegroundPoint.y),(int)(mMaxForegroundPoint.x -  mMinForegroundPoint.x), ImageMergeMainActivity.MAT_TYPE);
-        Log.d(GeneralInfo.DEBUG_TAG," " + (int)(mMaxForegroundPoint.y -  mMinForegroundPoint.y)+1 + " " + (int)(mMaxForegroundPoint.x -  mMinForegroundPoint.x)+1);
+        //Log.d(GeneralInfo.DEBUG_TAG," " + (int)(mMaxForegroundPoint.y -  mMinForegroundPoint.y)+1 + " " + (int)(mMaxForegroundPoint.x -  mMinForegroundPoint.x)+1);
         mExtractForegroundMat = new ColorPoint[(int)(mMaxForegroundPoint.y -  mMinForegroundPoint.y)+1][(int)(mMaxForegroundPoint.x -  mMinForegroundPoint.x)+1];
 
         // Go over all the points in mExtractForeground an connect them to the matrix

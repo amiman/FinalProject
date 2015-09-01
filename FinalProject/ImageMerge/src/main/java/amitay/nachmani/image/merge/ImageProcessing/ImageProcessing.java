@@ -123,9 +123,9 @@ public class ImageProcessing {
             data.SetMarkedImageMask(tempMask);
 
             // Second go over the marked mask and extract the background and foreground values
-            Log.d(GeneralInfo.DEBUG_TAG, "Start ExtractMaskPixels");
+            //Log.d(GeneralInfo.DEBUG_TAG, "Start ExtractMaskPixels");
             ExtractMaskPixels(data);
-            Log.d(GeneralInfo.DEBUG_TAG, "End ExtractMaskPixels");
+            //Log.d(GeneralInfo.DEBUG_TAG, "End ExtractMaskPixels");
 
             // Release mask
             if(mAlgorithm.equals(AlgorithmName.KMEANS)) {
@@ -137,31 +137,29 @@ public class ImageProcessing {
 
         } else if(currentProgress == 25) {
 
-            //TODO: change kMeans algorithm to a better segmentation algo
-
             switch(mAlgorithm) {
 
                 case GROW_CUT:
                     // Prepare basic data fro grow cut algorithm
-                    Log.d(GeneralInfo.DEBUG_TAG, "Start PrepareDataForGrowCut");
+                    //Log.d(GeneralInfo.DEBUG_TAG, "Start PrepareDataForGrowCut");
                     PrepareDataForGrowCut(data);
-                    Log.d(GeneralInfo.DEBUG_TAG, "End PrepareDataForGrowCut");
+                    //Log.d(GeneralInfo.DEBUG_TAG, "End PrepareDataForGrowCut");
                     break;
 
                 case MY_ALGORITHM:
 
                     // Calculate color statistic of points
-                    Log.d(GeneralInfo.DEBUG_TAG, "Start CalculateForegroundBackgroundStatistic");
+                    //Log.d(GeneralInfo.DEBUG_TAG, "Start CalculateForegroundBackgroundStatistic");
                     CalculateForegroundBackgroundStatistic(data);
-                    Log.d(GeneralInfo.DEBUG_TAG, "End CalculateForegroundBackgroundStatistic");
+                    //Log.d(GeneralInfo.DEBUG_TAG, "End CalculateForegroundBackgroundStatistic");
                     break;
 
                 case KMEANS:
 
                     // Create Kmeans matrix
-                    Log.d(GeneralInfo.DEBUG_TAG, "Start SetKmeansMatrix");
+                    //Log.d(GeneralInfo.DEBUG_TAG, "Start SetKmeansMatrix");
                     data.SetKmeansMatrix(CreateKMeansMatrix(data));
-                    Log.d(GeneralInfo.DEBUG_TAG, "End SetKmeansMatrix");
+                    //Log.d(GeneralInfo.DEBUG_TAG, "End SetKmeansMatrix");
                     break;
             }
 
@@ -169,16 +167,14 @@ public class ImageProcessing {
 
         } else if(currentProgress >= 50 && currentProgress < 75) {
 
-            //TODO: change kMeans algorithm to a better segmentation algo
-
             switch(mAlgorithm) {
                 case GROW_CUT:
 
                     // Run grow cut
-                    Log.d(GeneralInfo.DEBUG_TAG, "Start RunGrowCut");
+                    //Log.d(GeneralInfo.DEBUG_TAG, "Start RunGrowCut");
                     //RunGrowCut(data);
                     RunGrowCutOptimize(data,currentProgress);
-                    Log.d(GeneralInfo.DEBUG_TAG, "End RunGrowCut");
+                    //Log.d(GeneralInfo.DEBUG_TAG, "End RunGrowCut");
                     //currentProgress+=10;
                     currentProgress = 75;
 
@@ -187,28 +183,28 @@ public class ImageProcessing {
                 case MY_ALGORITHM:
 
                     // Calculate start label for each point in the image according to the statistic
-                    Log.d(GeneralInfo.DEBUG_TAG, "Start CalculateStartLabelAccordingToStatistic");
+                    //Log.d(GeneralInfo.DEBUG_TAG, "Start CalculateStartLabelAccordingToStatistic");
                     CalculateStartLabelAccordingToStatistic(data);
-                    Log.d(GeneralInfo.DEBUG_TAG, "End CalculateStartLabelAccordingToStatistic");
+                    //Log.d(GeneralInfo.DEBUG_TAG, "End CalculateStartLabelAccordingToStatistic");
 
                     // Extracted connected component and fill holes
-                    Log.d(GeneralInfo.DEBUG_TAG, "Start ExtractConnectedComponent");
+                    //Log.d(GeneralInfo.DEBUG_TAG, "Start ExtractConnectedComponent");
                     //ExtractConnectedComponent(data);
                     //ExtractConnectedComponent(data);
                     FillAreasUsingOpening(data);
-                    Log.d(GeneralInfo.DEBUG_TAG, "End ExtractConnectedComponent");
+                    //Log.d(GeneralInfo.DEBUG_TAG, "End ExtractConnectedComponent");
                     currentProgress = 75;
                     break;
 
                 case KMEANS:
 
                     // Run kmeans
-                    Log.d(GeneralInfo.DEBUG_TAG, "Start CreateBestLabelsFromUserMarks");
+                    //Log.d(GeneralInfo.DEBUG_TAG, "Start CreateBestLabelsFromUserMarks");
                     CreateBestLabelsFromUserMarks(data);
-                    Log.d(GeneralInfo.DEBUG_TAG, "End CreateBestLabelsFromUserMarks");
-                    Log.d(GeneralInfo.DEBUG_TAG, "Start kmeans");
+                    //Log.d(GeneralInfo.DEBUG_TAG, "End CreateBestLabelsFromUserMarks");
+                    //Log.d(GeneralInfo.DEBUG_TAG, "Start kmeans");
                     Core.kmeans(data.GetmKmeansMatrix(), 2, data.GetBestLabels(), new TermCriteria(TermCriteria.MAX_ITER | TermCriteria.EPS, 10, 0.0001), 1, Core.KMEANS_USE_INITIAL_LABELS);
-                    Log.d(GeneralInfo.DEBUG_TAG, "End kmeans");
+                    //Log.d(GeneralInfo.DEBUG_TAG, "End kmeans");
 
                     // Release unused matrix
                     data.ReleaseKmeansMatrix();
@@ -224,9 +220,9 @@ public class ImageProcessing {
             //AddMarksToFinalLabels(data);
 
             // Convert best labels to foreground image
-            Log.d(GeneralInfo.DEBUG_TAG, "Start ConvertBestLabelsToForegroundImage");
+            //Log.d(GeneralInfo.DEBUG_TAG, "Start ConvertBestLabelsToForegroundImage");
             ConvertBestLabelsToForegroundImage(data);
-            Log.d(GeneralInfo.DEBUG_TAG, "End ConvertBestLabelsToForegroundImage");
+            //Log.d(GeneralInfo.DEBUG_TAG, "End ConvertBestLabelsToForegroundImage");
 
             switch(mAlgorithm) {
                 case MY_ALGORITHM:
@@ -731,7 +727,7 @@ public class ImageProcessing {
                 converged = true;
             }
 
-            Log.d(GeneralInfo.DEBUG_TAG,Integer.toString(numOfIterations));
+            //Log.d(GeneralInfo.DEBUG_TAG,Integer.toString(numOfIterations));
         }
     }
 
@@ -873,7 +869,7 @@ public class ImageProcessing {
                 converged = true;
             }
 
-            Log.d(GeneralInfo.DEBUG_TAG,Integer.toString(numOfIterations));
+            //Log.d(GeneralInfo.DEBUG_TAG,Integer.toString(numOfIterations));
         }
 
         // Convert back to labels
@@ -1285,8 +1281,8 @@ public class ImageProcessing {
         int sizeOfCurser = 5;
         for(int i = -1*sizeOfCurser ; i < sizeOfCurser ; i++)
         {
-            Log.d(GeneralInfo.DEBUG_TAG,"Y: " + (int)(data.GetCenterOfGravity().y + i) + " X: " + (int)data.GetCenterOfGravity().x);
-            Log.d(GeneralInfo.DEBUG_TAG,"Y: " + (int)(data.GetCenterOfGravity().y) + " X: " + (int)(data.GetCenterOfGravity().x+i));
+            //Log.d(GeneralInfo.DEBUG_TAG,"Y: " + (int)(data.GetCenterOfGravity().y + i) + " X: " + (int)data.GetCenterOfGravity().x);
+            //Log.d(GeneralInfo.DEBUG_TAG,"Y: " + (int)(data.GetCenterOfGravity().y) + " X: " + (int)(data.GetCenterOfGravity().x+i));
 
             imageWithCurser.put((int)(data.GetCenterOfGravity().y + i),(int)data.GetCenterOfGravity().x,MarkValues.CURSER_COLOR);
             imageWithCurser.put((int)data.GetCenterOfGravity().y,(int)(data.GetCenterOfGravity().x+i),MarkValues.CURSER_COLOR);
@@ -1297,76 +1293,3 @@ public class ImageProcessing {
         return imageWithCurser;
     }
 }
-
-/*
-/**
-     * RunSegmentationAlgorithmDebug:
-     *
-     * For debuging this on the main process and not on thread.
-     * @param data
-     * @param tracks
-     * @param currentProgress
-     */
-/*
-public static final void RunSegmentationAlgorithmDebug(Data data,ArrayList<MovementTracker> tracks,int currentProgress)
-{
-    Mat background = data.GetSecondImage();
-
-    // Initialize the return image
-    //foregroundImage = new Mat(background.rows(), background.cols(), background.type(), MarkValues.NO_MARK_VALUE);
-
-    //TODO: optimize this using line iterator and line from opencv. needs to implemnent those classes in java so needs to be copy from opencv c++ source code and translate to java
-    // Extract all the pixels the user mark to foreground pixels and background pixels
-
-    // First merge all the tracks into the marked image
-    data.SetMarkedImageMask();
-    Mat tempMask = DrawTracks(data.GetMarkedImageMask(),tracks);
-    data.SetMarkedImageMask(tempMask);
-
-    // Second go over the marked mask and extract the background and foreground values
-    Log.d(GeneralInfo.DEBUG_TAG, "Start ExtractMaskPixels");
-    ExtractMaskPixels(data);
-    Log.d(GeneralInfo.DEBUG_TAG, "End ExtractMaskPixels");
-    // return current progress
-    currentProgress = 10;
-
-
-    //TODO: change kMeans algorithm to a better segmentation algo
-
-    // Run kmeans
-    Log.d(GeneralInfo.DEBUG_TAG, "Start CreateBestLabelsFromUserMarks");
-    CreateBestLabelsFromUserMarks(data);
-    Log.d(GeneralInfo.DEBUG_TAG, "End CreateBestLabelsFromUserMarks");
-
-    // Create Kmeans matrix
-    Log.d(GeneralInfo.DEBUG_TAG, "Start SetKmeansMatrix");
-    data.SetKmeansMatrix(CreateKMeansMatrix(data));
-    Log.d(GeneralInfo.DEBUG_TAG, "Done SetKmeansMatrix");
-
-    currentProgress = 20;
-
-
-    //TODO: change kMeans algorithm to a better segmentation algo
-
-
-    Log.d(GeneralInfo.DEBUG_TAG, "Start kmeans");
-    Core.kmeans(data.GetmKmeansMatrix(), 2, data.GetKmeansBestLabels(), new TermCriteria(TermCriteria.MAX_ITER | TermCriteria.EPS, 100, 0.0001), 1, Core.KMEANS_USE_INITIAL_LABELS);
-    Log.d(GeneralInfo.DEBUG_TAG, "End kmeans");
-
-    // Release unused matrix
-    //data.ReleaseKmeansMatrix();
-
-    currentProgress = 30;
-
-
-
-    // Convert best labels to foreground image
-    Log.d(GeneralInfo.DEBUG_TAG, "Start ConvertBestLabelsToForegroundImage");
-    ConvertBestLabelsToForegroundImage(data);
-    Log.d(GeneralInfo.DEBUG_TAG, "End ConvertBestLabelsToForegroundImage");
-
-    currentProgress = 100;
-
-}
-
- */

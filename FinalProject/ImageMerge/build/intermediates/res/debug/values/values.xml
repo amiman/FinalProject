@@ -48,9 +48,11 @@
     <dimen name="com_facebook_tooltip_horizontal_padding">10dp</dimen>
     <!-- From: file:/C:/Users/Amitay/Documents/GitHub/FinalProject/FinalProject/ImageMerge/src/main/res/values/dimens.xml -->
     <eat-comment/>
+    <dimen name="explanation_text_size">20dp</dimen>
     <dimen name="padding_button">20dp</dimen>
     <dimen name="padding_share_images">40dp</dimen>
     <dimen name="start_buttons">100dp</dimen>
+    <dimen name="start_screen_alligen_top_margin">30dp</dimen>
     <dimen name="title_text_size">60dp</dimen>
     <dimen name="tkae_picture_size">55dp</dimen>
     <!-- From: file:/C:/Users/Amitay/Documents/GitHub/FinalProject/FinalProject/ImageMerge/src/main/res/values/strings.xml -->
@@ -58,6 +60,7 @@
     <string name="ButtonImageMerge">New</string>
     <string name="ButtonLoadImage">Gallery</string>
     <string name="ButtonShare">Share</string>
+    <string name="ButtonTutorial">Tutorial</string>
     <string name="Share">SHARE</string>
     <string name="action_settings">Settings</string>
     <string name="app_name">Image Merge</string>
@@ -82,6 +85,97 @@
     <!-- From: file:/C:/Users/Amitay/Documents/GitHub/FinalProject/FinalProject/ImageMerge/src/main/res/values/strings.xml -->
     <eat-comment/>
     <string name="delete_image">DELETE</string>
+    <string name="explanation_algorithm">
+         In this screen you wait until the algorithm crops the area you choose to keep.
+         This can take a minute or two.
+    </string>
+    <string name="explanation_algorithm_50">
+         When the algorithm gets to 50% it takes the longest until it advanced so be patient.
+    </string>
+    <string name="explanation_first_image_keep_discard_screen_retake">
+        Press "Retake" inorder to take the first image again
+    </string>
+    <string name="explanation_first_image_keep_discard_screen_save">
+        Press "Save" to confirm that this is the first image in the merging process
+        and continue on to take the second image
+    </string>
+    <string name="explanation_first_image_keep_discard_screen_save_file">
+        Press "Save File" if you want to save the first image for later use
+    </string>
+    <string name="explanation_first_image_screen">
+        Press the red button when you want to take the picture
+    </string>
+    <string name="explanation_marking">
+        In this screen you will choose what area from the second image you want to crop
+        and merge to the first image you took.
+        You will mark the area that you want and don\'t want using strokes on the screen.
+    </string>
+    <string name="explanation_marking_advice">
+        Inorder to get the best result mark "KEEP" all around the area you want to crop
+        and mark "DISCARD" in closing the area you want to keep.
+    </string>
+    <string name="explanation_marking_discard">
+        Press "DISCARD" inorder to choose that the strokes you do on the screen are marking the
+        area you want to discard.
+    </string>
+    <string name="explanation_marking_done">
+        Press "DONE" when you finished marking the area you want to keep and the area you want
+        to discard.
+    </string>
+    <string name="explanation_marking_keep">
+        Press "KEEP" inorder to choose that the strokes you do on the screen are marking the
+        area you want to keep.
+    </string>
+    <string name="explanation_marking_undo">
+        Press "UNDO" inorder to undo last stroke.
+    </string>
+    <string name="explanation_move_and_erase">
+         In this screen you can move the cropped area to the final position.
+         Also you can erase pixels from the croped area the algorithm didn\'t cropped well.
+    </string>
+    <string name="explanation_move_and_erase_done">
+        Press "DONE" when you finished editng the croped area and you want to save the final merge picture.
+    </string>
+    <string name="explanation_move_and_erase_erase">
+        Press "ERASE" inorder to make your strokes on the screen delete the pixels you don\'t want.
+    </string>
+    <string name="explanation_move_and_erase_move">
+        Press "MOVE" inorder to make the place you press on the screen move the cropped area to there.
+        The red cursor on the cropped area is a reference point.If you press on the screen in a place to the right
+        of it the cropped area will go right If you press on the screen in a place above it
+        the cropped area will go up and so on.
+    </string>
+    <string name="explanation_move_and_erase_undo">
+        Press "UNDO" inorder to undo the last erase.
+    </string>
+    <string name="explanation_save">
+        Insert the name of the file and then "Done" in order to save the final image.
+    </string>
+    <string name="explanation_second_image_keep_discard_screen_retake">
+        Press "RETAKE" inorder to take the second image again
+    </string>
+    <string name="explanation_second_image_keep_discard_screen_save">
+        Press "SAVE" to confirm that this is the second image in the merging process
+        and continue to the extraction of the main area from the second image
+    </string>
+    <string name="explanation_second_image_screen">
+        When we are going to take the second image we can see an overlay of the first image
+        on top of the current image so we can plan how to take the second image.
+        Press the red button when you want to take the picture
+    </string>
+    <string name="explanation_start_screen_gallery">
+        Press Gallery   - In order to See old merged photos , Share photos we friends , Add a new merge to an existing picture or Delete
+    </string>
+    <string name="explanation_start_screen_new">
+        Press New       - In order to start a new merging of two images
+    </string>
+    <string name="explanation_start_screen_share">
+        Press Share   - In order to share your photos in facebook whatsapp and gmail
+    </string>
+    <string name="explanation_start_screen_start">
+        Swipe right in order to advance forward in the explanation
+        Swipe left in order to go backward in the explanation
+    </string>
     <string name="facebook_app_id">1620270164890984</string>
     <string name="hello_world">Hello world!</string>
     <string name="load_images">Load Images</string>
@@ -95,6 +189,7 @@
     <string name="title_activity_load_images">LoadImages</string>
     <string name="title_activity_share">ShareActivity</string>
     <string name="title_activity_start_screen">StartScreenActivity</string>
+    <string name="title_activity_tutorial">Tutorial</string>
     <!-- From: file:/C:/Users/Amitay/Documents/GitHub/FinalProject/FinalProject/ImageMerge/build/intermediates/exploded-aar/com.facebook.android/facebook/4.4.0/res/values/values.xml -->
     <eat-comment/>
     <style name="MessengerButton">

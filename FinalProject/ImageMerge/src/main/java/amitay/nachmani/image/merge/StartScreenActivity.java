@@ -3,14 +3,12 @@ package amitay.nachmani.image.merge;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
 import amitay.nachmani.image.merge.General.GeneralInfo;
-import amitay.nachmani.image.merge.R;
 
 public class StartScreenActivity extends Activity {
 
@@ -20,9 +18,21 @@ public class StartScreenActivity extends Activity {
         setContentView(R.layout.start_screen);
 
         // Set click listener for each button
+        Button btnTutorial = (Button) findViewById(R.id.btnTutorial);
         Button btnImageMerge = (Button) findViewById(R.id.btnImageMerge);
         Button btnLoadImage = (Button) findViewById(R.id.btnLoadImage);
         Button btnShare = (Button) findViewById(R.id.btnShare);
+
+        btnTutorial.setBackgroundResource(R.drawable.button_selector);
+        btnTutorial.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                // Start the tutorial activity
+                Intent intent = new Intent(getApplicationContext(), Tutorial.class);
+                startActivity(intent);
+            }
+        });
 
         btnImageMerge.setBackgroundResource(R.drawable.button_selector);
         btnImageMerge.setOnClickListener(new View.OnClickListener() {

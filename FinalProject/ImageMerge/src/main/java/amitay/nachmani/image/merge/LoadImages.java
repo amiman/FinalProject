@@ -1,24 +1,16 @@
 package amitay.nachmani.image.merge;
 
-import android.app.Activity;
 import android.app.ListActivity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.provider.MediaStore;
-import android.support.v4.util.LruCache;
-import android.support.v4.view.ViewPager;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -232,7 +224,7 @@ public class LoadImages extends ListActivity {
     static int CalculateInSampleSize( BitmapFactory.Options options, int reqWidth, int reqHeight) {
         int inSampleSize = 1;	//Default subsampling size
         // See if image raw height and width is bigger than that of required view
-        if (options.outHeight > reqHeight || options.outWidth > reqWidth) {
+        if ((options.outHeight > reqHeight) || (options.outWidth > reqWidth)) {
             //bigger
             final int halfHeight = options.outHeight / 2;
             final int halfWidth = options.outWidth / 2;

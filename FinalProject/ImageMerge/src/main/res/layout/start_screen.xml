@@ -9,9 +9,35 @@
         android:layout_height="wrap_content"
         android:text="@string/ButtonImageMerge"
         android:id="@+id/btnImageMerge"
-        android:layout_marginBottom="@dimen/padding_button"
         android:textSize="@dimen/button_text_size"
-        android:layout_centerVertical="true"
+        android:layout_below="@+id/btnTutorial"
+        android:layout_marginTop="@dimen/start_screen_alligen_top_margin"
+        android:layout_alignRight="@+id/btnTutorial"
+        android:layout_alignEnd="@+id/btnTutorial"
+        android:layout_alignLeft="@+id/btnTutorial"
+        android:layout_alignStart="@+id/btnTutorial" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/ButtonLoadImage"
+        android:id="@+id/btnLoadImage"
+        android:textSize="@dimen/button_text_size"
+        android:layout_marginTop="@dimen/start_screen_alligen_top_margin"
+        android:layout_below="@+id/btnImageMerge"
+        android:layout_alignLeft="@+id/btnImageMerge"
+        android:layout_alignStart="@+id/btnImageMerge"
+        android:layout_alignRight="@+id/btnImageMerge"
+        android:layout_alignEnd="@+id/btnImageMerge" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/ButtonShare"
+        android:id="@+id/btnShare"
+        android:textSize="@dimen/button_text_size"
+        android:layout_below="@+id/btnLoadImage"
+        android:layout_marginTop="@dimen/start_screen_alligen_top_margin"
         android:layout_alignRight="@+id/btnLoadImage"
         android:layout_alignEnd="@+id/btnLoadImage"
         android:layout_alignLeft="@+id/btnLoadImage"
@@ -20,24 +46,10 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/ButtonLoadImage"
-        android:id="@+id/btnLoadImage"
-        android:textSize="@dimen/button_text_size"
-        android:layout_below="@+id/btnImageMerge"
-        android:layout_centerHorizontal="true" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/ButtonShare"
-        android:id="@+id/btnShare"
-        android:layout_below="@+id/btnLoadImage"
-        android:layout_alignLeft="@+id/btnLoadImage"
-        android:layout_alignStart="@+id/btnLoadImage"
-        android:layout_marginTop="@dimen/padding_button"
+        android:text="@string/ButtonTutorial"
+        android:id="@+id/btnTutorial"
         android:textSize="@dimen/button_text_size"
         android:layout_centerVertical="true"
-        android:layout_alignRight="@+id/btnLoadImage"
-        android:layout_alignEnd="@+id/btnLoadImage" />
+        android:layout_centerHorizontal="true" />
 </RelativeLayout>
 
