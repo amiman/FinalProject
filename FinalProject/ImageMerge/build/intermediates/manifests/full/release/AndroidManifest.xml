@@ -57,6 +57,12 @@
             android:label="@string/title_activity_share" >
         </activity>
         <activity
+            android:name="amitay.nachmani.image.merge.Tutorial"
+            android:configChanges="keyboardHidden|orientation"
+            android:label="@string/title_activity_tutorial"
+            android:screenOrientation="landscape" >
+        </activity>
+        <activity
             android:name="com.facebook.FacebookActivity"
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
             android:label="@string/app_name"

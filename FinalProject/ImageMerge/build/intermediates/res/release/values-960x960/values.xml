@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- From: file:/C:/Users/Amitay/Documents/GitHub/FinalProject/FinalProject/ImageMerge/src/main/res/values-960x960/dimens.xml -->
+    <eat-comment/>
+    <dimen name="start_buttons">300dp</dimen>
+    <dimen name="title_text_size">200dp</dimen>
+</resources>

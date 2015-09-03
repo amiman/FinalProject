@@ -23,6 +23,7 @@
     <eat-comment/>
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="button_start_screen_size">40dp</dimen>
     <dimen name="button_text_size">25dp</dimen>
     <!-- From: file:/C:/Users/Amitay/Documents/GitHub/FinalProject/FinalProject/ImageMerge/build/intermediates/exploded-aar/com.facebook.android/facebook/4.4.0/res/values/values.xml -->
     <eat-comment/>
@@ -47,15 +48,19 @@
     <dimen name="com_facebook_tooltip_horizontal_padding">10dp</dimen>
     <!-- From: file:/C:/Users/Amitay/Documents/GitHub/FinalProject/FinalProject/ImageMerge/src/main/res/values/dimens.xml -->
     <eat-comment/>
+    <dimen name="explanation_text_size">20dp</dimen>
     <dimen name="padding_button">20dp</dimen>
     <dimen name="padding_share_images">40dp</dimen>
+    <dimen name="start_buttons">100dp</dimen>
+    <dimen name="start_screen_alligen_top_margin">30dp</dimen>
     <dimen name="title_text_size">60dp</dimen>
     <dimen name="tkae_picture_size">55dp</dimen>
     <!-- From: file:/C:/Users/Amitay/Documents/GitHub/FinalProject/FinalProject/ImageMerge/src/main/res/values/strings.xml -->
     <eat-comment/>
-    <string name="ButtonImageMerge">Merge Images</string>
-    <string name="ButtonLoadImage">Load Image</string>
+    <string name="ButtonImageMerge">New</string>
+    <string name="ButtonLoadImage">Gallery</string>
     <string name="ButtonShare">Share</string>
+    <string name="ButtonTutorial">Tutorial</string>
     <string name="Share">SHARE</string>
     <string name="action_settings">Settings</string>
     <string name="app_name">Image Merge</string>
@@ -80,10 +85,91 @@
     <!-- From: file:/C:/Users/Amitay/Documents/GitHub/FinalProject/FinalProject/ImageMerge/src/main/res/values/strings.xml -->
     <eat-comment/>
     <string name="delete_image">DELETE</string>
+    <string name="explanation_algorithm">
+         Wait until your image is processed. \(This can take a minute or two.\)
+    </string>
+    <string name="explanation_algorithm_50">
+         Be patient\.\.\. 50 percent to 75 percent takes the longest
+    </string>
+    <string name="explanation_first_image_keep_discard_screen_retake">
+        Press "Retake" in order to retake the first picture
+    </string>
+    <string name="explanation_first_image_keep_discard_screen_save">
+        Press "Save" to use this picture in the merging process
+
+    </string>
+    <string name="explanation_first_image_keep_discard_screen_save_file">
+        Press "Save File" if you want to save the picture to merge later
+    </string>
+    <string name="explanation_first_image_screen">
+        Press the red button to take a picture
+    </string>
+    <string name="explanation_marking">
+        Press "Keep" and then color the part of the picture you would like to crop and add to the first picture
+        In this screen you will choose what area from the second image you want to crop
+        and merge to the first image you took.
+        You will mark the area that you want and don\'t want using strokes on the screen.
+    </string>
+    <string name="explanation_marking_advice">
+        For best results, mark the full area to crop in white \(especially around the edges\)\, and a closed grey circle around that area to mark what to discard
+    </string>
+    <string name="explanation_marking_discard">
+        Press "Discard" to color the part of the picture to discard
+    </string>
+    <string name="explanation_marking_done">
+        Press "Done" when you have marked which areas to keep and which to discard
+    </string>
+    <string name="explanation_marking_keep">
+        Press "Keep" and then color the part of the picture you would like to crop and add to the first picture
+    </string>
+    <string name="explanation_marking_undo">
+        Press "Undo " to undo the last action
+    </string>
+    <string name="explanation_move_and_erase">
+         In this screen you can move the cropped area to the final position.
+         Also you can erase pixels from the cropped area the algorithm didn\'t cropped well.
+    </string>
+    <string name="explanation_move_and_erase_done">
+        Press "Done" when you have finished editing the picture
+    </string>
+    <string name="explanation_move_and_erase_erase">
+        Press "Erase" to erase the unwanted area in your cropped picture
+    </string>
+    <string name="explanation_move_and_erase_move">
+        Press "Move" and then slide the cropped image to the desired place in the picture \(use the red cursor to help set the picture\)
+    </string>
+    <string name="explanation_move_and_erase_undo">
+        Press "Undo " to undo the last action
+    </string>
+    <string name="explanation_save">
+        Name the picture and press "Done" to save the picture
+    </string>
+    <string name="explanation_second_image_keep_discard_screen_retake">
+        Press "Retake" in order to retake the second picture
+    </string>
+    <string name="explanation_second_image_keep_discard_screen_save">
+        Press "Save" to use this picture in the merging process
+    </string>
+    <string name="explanation_second_image_screen">
+        Use the overlay of the first picture to help position the second picture.
+        Press the red button to take the picture.
+    </string>
+    <string name="explanation_start_screen_gallery">
+        Press Gallery to see all pictures
+    </string>
+    <string name="explanation_start_screen_new">
+        Press New to take two pictures to merge
+    </string>
+    <string name="explanation_start_screen_share">
+        Press Share to share your pictures on Facebook, Whatsapp or Gmail
+    </string>
+    <string name="explanation_start_screen_start">
+        Swipe through the tutorial to learn about the app\!
+    </string>
     <string name="facebook_app_id">1620270164890984</string>
     <string name="hello_world">Hello world!</string>
     <string name="load_images">Load Images</string>
-    <string name="mergeImage">MERGE</string>
+    <string name="mergeImage">ADD</string>
     <!-- From: file:/C:/Users/Amitay/Documents/GitHub/FinalProject/FinalProject/ImageMerge/build/intermediates/exploded-aar/com.facebook.android/facebook/4.4.0/res/values/values.xml -->
     <eat-comment/>
     <string name="messenger_send_button_text">Send</string>
@@ -93,6 +179,7 @@
     <string name="title_activity_load_images">LoadImages</string>
     <string name="title_activity_share">ShareActivity</string>
     <string name="title_activity_start_screen">StartScreenActivity</string>
+    <string name="title_activity_tutorial">Tutorial</string>
     <!-- From: file:/C:/Users/Amitay/Documents/GitHub/FinalProject/FinalProject/ImageMerge/build/intermediates/exploded-aar/com.facebook.android/facebook/4.4.0/res/values/values.xml -->
     <eat-comment/>
     <style name="MessengerButton">

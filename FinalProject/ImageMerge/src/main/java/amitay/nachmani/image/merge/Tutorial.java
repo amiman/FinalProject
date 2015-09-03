@@ -20,7 +20,7 @@ public class Tutorial extends Activity {
     private TutorialStage mTutorialStage = TutorialStage.START_SCREEN;
     private ImageView mImageView;
 
-    private int[] mNumberOfSwipesForStage = {3,0,2,0,1,5,1,4,0};
+    private int[] mNumberOfSwipesForStage = {1,0,2,0,1,4,1,3,0};
     private int mCurrentSwipeCounter = 0;
 
     @Override
@@ -373,31 +373,33 @@ public class Tutorial extends Activity {
 
                 switch (mCurrentSwipeCounter) {
 
+                    /*
                     case 0:
                         textView.setText(R.string.explanation_marking);
                         params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
                         break;
-                    case 1:
+                        */
+                    case 0:
                         mImageView.setImageResource(R.drawable.keep_marking);
                         params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
                         textView.setText(R.string.explanation_marking_keep);
                         break;
-                    case 2:
+                    case 1:
                         mImageView.setImageResource(R.drawable.discard_marking);
                         params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
                         textView.setText(R.string.explanation_marking_discard);
                         break;
-                    case 3:
+                    case 2:
                         mImageView.setImageResource(R.drawable.undo_marking);
                         params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
                         textView.setText(R.string.explanation_marking_undo);
                         break;
-                    case 4:
+                    case 3:
                         mImageView.setImageResource(R.drawable.discard_marking);
                         params.addRule(RelativeLayout.ALIGN_PARENT_TOP);
                         textView.setText(R.string.explanation_marking_done);
                         break;
-                    case 5:
+                    case 4:
                         mImageView.setImageResource(R.drawable.discard_marking);
                         params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
                         textView.setText(R.string.explanation_marking_advice);
@@ -423,26 +425,27 @@ public class Tutorial extends Activity {
             case MOVE_FOREGROUND_AND_EDIT:
                 mImageView.setImageResource(R.drawable.edit_screen_start);
                 switch (mCurrentSwipeCounter) {
-                    case 0:
+                    /*case 0:
                         textView.setText(R.string.explanation_move_and_erase);
                         params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+                        break;
+                        */
+                    case 0:
+                        mImageView.setImageResource(R.drawable.edit_screen_start);
+                        params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+                        textView.setText(R.string.explanation_move_and_erase_erase);
                         break;
                     case 1:
                         mImageView.setImageResource(R.drawable.edit_screen_erase);
                         params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
-                        textView.setText(R.string.explanation_move_and_erase_erase);
-                        break;
-                    case 2:
-                        mImageView.setImageResource(R.drawable.edit_screen_erase);
-                        params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
                         textView.setText(R.string.explanation_move_and_erase_undo);
                         break;
-                    case 3:
+                    case 2:
                         mImageView.setImageResource(R.drawable.edit_screen_move);
                         params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
                         textView.setText(R.string.explanation_move_and_erase_move);
                         break;
-                    case 4:
+                    case 3:
                         mImageView.setImageResource(R.drawable.edit_screen_move);
                         params.addRule(RelativeLayout.ALIGN_PARENT_TOP);
                         textView.setText(R.string.explanation_move_and_erase_done);
